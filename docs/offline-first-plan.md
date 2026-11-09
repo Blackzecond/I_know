@@ -16,32 +16,27 @@ Before changing rules or game behavior, read [game-rules.md](./game-rules.md). I
 6. Test full games with 3–7 players.
 7. Resume online multiplayer only after the offline rules and engine are stable and the user approves resuming online work.
 
-## Implemented offline foundation
+## Implemented offline engine foundation
 
-- `setupOfflineRound()` validates the player roster and selected rule.
-- The Rule Keeper receives no hand.
-- The clue card is selected from the deck using the secret rule and removed from the draw pile.
-- Every active player other than the Rule Keeper receives seven cards.
-- The first turn belongs to the player immediately clockwise from the Rule Keeper.
-- The remaining cards stay in the draw pile.
-- The setup accepts an injectable random function so tests can be deterministic.
-- `playCards()` evaluates a submitted set atomically; an invalid set stays in the player's hand and ends the turn.
-- `exchangeWholeHand()` implements whole-hand inspection and exchange, including the one-card no-playable-card case.
+- `setupOfflineRound()` validates the player roster and selected rule, deals the hands, and treats the clue card as the first previous card on the table.
+- The Rule Keeper receives no hand; all other players receive the configured starting hand size.
+- `playCards()` evaluates multi-card submissions atomically and advances the turn after a failed attempt.
+- `exchangeWholeHand()` implements both keeper-inspection outcomes, including the one-card no-playable-card win and replacement draws after a playable card is selected.
+- Draw-pile exhaustion ends the round immediately and snapshots rankings using remaining hand sizes.
+- `scoring.ts` calculates active-player rank scores, competition-ranking ties, and the Rule Keeper's zero score.
+- `guessing.ts` creates the secret-plus-decoys choices, rotates guesses clockwise, adds unused rules after wrong guesses, and records the correct guesser.
+- `guessRoundRule()` awards the +1 correct-guess bonus and completes the round.
+- `match.ts` runs one round per player, rotates the Rule Keeper clockwise, accumulates scores, and ends the match after all rounds or draw-pile exhaustion.
+- Random sources are injectable in setup and the game actions so tests can be deterministic.
 
-## Rules to implement next
+## Remaining offline work
 
-The following are defined in the canonical rules document but are not yet fully implemented in the engine:
-
-- Transition to the guessing phase when the first player empties their hand.
-- Snapshot remaining hand sizes at that moment and rank players with fewer remaining cards higher; ties use competition ranking (for example, 1, 2, 2, 4).
-- Rule-guessing choices: the actual secret rule plus two decoys; after a wrong guess, pass clockwise and add one unused rule card to keep three choices.
-- Award the +1 correct-guess bonus.
-- Apply round ranking scores, with tied hand counts receiving the same rank score and the Rule Keeper receiving zero points for that round.
-- End the match after a fixed number of rounds equal to the number of players, so each player serves as Rule Keeper exactly once; sum scores across rounds.
-- Advance the Rule Keeper clockwise after each completed round.
-- End the game immediately if the draw pile is exhausted before anyone empties their hand; rank active players by remaining hand size (fewest cards is first), then begin rule guessing with the first-place player.
-- Treat the initial clue card as the previous card for sequence-dependent rules.
-- When a whole-hand exchange finds a playable card, the player always draws one replacement card after the keeper plays one, even if that was the player's last card. If no playable card exists and the player had one card, discard it, draw zero, and enter rule guessing.
+- Run the full lint, TypeScript, unit-test, and production-build checks; fix any failures.
+- Add additional edge-case tests and strengthen state invariants.
+- Build the local hot-seat UI on top of the engine.
+- Complete the card artwork and interaction design.
+- Test full games with 3–7 players.
+- Resume online multiplayer only after the offline rules and engine are stable and the user approves resuming online work.
 
 ## Decisions still open
 
