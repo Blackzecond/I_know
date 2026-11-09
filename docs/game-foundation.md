@@ -33,6 +33,15 @@ A multi-card play is evaluated from left to right. Each proposed card is checked
 
 Unknown condition types fail closed.
 
+## Offline turn actions
+
+- A failed play returns every attempted card to the player's hand and ends that turn.
+- A whole-hand exchange is inspected by the Rule Keeper.
+- If no card in the submitted hand can be played, the whole hand is discarded and the player draws one fewer card than they submitted.
+- If at least one card can be played, the Rule Keeper chooses exactly one legal card to put on the table. All other cards return to the player's hand and the player draws one card.
+- Exchanging a one-card hand with no legal card discards that card and draws zero; the player enters the pending-guess phase.
+- A successful play or exchange that empties a player's hand enters the pending-guess phase. Guess resolution is not implemented until its rules are finalized.
+
 ## Security model
 
 The server is authoritative. Secret rule, draw pile, discard pile, and individual hands are stored separately from public room/player metadata. Direct Data API access is revoked for client roles; trusted server code uses the service role. Never ship the secret key to a browser.
@@ -49,11 +58,8 @@ The server is authoritative. Secret rule, draw pile, discard pile, and individua
 
 ## Decisions still required before full turn implementation
 
-- Rule Keeper rotates one seat to the left (clockwise) after every completed round. The next round's Rule Keeper is the next player in seat order, wrapping from the last seat to the first.
 - Exact rule-guessing flow and whether all players can guess after the first player empties their hand
 - Deck-exhaustion behavior
-- Whether the initial clue card is removed from the draw pile
-- Exact hand exchange behavior and edge cases
 
 ## Private rooms and guest identity
 
@@ -82,9 +88,8 @@ The home screen can create a private room or join by code. The room page shows t
 
 Before using the app, enable **Anonymous Sign-Ins** in Supabase Authentication settings and configure the three variables listed in `.env.example`. The secret key must never use a `NEXT_PUBLIC_` prefix.
 
-
 ## Offline-first development
 
 Online multiplayer implementation is paused while the local game engine is built. See docs/offline-first-plan.md for the sequence and outstanding rule decisions.
 
-The initial local round setup is implemented in src/lib/game/setup.ts. It deals seven cards to each non-keeper, chooses a clue card that satisfies the secret rule, removes that clue from the draw pile, and starts with the player to the keeper's left. The random source is injectable for deterministic tests.
+The initial local round setup is implemented in src/lib/game/setup.ts. The offline action functions are in src/lib/game/actions.ts. They are pure TypeScript and do not use Supabase or browser APIs.
