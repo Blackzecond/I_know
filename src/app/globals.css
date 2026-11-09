@@ -1517,3 +1517,119 @@ button:disabled { opacity: .48; cursor: not-allowed; }
   .offline-hand-panel .offline-card,
   .offline-hand-panel .offline-action-row button { transition: none; }
 }
+
+
+/* 2.5D finish — tactile paper, layered light and soft perspective */
+.offline-card {
+  transform-style: preserve-3d;
+  box-shadow:
+    0 2px 0 rgba(255,255,255,.72),
+    0 5px 0 rgba(106,83,104,.08),
+    0 13px 24px rgba(54,39,59,.15),
+    inset 0 1px 0 rgba(255,255,255,.98),
+    inset 1px 0 0 rgba(255,255,255,.52),
+    inset -1px 0 0 rgba(104,78,101,.08),
+    inset 0 -9px 16px rgba(76,53,76,.07);
+  background-blend-mode: screen, normal;
+}
+.offline-card::before {
+  width: 150px;
+  height: 150px;
+  top: 31px;
+  background: radial-gradient(circle,rgba(255,255,255,.7) 0%,rgba(255,255,255,.2) 48%,transparent 73%);
+  filter: blur(2px);
+}
+.offline-card-frame {
+  inset: 5px;
+  border: 1px solid rgba(255,255,255,.7);
+  box-shadow: inset 0 0 0 1px rgba(130,102,128,.07), 0 1px 0 rgba(255,255,255,.55);
+}
+.offline-card-art {
+  filter:
+    drop-shadow(0 2px 1px rgba(255,255,255,.55))
+    drop-shadow(0 8px 5px rgba(54,39,59,.2));
+  transform: translateZ(12px);
+}
+.offline-card-art svg {
+  overflow: visible;
+}
+.offline-card-halo {
+  background: radial-gradient(circle,rgba(255,255,255,.3),rgba(255,255,255,.06) 60%,transparent 72%);
+  box-shadow: 0 0 0 8px rgba(255,255,255,.075), 0 0 25px rgba(255,255,255,.22), inset 0 0 18px rgba(255,255,255,.38);
+}
+.offline-card-number {
+  box-shadow:
+    0 3px 0 rgba(104,79,103,.08),
+    0 5px 9px rgba(83,63,78,.12),
+    inset 0 2px 2px rgba(255,255,255,.98),
+    inset 0 -2px 4px rgba(83,63,78,.08);
+}
+.offline-card:not(:disabled):hover {
+  transform: perspective(850px) translateY(-6px) rotateX(2deg) rotateY(-1deg);
+  box-shadow:
+    0 3px 0 rgba(255,255,255,.78),
+    0 7px 0 rgba(106,83,104,.08),
+    0 19px 30px rgba(54,39,59,.2),
+    inset 0 1px 0 rgba(255,255,255,.98),
+    inset 0 -9px 16px rgba(76,53,76,.07);
+}
+.offline-card.is-selected {
+  transform: perspective(850px) translateY(-8px) rotateX(2deg);
+  box-shadow:
+    0 3px 0 rgba(255,255,255,.8),
+    0 8px 0 rgba(106,83,104,.08),
+    0 21px 32px rgba(92,65,123,.24),
+    inset 0 1px 0 rgba(255,255,255,.98);
+}
+.offline-rule-option.offline-rule-card,
+.offline-rule-secret-card {
+  box-shadow:
+    0 2px 0 rgba(255,255,255,.86),
+    0 5px 0 rgba(102,79,105,.06),
+    0 13px 24px rgba(64,46,67,.14),
+    inset 0 1px 0 rgba(255,255,255,.98),
+    inset 0 -8px 15px rgba(87,63,83,.06);
+}
+.offline-rule-card-symbol .rule-emblem {
+  background: linear-gradient(145deg,rgba(255,255,255,.88),rgba(255,255,255,.28));
+  box-shadow:
+    0 3px 0 rgba(90,68,91,.06),
+    0 9px 16px rgba(79,57,84,.13),
+    inset 0 2px 2px rgba(255,255,255,.98),
+    inset 0 -3px 6px rgba(79,57,84,.07);
+}
+.offline-playmat {
+  box-shadow:
+    inset 0 2px 0 rgba(255,255,255,.22),
+    inset 0 -20px 34px rgba(25,43,35,.2),
+    0 4px 0 rgba(46,65,55,.12),
+    0 13px 25px rgba(37,53,45,.17);
+}
+.offline-pile-stack > svg,
+.offline-pile-stack > button {
+  box-shadow:
+    0 2px 0 rgba(255,255,255,.55),
+    0 5px 0 rgba(31,47,39,.13),
+    0 11px 15px rgba(22,37,29,.25);
+}
+.offline-pile-layer.pile-layer-back { filter: brightness(.92) saturate(.9); }
+.offline-pile-layer.pile-layer-middle { filter: brightness(.97); }
+.offline-discard-stack > button {
+  box-shadow: 0 2px 0 rgba(255,255,255,.65), 0 6px 0 rgba(31,47,39,.12), 0 12px 18px rgba(22,37,29,.28);
+}
+.offline-hand-panel {
+  box-shadow:
+    0 2px 0 rgba(255,255,255,.96),
+    0 7px 0 rgba(107,83,110,.035),
+    0 17px 30px rgba(66,49,73,.085),
+    inset 0 1px 0 #fff;
+}
+@media (max-width:560px) {
+  .offline-card:not(:disabled):hover { transform: translateY(-3px); }
+  .offline-card.is-selected { transform: translateY(-5px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .offline-card,
+  .offline-rule-option.offline-rule-card,
+  .offline-rule-secret-card { transition: none; }
+}
