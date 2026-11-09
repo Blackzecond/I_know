@@ -68,14 +68,33 @@ describe("offline match flow", () => {
     expect(finished.roundHistory).toHaveLength(1);
   });
 
-  it("can be ended early without starting another round", () => {
+  it("can be ended early without counting an unfinished round", () => {
     const game = startOfflineGame({
       players,
       startingRuleKeeperId: "p1",
       firstSecretRuleId: "R001",
       random: fixedRandom,
     });
-    expect(endOfflineGameEarly(game).phase).toBe("complete");
+    const ended = endOfflineGameEarly(game);
+    expect(ended.phase).toBe("complete");
+    expect(ended.roundsCompleted).toBe(0);
+    expect(ended.roundHistory).toHaveLength(0);
+  });
+
+  it("keeps the score from a round that was completed before ending early", () => {
+    const game = startOfflineGame({
+      players,
+      startingRuleKeeperId: "p1",
+      firstSecretRuleId: "R001",
+      random: fixedRandom,
+    });
+    const updated = updateOfflineGameRound(game, completedRound(game));
+    const ended = endOfflineGameEarly(updated);
+
+    expect(ended.phase).toBe("complete");
+    expect(ended.roundsCompleted).toBe(1);
+    expect(ended.roundHistory).toHaveLength(1);
+    expect(Object.values(ended.totalScores).some((score) => score !== 0)).toBe(true);
   });
 
   it("requires the next secret rule when another round remains", () => {
