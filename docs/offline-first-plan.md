@@ -24,7 +24,7 @@ Before changing rules or game behavior, read [game-rules.md](./game-rules.md). I
 - `exchangeWholeHand()` implements both keeper-inspection outcomes, including the one-card no-playable-card win and replacement draws after a playable card is selected.
 - Draw-pile exhaustion ends the round immediately and snapshots rankings using remaining hand sizes.
 - `scoring.ts` calculates active-player rank scores, competition-ranking ties, and the Rule Keeper's zero score.
-- `guessing.ts` creates the secret-plus-decoys choices, rotates guesses clockwise, adds unused rules after wrong guesses, and records the correct guesser.
+- `guessing.ts` creates the secret-plus-decoys choices, rotates guesses clockwise, pauses for the Rule Keeper to add an unused rule after a wrong guess, and records the correct guesser.
 - `guessRoundRule()` awards the +1 correct-guess bonus and completes the round.
 - `match.ts` runs one round per player, rotates the Rule Keeper clockwise, accumulates scores, and ends the match after all rounds or draw-pile exhaustion.
 - Random sources are injectable in setup and the game actions so tests can be deterministic.
