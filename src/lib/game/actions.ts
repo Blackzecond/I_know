@@ -1,5 +1,5 @@
 import type { CharacterCard } from "./catalog";
-import { startRuleGuessing, submitRuleGuess } from "./guessing";
+import { addRuleCardToGuess, startRuleGuessing, submitRuleGuess } from "./guessing";
 import { awardGuessBonus, calculateRoundScores } from "./scoring";
 import { evaluatePlay } from "./rule-engine";
 import type { OfflineRoundState } from "./setup";
@@ -228,4 +228,23 @@ export function guessRoundRule(
     guessedRuleId,
     guesserId: playerId,
   };
+}
+
+
+/** The Rule Keeper supplies the replacement choice before the next player guesses. */
+export function addRuleCardForNextGuess(
+  current: OfflineRoundState,
+  ruleKeeperId: string,
+  ruleCardId: string,
+): OfflineRoundState {
+  if (current.phase !== "guessing" || !current.ruleGuessState) {
+    throw new Error("The round is not accepting rule-guess setup.");
+  }
+  if (ruleKeeperId !== current.ruleKeeperId) {
+    throw new Error("Only the Rule Keeper can add a replacement rule card.");
+  }
+
+  const next = copyState(current);
+  next.ruleGuessState = addRuleCardToGuess(current.ruleGuessState, ruleCardId);
+  return next;
 }
