@@ -43,7 +43,7 @@ function RuleOptionCard({
   return (
     <button
       type="button"
-      className={`offline-rule-option offline-rule-card${selected ? " is-rule-selected" : ""}`}
+      className={`offline-rule-option offline-rule-card rule-card-${rule.id.toLowerCase()}${selected ? " is-rule-selected" : ""}`}
       onClick={onClick}
       aria-pressed={selected}
     >
@@ -457,7 +457,7 @@ export default function OfflinePage() {
         <section className="offline-panel">
           <p className="offline-eyebrow">RULE KEEPER ONLY</p>
           <h1 className="offline-title">กฎลับของรอบนี้</h1>
-          <div className="offline-rule-secret offline-rule-secret-card">
+          <div className={`offline-rule-secret offline-rule-secret-card rule-card-${round?.secretRule.id.toLowerCase() ?? "default"}`}>
             <span className="offline-rule-card-top">
               <span className="offline-rule-card-brand">I KNOW <i>✦</i> YOU DON&apos;T</span>
               <span className="offline-rule-card-id">{round?.secretRule.id}</span>
