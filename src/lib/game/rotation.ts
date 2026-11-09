@@ -16,7 +16,7 @@ export function getNextRuleKeeper(
   const ordered = [...players].sort((a, b) => a.seatOrder - b.seatOrder);
   const currentIndex = ordered.findIndex((player) => player.id === currentKeeperId);
 
-  if (currentIndex === -1) return ordered[0];
+  if (currentIndex === -1) return null;
 
   return ordered[(currentIndex + 1) % ordered.length];
 }
