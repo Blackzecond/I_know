@@ -7,6 +7,7 @@ export interface RuleGuessState {
   guesserOrder: string[];
   currentGuesserIndex: number;
   isComplete: boolean;
+  awaitingKeeperChoice: boolean;
   correctGuesserId?: string;
 }
 
@@ -57,6 +58,7 @@ export function startRuleGuessing(
     ],
     currentGuesserIndex: 0,
     isComplete: false,
+    awaitingKeeperChoice: false,
   };
 }
 
@@ -71,6 +73,9 @@ export function submitRuleGuess(
   ruleDeck: RuleCard[] = RULE_CARDS,
 ): RuleGuessResult {
   if (current.isComplete) throw new Error("Rule guessing is already complete.");
+  if (current.awaitingKeeperChoice) {
+    throw new Error("The Rule Keeper must add a replacement rule before the next guess.");
+  }
   const expectedGuesser = current.guesserOrder[current.currentGuesserIndex];
   if (guesserId !== expectedGuesser) throw new Error("It is not this player's guessing turn.");
   if (!current.choices.some((rule) => rule.id === guessedRuleId)) {
@@ -87,22 +92,44 @@ export function submitRuleGuess(
   }
 
   const choices = current.choices.filter((rule) => rule.id !== guessedRuleId);
-  const nextUnusedId = current.unusedRuleIds[0];
-  const nextUnusedRule = nextUnusedId
-    ? ruleDeck.find((rule) => rule.id === nextUnusedId)
-    : undefined;
-
-  if (nextUnusedRule) choices.push(nextUnusedRule);
+  const hasUnusedRule = current.unusedRuleIds.some((id) => ruleDeck.some((rule) => rule.id === id));
 
   return {
     state: {
       ...current,
       choices,
-      unusedRuleIds: nextUnusedRule ? current.unusedRuleIds.slice(1) : current.unusedRuleIds,
+      awaitingKeeperChoice: hasUnusedRule,
       currentGuesserIndex: (current.currentGuesserIndex + 1) % current.guesserOrder.length,
     },
     correct: false,
     guessedRuleId,
     guesserId,
+  };
+}
+
+
+/** Lets the Rule Keeper choose the replacement from the still-unused rule cards. */
+export function addRuleCardToGuess(
+  current: RuleGuessState,
+  ruleId: string,
+  ruleDeck: RuleCard[] = RULE_CARDS,
+): RuleGuessState {
+  if (current.isComplete) throw new Error("Rule guessing is already complete.");
+  if (!current.awaitingKeeperChoice) throw new Error("No replacement rule is currently required.");
+  if (current.choices.some((rule) => rule.id === ruleId)) {
+    throw new Error("That rule is already one of the guessing choices.");
+  }
+  if (!current.unusedRuleIds.includes(ruleId)) {
+    throw new Error("The replacement must come from the unused rule cards.");
+  }
+
+  const rule = ruleDeck.find((candidate) => candidate.id === ruleId);
+  if (!rule) throw new Error("The selected replacement rule is not in the rule deck.");
+
+  return {
+    ...current,
+    choices: [...current.choices, rule],
+    unusedRuleIds: current.unusedRuleIds.filter((id) => id !== ruleId),
+    awaitingKeeperChoice: false,
   };
 }
