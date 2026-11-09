@@ -104,6 +104,7 @@ describe("exchangeWholeHand", () => {
     expect(result.state.hands.p2).toHaveLength(0);
     expect(result.state.discardPile.map((card) => card.id)).toEqual(["CAT_BLUE_01"]);
     expect(result.state.phase).toBe("guessing");
+    expect(result.state.endReason).toBe("player_empty_hand");
     expect(result.state.pendingGuesserId).toBe("p2");
   });
 
