@@ -85,6 +85,7 @@ export default function OfflinePage() {
   const [keeperPlayableIds, setKeeperPlayableIds] = useState<string[] | null>(null);
   const [handoffTo, setHandoffTo] = useState<string | null>(null);
   const [keeperBriefing, setKeeperBriefing] = useState(false);
+  const [choosingNextSecret, setChoosingNextSecret] = useState(false);
   const [nextSecretRule, setNextSecretRule] = useState(RULE_CARDS[0].id);
   const [notice, setNotice] = useState("");
   const [busy, setBusy] = useState(false);
@@ -247,9 +248,10 @@ export default function OfflinePage() {
     try {
       const next = advanceOfflineGame(game, nextSecretRule);
       setGame(next);
+      setChoosingNextSecret(false);
       setNextSecretRule(RULE_CARDS.find((rule) => rule.id !== nextSecretRule)?.id ?? RULE_CARDS[0].id);
       if (next.phase !== "complete") {
-        setHandoffTo(next.currentRound.ruleKeeperId);
+        setHandoffTo(null);
         setKeeperBriefing(true);
       } else {
         setHandoffTo(null);
@@ -257,6 +259,15 @@ export default function OfflinePage() {
     } catch (error) {
       setNotice(error instanceof Error ? error.message : "เริ่มรอบถัดไปไม่สำเร็จ");
     }
+  }
+
+  function beginNextSecretSelection() {
+    if (!round) return;
+    const keeperIndex = players.findIndex((player) => player.id === round.ruleKeeperId);
+    const nextKeeper = players[(keeperIndex + 1) % players.length];
+    setChoosingNextSecret(true);
+    setHandoffTo(nextKeeper.id);
+    setNotice("");
   }
 
   function quitEarly() {
@@ -335,7 +346,7 @@ export default function OfflinePage() {
           </div>
           <p className="offline-copy">เล่นจบ {game.roundsCompleted} จาก {game.roundsToPlay} รอบ</p>
           <button className="offline-primary" type="button" onClick={() => {
-            setGame(null); setHandoffTo(null); setKeeperPlayableIds(null); setNotice("");
+            setGame(null); setHandoffTo(null); setKeeperPlayableIds(null); setChoosingNextSecret(false); setKeeperBriefing(false); setNotice("");
           }}>กลับหน้าตั้งค่าเกม</button>
         </section>
       </main>
@@ -375,7 +386,7 @@ export default function OfflinePage() {
                     : "เมื่อพร้อมแล้ว ให้ผู้เล่นที่ระบุรับอุปกรณ์"}
           </p>
           <button className="offline-primary" type="button" onClick={continueAfterHandoff}>
-            {keeperBriefing ? "เปิดหน้าผู้คุมกฎ" : "พร้อมแล้ว"}
+            {keeperBriefing ? "เปิดหน้าผู้คุมกฎ" : choosingNextSecret ? "เลือกกฎลับ" : "พร้อมแล้ว"}
           </button>
         </section>
       </main>
@@ -390,6 +401,26 @@ export default function OfflinePage() {
       </header>
 
       {notice ? <p className="offline-notice" role="status">{notice}</p> : null}
+
+      {choosingNextSecret ? (
+        <section className="offline-panel">
+          <p className="offline-eyebrow">NEXT RULE KEEPER ONLY</p>
+          <h1 className="offline-title">เลือกกฎลับ <span>รอบถัดไป</span></h1>
+          <p className="offline-copy">เลือกไพ่กฎหนึ่งใบ แล้วอย่าให้ผู้เล่นคนอื่นเห็น</p>
+          <div className="offline-rule-options">
+            {RULE_CARDS.map((rule) => (
+              <button
+                className={`offline-rule-option${nextSecretRule === rule.id ? " is-rule-selected" : ""}`}
+                key={rule.id}
+                onClick={() => setNextSecretRule(rule.id)}
+              >
+                <strong>{rule.title}</strong><span>{rule.description}</span>
+              </button>
+            ))}
+          </div>
+          <button className="offline-primary" type="button" onClick={startNextRound}>ยืนยันกฎลับและเริ่มรอบ</button>
+        </section>
+      ) : null}
 
       {keeperBriefing ? (
         <section className="offline-panel">
@@ -469,15 +500,9 @@ export default function OfflinePage() {
             ? players.find((player) => player.id === guessState.correctGuesserId)?.displayName
             : "—"}</p>
           {game.roundsCompleted + 1 < game.roundsToPlay && round?.endReason !== "draw_pile_exhausted" ? (
-            <>
-              <label className="offline-field">
-                <span>ผู้คุมกฎรอบถัดไป: {players.find((player) => player.id === players[(players.findIndex((p) => p.id === round.ruleKeeperId) + 1) % players.length].id)?.displayName}</span>
-                <select value={nextSecretRule} onChange={(event) => setNextSecretRule(event.target.value)}>
-                  {RULE_CARDS.map((rule) => <option key={rule.id} value={rule.id}>{rule.title}</option>)}
-                </select>
-              </label>
-              <button className="offline-primary" type="button" onClick={startNextRound}>เริ่มรอบถัดไป</button>
-            </>
+            <button className="offline-primary" type="button" onClick={beginNextSecretSelection}>
+              ส่งอุปกรณ์ให้ผู้คุมกฎรอบถัดไปเพื่อเลือกกฎ
+            </button>
           ) : (
             <button className="offline-primary" type="button" onClick={() => {
               const final = advanceOfflineGame(game);
