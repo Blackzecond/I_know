@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { RULE_CARDS } from "./catalog";
-import { startRuleGuessing, submitRuleGuess } from "./guessing";
+import { addRuleCardToGuess, startRuleGuessing, submitRuleGuess } from "./guessing";
 
 describe("rule guessing", () => {
   it("starts with the secret rule and two distinct decoys", () => {
@@ -19,9 +19,15 @@ describe("rule guessing", () => {
     const result = submitRuleGuess(state, "p2", wrongRule.id);
 
     expect(result.correct).toBe(false);
-    expect(result.state.choices).toHaveLength(3);
+    expect(result.state.choices).toHaveLength(2);
     expect(result.state.choices.map((rule) => rule.id)).not.toContain(wrongRule.id);
+    expect(result.state.awaitingKeeperChoice).toBe(true);
     expect(result.state.currentGuesserIndex).toBe(1);
+
+    const replacementId = result.state.unusedRuleIds[0];
+    const replenished = addRuleCardToGuess(result.state, replacementId);
+    expect(replenished.choices).toHaveLength(3);
+    expect(replenished.awaitingKeeperChoice).toBe(false);
   });
 
   it("awards success to the player who selects the secret rule", () => {
