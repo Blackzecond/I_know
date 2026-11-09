@@ -1,15 +1,14 @@
 # Game foundation
 
-## Character deck
+The canonical, player-approved rules are maintained in [docs/game-rules.md](./game-rules.md). Read that file before changing game behavior. If implementation or another document conflicts with it, update the implementation/documentation to match the canonical rules; do not silently invent resolutions for items marked TBD.
 
-The first deck is a complete Cartesian product:
+## Character deck
 
 - Animals: cat, rabbit, frog, fox
 - Colors: pink, blue, gold
 - Numbers: 1–6
 - Total: 4 × 3 × 6 = 72 unique cards
-
-Card IDs use `ANIMAL_COLOR_NUMBER`, for example `CAT_PINK_01`.
+- Card IDs use `ANIMAL_COLOR_NUMBER`, for example `CAT_PINK_01`.
 
 ## Initial rule deck
 
@@ -25,7 +24,7 @@ R005 is adapted to this game's animal set rather than claimed as a verbatim orig
 
 ## Rule Keeper rotation
 
-At the start of the first round, the room selects an initial Rule Keeper. After each completed round, the role passes to the next occupied seat clockwise (the player to the current Rule Keeper's left). It never skips a player and wraps around to the first seat. The next round starts with the player to the new Rule Keeper's left, matching the published turn direction.
+After each completed round, the Rule Keeper role passes to the next occupied seat clockwise (the player to the current Rule Keeper's left). It never skips a seat and wraps around to the first seat. The next round starts with the player to the new Rule Keeper's left.
 
 ## Rule evaluation
 
@@ -33,18 +32,13 @@ A multi-card play is evaluated from left to right. Each proposed card is checked
 
 Unknown condition types fail closed.
 
-## Offline turn actions
+## Offline engine
 
-- A failed play returns every attempted card to the player's hand and ends that turn.
-- A whole-hand exchange is inspected by the Rule Keeper.
-- If no card in the submitted hand can be played, the whole hand is discarded and the player draws one fewer card than they submitted.
-- If at least one card can be played, the Rule Keeper chooses exactly one legal card to put on the table. All other cards return to the player's hand and the player draws one card.
-- Exchanging a one-card hand with no legal card discards that card and draws zero; the player enters the pending-guess phase.
-- A successful play or exchange that empties a player's hand enters the pending-guess phase. Guess resolution is not implemented until its rules are finalized.
+The initial local round setup is implemented in `src/lib/game/setup.ts`. Offline actions are in `src/lib/game/actions.ts`. These are pure TypeScript and must not import Supabase, Next.js, browser APIs, or React.
 
-## Security model
+## Security model for future online mode
 
-The server is authoritative. Secret rule, draw pile, discard pile, and individual hands are stored separately from public room/player metadata. Direct Data API access is revoked for client roles; trusted server code uses the service role. Never ship the secret key to a browser.
+The server is authoritative. Secret rule, draw pile, discard pile, and individual hands must be stored separately from public room/player metadata. Direct Data API access must be revoked for client roles; trusted server code uses the service role. Never ship the secret key to a browser.
 
 ## Initial database entities
 
@@ -55,22 +49,6 @@ The server is authoritative. Secret rule, draw pile, discard pile, and individua
 - `game_private_state`: hidden rule, clue, accepted sequence and piles
 - `game_player_private`: per-player hand
 - `game_events`: append-only action log with idempotency key
-
-## Decisions still required before full turn implementation
-
-- Exact rule-guessing flow and whether all players can guess after the first player empties their hand
-- Deck-exhaustion behavior
-
-## Private rooms and guest identity
-
-- Players use Supabase anonymous authentication; no email or password is required.
-- A Next.js Proxy refreshes cookie-backed sessions before server rendering, following Supabase SSR guidance.
-- Each room seat stores the authenticated Supabase user ID in `game_players.auth_user_id`.
-- A player can rejoin the same waiting room with the same anonymous session without taking another seat.
-- Room creation and joining run through server-only RPC calls. The API verifies the current user with `auth.getUser()` before calling the RPC with the server-side Supabase client using the secret key.
-- Room codes are six uppercase hexadecimal characters. Joining locks the room row while checking status and capacity, preventing concurrent joins from exceeding the player limit.
-- RPC execution is revoked from `PUBLIC`, `anon`, and `authenticated`; only `service_role` can execute these functions.
-- The browser never receives the secret key. Keep it only in server environment variables.
 
 ## Migration history
 
@@ -84,12 +62,4 @@ The schema is tracked under `supabase/migrations`:
 
 ## Current implementation boundary
 
-The home screen can create a private room or join by code. The room page shows the public lobby roster and refreshes every five seconds for now. Realtime push updates, ready states, host controls, and starting the game are not implemented yet.
-
-Before using the app, enable **Anonymous Sign-Ins** in Supabase Authentication settings and configure the three variables listed in `.env.example`. The secret key must never use a `NEXT_PUBLIC_` prefix.
-
-## Offline-first development
-
-Online multiplayer implementation is paused while the local game engine is built. See docs/offline-first-plan.md for the sequence and outstanding rule decisions.
-
-The initial local round setup is implemented in src/lib/game/setup.ts. The offline action functions are in src/lib/game/actions.ts. They are pure TypeScript and do not use Supabase or browser APIs.
+Online multiplayer work is paused while the offline game is completed. The current home/room implementation is retained but is not the active development target. See [docs/offline-first-plan.md](./offline-first-plan.md) for the work sequence and [docs/game-rules.md](./game-rules.md) for the authoritative rules and unresolved decisions.
