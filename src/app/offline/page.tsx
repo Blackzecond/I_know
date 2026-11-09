@@ -230,12 +230,15 @@ export default function OfflinePage() {
   }
 
   function continueAfterHandoff() {
+    if (handoffTo) {
+      setHandoffTo(null);
+      return;
+    }
     if (keeperBriefing) {
       setKeeperBriefing(false);
       setHandoffTo(round?.currentPlayerId ?? null);
       return;
     }
-    setHandoffTo(null);
     setNotice("");
   }
 
@@ -340,8 +343,8 @@ export default function OfflinePage() {
   }
 
   const handoffPlayer = handoffTo ? players.find((player) => player.id === handoffTo) : null;
-  const isKeeperSelection = keeperPlayableIds !== null && handoffTo === round?.ruleKeeperId;
-  const isKeeperReplacement = waitingForKeeperReplacement && handoffTo === round?.ruleKeeperId;
+  const isKeeperSelection = keeperPlayableIds !== null;
+  const isKeeperReplacement = waitingForKeeperReplacement;
   const isGuessingHandoff = isGuessing && !waitingForKeeperReplacement && handoffTo === currentGuesserId;
 
   if (handoffTo) {
@@ -361,18 +364,24 @@ export default function OfflinePage() {
               : handoffPlayer?.displayName ?? "ผู้เล่น"}
           </h2>
           <p className="offline-copy">
-            {isKeeperSelection
-              ? "ผู้คุมกฎเท่านั้นที่ควรดูไพ่ในมือและเลือกไพ่ที่ผ่านกฎ"
-              : isKeeperReplacement
-                ? "ผู้คุมกฎเลือกไพ่กฎใหม่เพื่อเติมตัวเลือกให้ครบ"
-                : keeperBriefing
-                  ? "ดูไพ่กฎลับให้เรียบร้อย แล้วส่งอุปกรณ์ให้ผู้เล่นคนแรก"
+            {keeperBriefing
+              ? "ผู้คุมกฎดูไพ่กฎลับให้เรียบร้อย ก่อนส่งอุปกรณ์ให้ผู้เล่นคนแรก"
+              : isKeeperSelection
+                ? "ผู้คุมกฎเท่านั้นที่ควรดูไพ่ในมือและเลือกไพ่ที่ผ่านกฎ"
+                : isKeeperReplacement
+                  ? "ผู้คุมกฎเลือกไพ่กฎใหม่เพื่อเติมตัวเลือกให้ครบ"
                   : isGuessingHandoff
                     ? "ถึงเวลาทายกฎลับแล้ว"
                     : "เมื่อพร้อมแล้ว ให้ผู้เล่นที่ระบุรับอุปกรณ์"}
           </p>
+          {keeperBriefing ? (
+            <div className="offline-rule-secret handoff-secret">
+              <strong>{round?.secretRule.title}</strong>
+              <span>{round?.secretRule.description}</span>
+            </div>
+          ) : null}
           <button className="offline-primary" type="button" onClick={continueAfterHandoff}>
-            {keeperBriefing ? "ซ่อนกฎและส่งต่อ" : "พร้อมแล้ว"}
+            {keeperBriefing ? "รับทราบ ดูกฎแล้ว" : "พร้อมแล้ว"}
           </button>
         </section>
       </main>
