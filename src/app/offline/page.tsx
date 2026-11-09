@@ -17,18 +17,13 @@ import {
   type OfflineGameState,
 } from "@/lib/game/match";
 import type { GameParticipant } from "@/lib/game/setup";
+import { AnimalArt, RuleEmblem } from "@/components/game/animal-art";
 
 const ANIMAL_LABELS: Record<CharacterCard["animal"], string> = {
   cat: "แมว",
   rabbit: "กระต่าย",
   frog: "กบ",
   fox: "สุนัขจิ้งจอก",
-};
-const ANIMAL_ART: Record<CharacterCard["animal"], string> = {
-  cat: "🐱",
-  rabbit: "🐰",
-  frog: "🐸",
-  fox: "🦊",
 };
 const COLOR_LABELS: Record<CharacterCard["color"], string> = {
   pink: "ชมพู",
@@ -56,12 +51,12 @@ function CardFace({
       aria-pressed={selected}
     >
       <span className="offline-card-top"><span>IKYD</span><span>{card.id.slice(-2)}</span></span>
-      <span className="offline-card-art">{ANIMAL_ART[card.animal]}</span>
+      <span className="offline-card-art"><AnimalArt animal={card.animal} /></span>
       <span className="offline-card-bottom">
         <span>{ANIMAL_LABELS[card.animal]}</span>
         <strong>{card.number}</strong>
       </span>
-      <span className="offline-card-color">{COLOR_LABELS[card.color]}</span>
+      <span className="offline-card-color"><i />{COLOR_LABELS[card.color]}</span>
     </button>
   );
 }
@@ -414,7 +409,7 @@ export default function OfflinePage() {
                 key={rule.id}
                 onClick={() => setNextSecretRule(rule.id)}
               >
-                <strong>{rule.title}</strong><span>{rule.description}</span>
+                <RuleEmblem ruleId={rule.id} /><strong>{rule.title}</strong><span>{rule.description}</span>
               </button>
             ))}
           </div>
