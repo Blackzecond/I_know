@@ -22,7 +22,7 @@ export default async function RoomPage({ params }: RoomPageProps) {
   const { data: room, error } = await admin
     .from("game_rooms")
     .select(
-      "room_id, room_code, status, max_players, host_player_id, game_players(player_id, display_name, seat_order, is_connected, auth_user_id)",
+      "room_id, room_code, status, max_players, host_player_id, game_players(player_id, display_name, seat_order, auth_user_id)",
     )
     .eq("room_code", normalizedCode)
     .maybeSingle();
@@ -33,7 +33,6 @@ export default async function RoomPage({ params }: RoomPageProps) {
     player_id: string;
     display_name: string;
     seat_order: number;
-    is_connected: boolean;
     auth_user_id: string | null;
   }>;
 
@@ -42,11 +41,10 @@ export default async function RoomPage({ params }: RoomPageProps) {
 
   const publicPlayers = players
     .sort((a, b) => a.seat_order - b.seat_order)
-    .map(({ player_id, display_name, seat_order, is_connected }) => ({
+    .map(({ player_id, display_name, seat_order }) => ({
       player_id,
       display_name,
       seat_order,
-      is_connected,
     }));
 
   return (
@@ -81,7 +79,6 @@ export default async function RoomPage({ params }: RoomPageProps) {
               <span className="player-seat">{String(player.seat_order + 1).padStart(2, "0")}</span>
               <span className="player-name">{player.display_name}</span>
               {player.player_id === room.host_player_id ? <span className="host-tag">HOST</span> : null}
-              <span className={player.is_connected ? "connection-dot connected" : "connection-dot"} />
             </li>
           ))}
           {Array.from({ length: Math.max(0, room.max_players - publicPlayers.length) }).map((_, index) => (
