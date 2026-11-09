@@ -1,0 +1,123 @@
+@import "tailwindcss";
+
+:root {
+  --ink: #241d35;
+  --muted: #8d849b;
+  --paper: #faf8f5;
+  --violet: #7254a4;
+  --line: rgba(58, 42, 79, .12);
+}
+
+* { box-sizing: border-box; }
+html, body { min-height: 100%; }
+body {
+  margin: 0;
+  color: var(--ink);
+  background: var(--paper);
+  font-family: Arial, Helvetica, sans-serif;
+}
+button { font: inherit; }
+.landing {
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  padding: 0 clamp(22px, 7vw, 108px);
+  display: flex;
+  flex-direction: column;
+}
+.ambient {
+  position: absolute;
+  z-index: -1;
+  width: 480px;
+  height: 480px;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: .42;
+  pointer-events: none;
+}
+.ambient-one { top: 12%; left: -260px; background: #f4d6e8; }
+.ambient-two { top: 30%; right: -280px; background: #dcd5f2; }
+.topbar {
+  height: 88px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--line);
+}
+.wordmark {
+  color: var(--ink);
+  text-decoration: none;
+  font-weight: 900;
+  font-size: 19px;
+  letter-spacing: -.08em;
+}
+.wordmark span { color: #b58cce; margin-left: 5px; }
+.topbar-note, .eyebrow, .preview-caption, .coming-soon, .footer {
+  font-size: 9px;
+  letter-spacing: .2em;
+  font-weight: 700;
+}
+.topbar-note { color: var(--muted); letter-spacing: .12em; }
+.hero {
+  text-align: center;
+  padding: clamp(68px, 10vh, 116px) 0 38px;
+}
+.eyebrow { color: #917da7; display: flex; justify-content: center; align-items: center; gap: 13px; }
+.eyebrow span { width: 22px; height: 1px; background: #c7b5d4; }
+h1 {
+  font-size: clamp(58px, 10vw, 122px);
+  line-height: .82;
+  letter-spacing: -.095em;
+  font-weight: 950;
+  margin: 30px 0 25px;
+}
+.title-soft { color: #b49bc9; }
+.title-star { color: #d2b36d; font-size: .32em; vertical-align: top; margin-left: 14px; }
+.hero-copy { color: #82798e; line-height: 1.8; font-size: 14px; }
+.hero-actions { display: flex; justify-content: center; gap: 12px; margin-top: 29px; }
+.primary-button, .secondary-button {
+  border-radius: 999px;
+  padding: 14px 23px;
+  font-size: 12px;
+  font-weight: 700;
+  border: 1px solid transparent;
+}
+.primary-button { color: white; background: #7254a4; box-shadow: 0 8px 22px #7254a433; }
+.primary-button span { margin-left: 17px; }
+.secondary-button { background: #fff; color: #796c89; border-color: var(--line); }
+button:disabled { opacity: .55; cursor: not-allowed; }
+.coming-soon { color: #b2a7bb; font-size: 8px; margin-top: 19px; }
+.preview { width: min(420px, 100%); margin: 0 auto 42px; }
+.preview-caption { display: flex; justify-content: space-between; color: #a398ad; font-size: 8px; }
+.card-fan { display: flex; justify-content: center; align-items: center; padding: 25px 0 12px; }
+.sample-card {
+  width: 132px; height: 178px; border-radius: 13px; padding: 12px;
+  display: flex; flex-direction: column; justify-content: space-between;
+  border: 1px solid #ffffffc9; box-shadow: 0 12px 30px #2d1c441c;
+}
+.sample-card + .sample-card { margin-left: -17px; }
+.card-pink { background: linear-gradient(145deg, #f8dce9, #efb9d2); transform: rotate(-10deg) translateY(8px); }
+.card-blue { background: linear-gradient(145deg, #dceafa, #a9c9e8); z-index: 1; transform: translateY(-5px); }
+.card-gold { background: linear-gradient(145deg, #f7ebc9, #e7d09a); transform: rotate(10deg) translateY(8px); }
+.card-top, .card-bottom { display: flex; align-items: center; justify-content: space-between; color: #4b3e56; }
+.card-top { font-size: 7px; letter-spacing: .15em; font-weight: 800; opacity: .65; }
+.animal-art { text-align: center; font-size: 56px; filter: drop-shadow(0 7px 5px #47324b20); }
+.card-bottom strong { font-size: 9px; letter-spacing: .12em; }
+.card-bottom b { font-size: 19px; }
+.preview-foot { display: flex; justify-content: center; gap: 12px; color: #c2aecf; font-size: 12px; }
+.footer {
+  margin-top: auto; min-height: 58px; border-top: 1px solid var(--line);
+  display: flex; align-items: center; justify-content: space-between;
+  color: #b0a6b7; font-size: 7px; letter-spacing: .16em;
+}
+@media (max-width: 560px) {
+  .topbar { height: 70px; }
+  .topbar-note { font-size: 7px; }
+  .hero { padding-top: 72px; }
+  .hero-actions { flex-direction: column; align-items: center; }
+  .primary-button, .secondary-button { width: min(240px, 100%); }
+  .footer { gap: 12px; font-size: 6px; line-height: 1.5; }
+  .sample-card { width: 112px; height: 158px; }
+  .animal-art { font-size: 46px; }
+}
