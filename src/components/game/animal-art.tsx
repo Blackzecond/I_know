@@ -1,7 +1,18 @@
+import { useId } from "react";
 import type { Animal } from "@/lib/game/catalog";
 
 export function AnimalArt({ animal, className = "" }: { animal: Animal; className?: string }) {
+  const textureId = useId().replace(/:/g, "");
   return <svg className={className} viewBox="0 0 160 150" role="img" aria-label={animal} xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <filter id={textureId} x="-8%" y="-8%" width="116%" height="116%">
+        <feTurbulence type="fractalNoise" baseFrequency=".68" numOctaves="2" seed="8" result="grain" />
+        <feColorMatrix in="grain" type="saturate" values="0" result="mono" />
+        <feComponentTransfer in="mono" result="soft-grain"><feFuncA type="table" tableValues="0 .10" /></feComponentTransfer>
+        <feBlend in="SourceGraphic" in2="soft-grain" mode="soft-light" />
+      </filter>
+    </defs>
+    <g filter={`url(#${textureId})`}>
     <ellipse cx="80" cy="132" rx="47" ry="8" fill="#59445f" opacity=".12"/>
     {animal === "cat" && <>
       <path d="M39 67 43 24Q44 16 51 23L72 43Q80 40 88 43L109 23Q116 16 117 25L121 68" fill="#f3a9b9" stroke="#59445f" strokeWidth="5" strokeLinejoin="round"/>
@@ -34,6 +45,7 @@ export function AnimalArt({ animal, className = "" }: { animal: Animal; classNam
       <ellipse cx="62" cy="79" rx="5" ry="7" fill="#59445f"/><ellipse cx="98" cy="79" rx="5" ry="7" fill="#59445f"/>
       <path d="m73 96 7 5 7-5q-7-9-14 0" fill="#59445f"/><path d="M80 101q-7 9-15 2m15-2q7 9 15 2" fill="none" stroke="#59445f" strokeWidth="3" strokeLinecap="round"/>
     </>}
+    </g>
   </svg>;
 }
 
