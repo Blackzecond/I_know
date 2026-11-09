@@ -31,6 +31,34 @@ const COLOR_LABELS: Record<CharacterCard["color"], string> = {
   gold: "ทอง",
 };
 
+function RuleOptionCard({
+  rule,
+  selected = false,
+  onClick,
+}: {
+  rule: (typeof RULE_CARDS)[number];
+  selected?: boolean;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      className={`offline-rule-option offline-rule-card${selected ? " is-rule-selected" : ""}`}
+      onClick={onClick}
+      aria-pressed={selected}
+    >
+      <span className="offline-rule-card-top">
+        <span className="offline-rule-card-brand">I KNOW <i>✦</i> YOU DON&apos;T</span>
+        <span className="offline-rule-card-id">{rule.id}</span>
+      </span>
+      <span className="offline-rule-card-symbol"><RuleEmblem ruleId={rule.id} /></span>
+      <strong>{rule.title}</strong>
+      <span className="offline-rule-card-description">{rule.description}</span>
+      <span className="offline-rule-card-footer">SECRET RULE <i>✧</i></span>
+    </button>
+  );
+}
+
 function CardFace({
   card,
   selected,
@@ -413,13 +441,12 @@ export default function OfflinePage() {
           <p className="offline-copy">เลือกไพ่กฎหนึ่งใบ แล้วอย่าให้ผู้เล่นคนอื่นเห็น</p>
           <div className="offline-rule-options">
             {RULE_CARDS.map((rule) => (
-              <button
-                className={`offline-rule-option${nextSecretRule === rule.id ? " is-rule-selected" : ""}`}
+              <RuleOptionCard
                 key={rule.id}
+                rule={rule}
+                selected={nextSecretRule === rule.id}
                 onClick={() => setNextSecretRule(rule.id)}
-              >
-                <RuleEmblem ruleId={rule.id} /><strong>{rule.title}</strong><span>{rule.description}</span>
-              </button>
+              />
             ))}
           </div>
           <button className="offline-primary" type="button" onClick={startNextRound}>ยืนยันกฎลับและเริ่มรอบ</button>
@@ -430,9 +457,15 @@ export default function OfflinePage() {
         <section className="offline-panel">
           <p className="offline-eyebrow">RULE KEEPER ONLY</p>
           <h1 className="offline-title">กฎลับของรอบนี้</h1>
-          <div className="offline-rule-secret">
+          <div className="offline-rule-secret offline-rule-secret-card">
+            <span className="offline-rule-card-top">
+              <span className="offline-rule-card-brand">I KNOW <i>✦</i> YOU DON&apos;T</span>
+              <span className="offline-rule-card-id">{round?.secretRule.id}</span>
+            </span>
+            <span className="offline-rule-card-symbol"><RuleEmblem ruleId={round?.secretRule.id ?? ""} /></span>
             <strong>{round?.secretRule.title}</strong>
             <span>{round?.secretRule.description}</span>
+            <span className="offline-rule-card-footer">YOUR SECRET RULE <i>✧</i></span>
           </div>
           <button className="offline-primary" type="button" onClick={continueAfterHandoff}>ซ่อนกฎและส่งต่อ</button>
         </section>
@@ -460,7 +493,7 @@ export default function OfflinePage() {
           <div className="offline-rule-options">
             {guessState?.unusedRuleIds.map((id) => {
               const rule = RULE_CARDS.find((item) => item.id === id);
-              return rule ? <button className="offline-rule-option" key={id} onClick={() => keeperAddRule(id)}>{rule.title}</button> : null;
+              return rule ? <RuleOptionCard key={id} rule={rule} onClick={() => keeperAddRule(id)} /> : null;
             })}
           </div>
         </section>
@@ -476,9 +509,7 @@ export default function OfflinePage() {
           </p>
           <div className="offline-rule-options">
             {guessState?.choices.map((rule) => (
-              <button className="offline-rule-option" key={rule.id} onClick={() => makeGuess(rule.id)}>
-                <strong>{rule.title}</strong><span>{rule.description}</span>
-              </button>
+              <RuleOptionCard key={rule.id} rule={rule} onClick={() => makeGuess(rule.id)} />
             ))}
           </div>
         </section>
