@@ -110,8 +110,8 @@ export function CardBack({ className = "" }: { className?: string }) {
           <feBlend in="SourceGraphic" mode="soft-light" />
         </filter>
       </defs>
-      <rect x="1" y="1" width="88" height="124" rx="10" fill="url(#{backId}-paper)" stroke="#fff" strokeWidth="2" />
-      <g filter="url(#{backId}-grain)">
+      <rect x="1" y="1" width="88" height="124" rx="10" fill={`url(#${backId}-paper)`} stroke="#fff" strokeWidth="2" />
+      <g filter={`url(#${backId}-grain)`}>
         <rect x="7" y="7" width="76" height="112" rx="7" fill="none" stroke="#e8dff3" strokeOpacity=".82" strokeWidth="1.3" />
         <rect x="12" y="12" width="66" height="102" rx="5" fill="none" stroke="#d7c7e8" strokeOpacity=".5" strokeDasharray="2 3" />
         <path d="M45 20 C72 37 72 89 45 106 C18 89 18 37 45 20Z" fill="#f4d9a7" fillOpacity=".16" stroke="#f3dfbd" strokeWidth="1.5" />
