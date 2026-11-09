@@ -4,7 +4,7 @@ Online room work is intentionally paused. The current target is a complete local
 
 ## Work order
 
-1. Complete and approve the game rules, including deck exhaustion, exchange-hand edge cases, failed plays, guessing, and end-of-round conditions.
+1. Complete and approve the game rules, including deck exhaustion, exchange-hand edge cases, guessing, and end-of-round conditions.
 2. Implement the game engine as pure TypeScript functions with no UI, network, or database imports.
 3. Add deterministic unit tests for setup, turns, actions, hidden information boundaries, and end conditions.
 4. Build a local hot-seat / simulated-player UI on top of the engine.
@@ -21,12 +21,13 @@ Online room work is intentionally paused. The current target is a complete local
 - The first turn belongs to the player immediately clockwise from the Rule Keeper.
 - The remaining cards stay in the draw pile.
 - The setup accepts an injectable random function so tests can be deterministic.
+- playCards() evaluates a submitted set atomically; an invalid set stays in the player's hand and ends the turn.
+- exchangeWholeHand() implements the whole-hand inspection and exchange rules, including the one-card no-playable-card case.
+- When a player empties their hand, the state enters a pending-guess phase; the actual guessing procedure remains to be specified.
 
-## Rules that must be decided before implementing the complete turn engine
+## Rules still to be decided
 
 - Whether the clue card counts as the first accepted card for sequence-dependent rules.
-- Whether a failed play ends the player's turn, and whether failed cards remain in hand.
-- Exact exchange-hand rules, including the one-card special case.
 - Whether and when the draw pile is recycled from the discard pile.
 - Exact guessing procedure after a player empties their hand.
 - Whether the Rule Keeper can win and under what condition.
