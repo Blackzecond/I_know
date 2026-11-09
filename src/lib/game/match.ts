@@ -17,7 +17,7 @@ export interface OfflineGameState {
   currentRound: OfflineRoundState;
   totalScores: Record<string, number>;
   roundHistory: OfflineRoundRecord[];
-  phase: "playing" | "guessing" | "complete";
+  phase: "playing" | "guessing" | "round_complete" | "complete";
 }
 
 export interface StartOfflineGameOptions {
@@ -70,7 +70,7 @@ export function updateOfflineGameRound(
     currentRound: updatedRound,
     phase: updatedRound.phase === "playing" ? "playing"
       : updatedRound.phase === "guessing" ? "guessing"
-      : "playing",
+      : "round_complete",
   };
 }
 
