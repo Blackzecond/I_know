@@ -97,7 +97,7 @@ export default async function RoomPage({ params }: RoomPageProps) {
           <strong>{room.room_code}</strong>
         </div>
         <p className="lobby-footnote">This lobby refreshes automatically while players join.</p>
-        <Link className="leave-room-link" href="/">Leave room</Link>
+        <Link className="leave-room-link" href="/">Back to home</Link>
       </section>
     </main>
   );
