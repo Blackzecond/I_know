@@ -11,9 +11,9 @@ Before changing rules or game behavior, read [game-rules.md](./game-rules.md). I
 1. Keep the canonical rules document current and resolve its remaining TBD decisions with the user.
 2. Complete the game engine as pure TypeScript functions with no UI, network, or database imports.
 3. Add deterministic unit tests for setup, turns, actions, hidden information boundaries, scoring, guessing, and end conditions.
-4. Build a local hot-seat / simulated-player UI on top of the engine.
+4. Build a local hot-seat UI on top of the engine.
 5. Complete the card artwork and interaction design.
-6. Test full games with 3–7 players.
+6. Test full games with 3–7 players and verify privacy handoffs.
 7. Resume online multiplayer only after the offline rules and engine are stable and the user approves resuming online work.
 
 ## Implemented offline engine foundation
@@ -29,13 +29,21 @@ Before changing rules or game behavior, read [game-rules.md](./game-rules.md). I
 - `match.ts` runs one round per player, rotates the Rule Keeper clockwise, accumulates scores, and ends the match after all rounds or draw-pile exhaustion.
 - Random sources are injectable in setup and the game actions so tests can be deterministic.
 
+## Implemented hot-seat UI foundation
+
+- Added the `/offline` route with local player setup for 3–7 players and a selectable starting Rule Keeper.
+- Added local card selection and ordered multi-card play, whole-hand exchange, table display, and draw-pile count.
+- Added privacy handoff screens before showing a player's hand, the Rule Keeper's secret rule, keeper-only exchange choices, replacement-rule selection, and the next round's secret-rule selection.
+- Added rule-guessing choices, round score summaries, total match scores, early ending, and one-round-per-player progression.
+- Added a direct Offline entry point from the home page.
+- The latest full CI run passed: lint, TypeScript typecheck, unit tests, and production build.
+
 ## Remaining offline work
 
-- Run the full lint, TypeScript, unit-test, and production-build checks; fix any failures.
-- Add additional edge-case tests and strengthen state invariants.
-- Build the local hot-seat UI on top of the engine.
-- Complete the card artwork and interaction design.
-- Test full games with 3–7 players.
+- Refine card artwork and interaction design; current character cards use emoji placeholders.
+- Add browser-level/manual playthrough checks for 3–7 players, especially device handoffs and hidden-information privacy.
+- Add persistence/resume behavior only if wanted; the current hot-seat session lives in page memory and resets on refresh.
+- Strengthen state invariants and cover any issues found during full-game playtests.
 - Resume online multiplayer only after the offline rules and engine are stable and the user approves resuming online work.
 
 ## Decisions still open
