@@ -94,23 +94,24 @@ export function AnimalArt({ animal, className = "" }: { animal: Animal; classNam
 }
 
 export function CardBack({ className = "" }: { className?: string }) {
+  const backId = useId().replace(/:/g, "");
   return (
     <svg className={className} viewBox="0 0 90 126" role="img" aria-label="ด้านหลังไพ่" xmlns="http://www.w3.org/2000/svg">
       <defs>
-        <linearGradient id="card-back-paper" x1="0" y1="0" x2="1" y2="1">
+        <linearGradient id={`${backId}-paper`} x1="0" y1="0" x2="1" y2="1">
           <stop offset="0" stopColor="#8d78b2" />
           <stop offset=".52" stopColor="#6d5a91" />
           <stop offset="1" stopColor="#51436f" />
         </linearGradient>
-        <filter id="card-back-grain">
+        <filter id={`${backId}-grain`}>
           <feTurbulence type="fractalNoise" baseFrequency=".8" numOctaves="2" seed="12" />
           <feColorMatrix type="saturate" values="0" />
           <feComponentTransfer><feFuncA type="table" tableValues="0 .13" /></feComponentTransfer>
           <feBlend in="SourceGraphic" mode="soft-light" />
         </filter>
       </defs>
-      <rect x="1" y="1" width="88" height="124" rx="10" fill="url(#card-back-paper)" stroke="#fff" strokeWidth="2" />
-      <g filter="url(#card-back-grain)">
+      <rect x="1" y="1" width="88" height="124" rx="10" fill="url(#{backId}-paper)" stroke="#fff" strokeWidth="2" />
+      <g filter="url(#{backId}-grain)">
         <rect x="7" y="7" width="76" height="112" rx="7" fill="none" stroke="#e8dff3" strokeOpacity=".82" strokeWidth="1.3" />
         <rect x="12" y="12" width="66" height="102" rx="5" fill="none" stroke="#d7c7e8" strokeOpacity=".5" strokeDasharray="2 3" />
         <path d="M45 20 C72 37 72 89 45 106 C18 89 18 37 45 20Z" fill="#f4d9a7" fillOpacity=".16" stroke="#f3dfbd" strokeWidth="1.5" />
