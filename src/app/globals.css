@@ -919,3 +919,215 @@ button:disabled { opacity: .48; cursor: not-allowed; }
 .card-pink .offline-card-number { color: #a85f80; }
 .card-blue .offline-card-number { color: #5d83a7; }
 .card-gold .offline-card-number { color: #9b793b; }
+
+
+/* Rule cards — matching storybook collector deck */
+.offline-rule-options {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 13px;
+  align-items: stretch;
+}
+.offline-rule-option.offline-rule-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+  min-width: 0;
+  min-height: 218px;
+  padding: 13px 14px 11px;
+  overflow: hidden;
+  isolation: isolate;
+  border: 1px solid rgba(255,255,255,.95);
+  border-radius: 18px;
+  background:
+    radial-gradient(ellipse at 50% 48%, rgba(255,255,255,.94) 0%, rgba(255,255,255,.36) 48%, transparent 73%),
+    linear-gradient(150deg,#f8eff5 0%,#eee3ef 56%,#e5d9e9 100%);
+  color: #594b5d;
+  box-shadow: 0 9px 20px rgba(64,46,67,.1), inset 0 1px 0 rgba(255,255,255,.95);
+  text-align: left;
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+.offline-rule-option.offline-rule-card::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 6px;
+  border: 1px solid rgba(255,255,255,.56);
+  border-radius: 12px;
+  pointer-events: none;
+}
+.offline-rule-option.offline-rule-card::after {
+  content: "✧";
+  position: absolute;
+  z-index: -1;
+  right: 16px;
+  top: 43px;
+  color: rgba(255,255,255,.8);
+  font-size: 31px;
+  line-height: 1;
+}
+.offline-rule-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  color: rgba(83,66,83,.64);
+}
+.offline-rule-card-brand {
+  font-size: 7px;
+  font-weight: 950;
+  letter-spacing: .12em;
+}
+.offline-rule-card-brand i {
+  color: #a47a9c;
+  font-style: normal;
+}
+.offline-rule-card-id {
+  display: grid;
+  place-items: center;
+  min-width: 34px;
+  height: 19px;
+  padding: 0 5px;
+  border: 1px solid rgba(255,255,255,.68);
+  border-radius: 6px;
+  background: rgba(255,255,255,.34);
+  color: rgba(83,66,83,.7);
+  font-size: 8px;
+  font-weight: 850;
+  letter-spacing: .08em;
+}
+.offline-rule-card-symbol {
+  display: grid;
+  place-items: center;
+  min-height: 76px;
+  margin: 1px 0 0;
+}
+.offline-rule-card-symbol .rule-emblem {
+  display: grid;
+  place-items: center;
+  width: 62px;
+  height: 62px;
+  margin: 0;
+  border: 1px solid rgba(255,255,255,.92);
+  border-radius: 22px;
+  box-shadow: 0 7px 15px rgba(79,57,84,.1), inset 0 1px 0 rgba(255,255,255,.95);
+  font-family: Georgia, serif;
+  font-size: 32px;
+}
+.offline-rule-option.offline-rule-card > strong {
+  position: relative;
+  z-index: 1;
+  color: #554653;
+  font-family: Georgia, "Noto Serif Thai", serif;
+  font-size: 15px;
+  font-weight: 850;
+  line-height: 1.35;
+}
+.offline-rule-option.offline-rule-card > .offline-rule-card-description {
+  position: relative;
+  z-index: 1;
+  color: #827486;
+  font-size: 10px;
+  font-weight: 550;
+  line-height: 1.55;
+}
+.offline-rule-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  width: 100%;
+  margin-top: auto;
+  padding-top: 7px;
+  border-top: 1px solid rgba(255,255,255,.58);
+  color: rgba(85,69,85,.58);
+  font-size: 6px;
+  font-weight: 950;
+  letter-spacing: .16em;
+}
+.offline-rule-card-footer i {
+  color: rgba(164,122,156,.8);
+  font-size: 11px;
+  font-style: normal;
+}
+.offline-rule-option.offline-rule-card:hover {
+  transform: translateY(-3px);
+  border-color: #fff;
+  background:
+    radial-gradient(ellipse at 50% 48%, rgba(255,255,255,.98) 0%, rgba(255,255,255,.4) 48%, transparent 73%),
+    linear-gradient(150deg,#fbf2f7 0%,#f0e5f1 56%,#e9ddec 100%);
+  box-shadow: 0 14px 25px rgba(64,46,67,.14), inset 0 1px 0 #fff;
+}
+.offline-rule-option.offline-rule-card.is-rule-selected {
+  border: 2px solid #9878b8;
+  padding: 12px 13px 10px;
+  background:
+    radial-gradient(ellipse at 50% 48%, rgba(255,255,255,.98) 0%, rgba(255,255,255,.4) 48%, transparent 73%),
+    linear-gradient(150deg,#f8edf8 0%,#eaddf1 56%,#e2d3eb 100%);
+  box-shadow: 0 0 0 3px rgba(152,120,184,.14), 0 12px 23px rgba(114,84,164,.16);
+}
+.offline-rule-option.offline-rule-card:focus-visible {
+  outline: 3px solid #8060a8;
+  outline-offset: 3px;
+}
+.offline-rule-secret-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 10px;
+  width: min(340px,100%);
+  min-height: 240px;
+  margin: 20px auto 12px;
+  padding: 15px 17px 13px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.96);
+  border-radius: 20px;
+  background:
+    radial-gradient(ellipse at 50% 47%, rgba(255,255,255,.95) 0%, rgba(255,255,255,.35) 53%, transparent 74%),
+    linear-gradient(150deg,#f8eff5 0%,#eee3ef 56%,#e5d9e9 100%);
+  box-shadow: 0 12px 25px rgba(64,46,67,.12), inset 0 1px 0 #fff;
+  text-align: left;
+}
+.offline-rule-secret-card::after {
+  content: "";
+  position: absolute;
+  inset: 6px;
+  border: 1px solid rgba(255,255,255,.56);
+  border-radius: 14px;
+  pointer-events: none;
+}
+.offline-rule-secret-card > strong {
+  color: #554653;
+  font-family: Georgia, "Noto Serif Thai", serif;
+  font-size: 19px;
+  font-weight: 850;
+  text-align: center;
+}
+.offline-rule-secret-card > span:not(.offline-rule-card-top):not(.offline-rule-card-symbol):not(.offline-rule-card-footer) {
+  color: #827486;
+  font-size: 11px;
+  line-height: 1.55;
+  text-align: center;
+}
+.offline-rule-secret-card .offline-rule-card-symbol { flex: 1; }
+.offline-rule-secret-card .offline-rule-card-symbol .rule-emblem { width: 72px; height: 72px; font-size: 36px; }
+
+@media (max-width:560px) {
+  .offline-rule-options { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 9px; }
+  .offline-rule-option.offline-rule-card { min-height: 194px; padding: 10px 10px 9px; border-radius: 15px; }
+  .offline-rule-option.offline-rule-card.is-rule-selected { padding: 9px 9px 8px; }
+  .offline-rule-card-brand { font-size: 5px; }
+  .offline-rule-card-id { min-width: 29px; height: 17px; font-size: 7px; }
+  .offline-rule-card-symbol { min-height: 62px; }
+  .offline-rule-card-symbol .rule-emblem { width: 52px; height: 52px; border-radius: 18px; font-size: 27px; }
+  .offline-rule-option.offline-rule-card > strong { font-size: 12px; }
+  .offline-rule-option.offline-rule-card > .offline-rule-card-description { font-size: 9px; }
+  .offline-rule-card-footer { font-size: 5px; }
+  .offline-rule-secret-card { min-height: 220px; padding: 13px 14px 11px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .offline-rule-option.offline-rule-card { transition: none; }
+}
