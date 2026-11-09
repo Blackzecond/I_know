@@ -39,13 +39,12 @@ The following are defined in the canonical rules document but are not yet fully 
 - Apply round ranking scores, with tied hand counts receiving the same rank score and the Rule Keeper receiving zero points for that round.
 - End the match after a fixed number of rounds equal to the number of players, so each player serves as Rule Keeper exactly once; sum scores across rounds.
 - Advance the Rule Keeper clockwise after each completed round.
-- End the game if the draw pile is exhausted; scoring for this exceptional end condition remains TBD.
+- End the game immediately if the draw pile is exhausted before anyone empties their hand; rank active players by remaining hand size (fewest cards is first), then begin rule guessing with the first-place player.
 
 ## Decisions still open
 
 See the full list in [game-rules.md](./game-rules.md). In particular:
 - Apply the score table using the number of active card-playing players (total players minus the Rule Keeper); the Rule Keeper independently receives zero points for that round.
-- How to score a game that ends because the draw pile is exhausted.
 - Whether the clue card counts as the previous card for sequence-dependent rules.
 
 ## Architecture constraints
