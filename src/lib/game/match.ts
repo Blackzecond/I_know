@@ -13,6 +13,7 @@ export interface OfflineGameState {
   players: GameParticipant[];
   roundsToPlay: number;
   roundsCompleted: number;
+  handSize: number;
   currentRound: OfflineRoundState;
   totalScores: Record<string, number>;
   roundHistory: OfflineRoundRecord[];
@@ -43,6 +44,7 @@ export function startOfflineGame(options: StartOfflineGameOptions): OfflineGameS
     players: currentRound.players,
     roundsToPlay: currentRound.players.length,
     roundsCompleted: 0,
+    handSize: options.handSize ?? 7,
     currentRound,
     totalScores: Object.fromEntries(currentRound.players.map((player) => [player.id, 0])),
     roundHistory: [],
@@ -125,6 +127,7 @@ export function advanceOfflineGame(
     secretRuleId: nextSecretRuleId,
     roundNumber: roundsCompleted + 1,
     random,
+    handSize: current.handSize,
   });
 
   return {
