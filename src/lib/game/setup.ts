@@ -18,7 +18,8 @@ export interface OfflineRoundState {
   discardPile: CharacterCard[];
   tableCards: CharacterCard[];
   currentPlayerId: string;
-  phase: "playing";
+  phase: "playing" | "guessing";
+  pendingGuesserId?: string;
 }
 
 export interface SetupRoundOptions {
