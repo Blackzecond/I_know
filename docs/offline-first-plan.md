@@ -36,15 +36,15 @@ The following are defined in the canonical rules document but are not yet fully 
 - Snapshot remaining hand sizes at that moment and rank players with fewer remaining cards higher.
 - Rule-guessing choices: the actual secret rule plus two decoys; after a wrong guess, pass clockwise and add one unused rule card to keep three choices.
 - Award the +1 correct-guess bonus.
-- Apply the round ranking score table and the target-score game-end condition.
+- Apply round ranking scores, with tied hand counts receiving the same rank score and the Rule Keeper receiving zero points for that round.
+- End the match after a fixed number of rounds equal to the number of players, so each player serves as Rule Keeper exactly once; sum scores across rounds.
 - Advance the Rule Keeper clockwise after each completed round.
 - End the game if the draw pile is exhausted; scoring for this exceptional end condition remains TBD.
 
 ## Decisions still open
 
 See the full list in [game-rules.md](./game-rules.md). In particular:
-- How tied hand sizes share ranks and points.
-- How the Rule Keeper is included in ranking/scoring.
+- Whether the round score table is indexed by total seated players or by active card-playing players (the Rule Keeper receives zero points either way).
 - How to score a game that ends because the draw pile is exhausted.
 - Whether the clue card counts as the previous card for sequence-dependent rules.
 
