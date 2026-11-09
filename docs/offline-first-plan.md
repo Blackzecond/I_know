@@ -44,7 +44,7 @@ The following are defined in the canonical rules document but are not yet fully 
 ## Decisions still open
 
 See the full list in [game-rules.md](./game-rules.md). In particular:
-- Whether the round score table is indexed by total seated players or by active card-playing players (the Rule Keeper receives zero points either way).
+- Apply the score table using the number of active card-playing players (total players minus the Rule Keeper); the Rule Keeper independently receives zero points for that round.
 - How to score a game that ends because the draw pile is exhausted.
 - Whether the clue card counts as the previous card for sequence-dependent rules.
 
