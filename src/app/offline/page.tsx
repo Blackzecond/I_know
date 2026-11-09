@@ -553,14 +553,42 @@ export default function OfflinePage() {
             <div className="offline-turn-top">
               <div><span>TURN</span><strong>{currentPlayer?.displayName}</strong></div>
               <div><span>RULE KEEPER</span><strong>{players.find((player) => player.id === round.ruleKeeperId)?.displayName}</strong></div>
-              <div><span>DRAW PILE</span><strong className="offline-draw-count"><CardBack className="offline-draw-back" /><span>{round.drawPile.length}</span></strong></div>
             </div>
-            <div className="offline-table-heading">
-              <div><p className="offline-eyebrow">ON THE TABLE</p><h2>ไพ่คำใบ้และไพ่ที่ลงแล้ว</h2></div>
-              <span>{round.tableCards.length} ใบ</span>
-            </div>
-            <div className="offline-table-cards">
-              {round.tableCards.slice(-5).map((card) => <CardFace key={card.id} card={card} disabled />)}
+            <div className="offline-playmat">
+              <div className="offline-playmat-ornament" aria-hidden="true">✦</div>
+              <div className="offline-pile-zone">
+                <div className="offline-pile offline-draw-pile">
+                  <div className="offline-pile-stack" aria-hidden="true">
+                    {round.drawPile.length > 2 ? <CardBack className="offline-pile-layer pile-layer-back" /> : null}
+                    {round.drawPile.length > 1 ? <CardBack className="offline-pile-layer pile-layer-middle" /> : null}
+                    {round.drawPile.length > 0 ? <CardBack className="offline-pile-layer pile-layer-front" /> : null}
+                    {round.drawPile.length === 0 ? <span className="offline-empty-pile">—</span> : null}
+                  </div>
+                  <strong>{round.drawPile.length}</strong>
+                  <span>กองจั่ว</span>
+                </div>
+                <div className="offline-pile-center">
+                  <span className="offline-playmat-label">THE PLAYING TABLE</span>
+                  <span className="offline-playmat-mark">✧</span>
+                  <span className="offline-playmat-caption">ไพ่คำใบ้และไพ่ที่ลงแล้ว</span>
+                </div>
+                <div className="offline-pile offline-discard-pile">
+                  <div className="offline-pile-stack offline-discard-stack">
+                    {round.discardPile.length > 0 ? (
+                      <CardFace card={round.discardPile[round.discardPile.length - 1]} disabled />
+                    ) : <span className="offline-empty-pile">—</span>}
+                  </div>
+                  <strong>{round.discardPile.length}</strong>
+                  <span>กองทิ้ง</span>
+                </div>
+              </div>
+              <div className="offline-table-heading">
+                <div><p className="offline-eyebrow">CARDS IN PLAY</p><h2>ไพ่บนโต๊ะ</h2></div>
+                <span>{round.tableCards.length} ใบ</span>
+              </div>
+              <div className="offline-table-cards">
+                {round.tableCards.slice(-5).map((card) => <CardFace key={card.id} card={card} disabled />)}
+              </div>
             </div>
           </section>
 
