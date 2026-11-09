@@ -51,6 +51,9 @@ export function AnimalArt({ animal, className = "" }: { animal: Animal; classNam
       <path d="M57 82q8-10 16 0M87 82q8-10 16 0" fill="none" stroke="#806875" strokeWidth="3.4" strokeLinecap="round"/>
       <path d="m75 94 5 4 5-4" fill="#df879d" stroke="#806875" strokeWidth="2.4"/>
       <path d="M80 98q-8 11-17 3m17-3q8 11 17 3M42 91 19 86m24 14-24 4m99-13 23-5m-23 15 24 5" fill="none" stroke="#806875" strokeWidth="2.4" strokeLinecap="round"/>
+      <path d="M72 55q-5 7-4 13m20-13q5 7 4 13" fill="none" stroke="#d5b4ae" strokeWidth="2" strokeLinecap="round" opacity=".72"/>
+      <ellipse cx="48" cy="96" rx="8" ry="5" fill="#efb1b5" opacity=".42"/><ellipse cx="112" cy="96" rx="8" ry="5" fill="#efb1b5" opacity=".42"/>
+      <path d="M57 70q8-5 15-1m16-1q7-4 15 1" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" opacity=".55"/>
     </>}
     {animal === "rabbit" && <>
       <path d="M54 65Q30 5 48 12Q68 13 75 62M86 62Q95 8 115 12Q132 19 105 70" fill={`url(#${textureId}-cream)`} stroke="#806875" strokeWidth="3.4"/>
@@ -59,7 +62,10 @@ export function AnimalArt({ animal, className = "" }: { animal: Animal; classNam
       <ellipse cx="63" cy="83" rx="4" ry="6" fill="#725966"/><ellipse cx="97" cy="83" rx="4" ry="6" fill="#725966"/>
       <path d="m75 94 5 4 5-4q-5-7-10 0" fill="#df879d" stroke="#806875" strokeWidth="1.8"/>
       <path d="M80 98q-8 11-17 3m17-3q8 11 17 3" fill="none" stroke="#806875" strokeWidth="2.4" strokeLinecap="round"/>
-      <circle cx="48" cy="99" r="7" fill="#f3b7bf"/><circle cx="112" cy="99" r="7" fill="#f3b7bf"/>
+      <circle cx="48" cy="99" r="7" fill="#f3b7bf" opacity=".72"/><circle cx="112" cy="99" r="7" fill="#f3b7bf" opacity=".72"/>
+      <path d="M62 111q18 8 36 0" fill="none" stroke="#fff" strokeWidth="2.2" strokeLinecap="round" opacity=".55"/>
+      <path d="M57 72q4-5 8-2m38-1q4-3 8 2" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" opacity=".6"/>
+      <path d="M43 31q3 15 9 22m62-22q-3 15-9 22" fill="none" stroke="#d99aaa" strokeWidth="2" strokeLinecap="round" opacity=".55"/>
     </>}
     {animal === "frog" && <>
       <circle cx="55" cy="54" r="23" fill={`url(#${textureId}-green)`} stroke="#806875" strokeWidth="3.4"/><circle cx="105" cy="54" r="23" fill={`url(#${textureId}-green)`} stroke="#806875" strokeWidth="3.4"/>
@@ -67,6 +73,10 @@ export function AnimalArt({ animal, className = "" }: { animal: Animal; classNam
       <circle cx="56" cy="53" r="8" fill="#fff"/><circle cx="104" cy="53" r="8" fill="#fff"/><circle cx="58" cy="54" r="4" fill="#725966"/><circle cx="102" cy="54" r="4" fill="#725966"/>
       <path d="M58 94q22 24 44 0" fill="none" stroke="#806875" strokeWidth="3.4" strokeLinecap="round"/>
       <circle cx="43" cy="91" r="8" fill="#ed9da7" opacity=".75"/><circle cx="117" cy="91" r="8" fill="#ed9da7" opacity=".75"/>
+      <ellipse cx="80" cy="104" rx="27" ry="19" fill="#f4f1d8" opacity=".48"/>
+      <path d="M48 57q3-9 9-11m55 11q-3-9-9-11" fill="none" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" opacity=".62"/>
+      <circle cx="42" cy="71" r="2.3" fill="#e5f2c7" opacity=".8"/><circle cx="119" cy="72" r="2.3" fill="#e5f2c7" opacity=".8"/>
+      <path d="M68 117q12 5 24 0" fill="none" stroke="#7ca67b" strokeWidth="2" strokeLinecap="round" opacity=".45"/>
     </>}
     {animal === "fox" && <>
       <path d="M34 69 25 20Q24 12 33 17L69 44Q80 40 91 44L127 17Q136 12 135 21L126 71 119 108 80 130 41 108Z" fill={`url(#${textureId}-orange)`} stroke="#806875" strokeWidth="3.4" strokeLinejoin="round"/>
@@ -74,6 +84,9 @@ export function AnimalArt({ animal, className = "" }: { animal: Animal; classNam
       <path d="M42 82Q80 58 118 82L111 111Q80 139 49 111Z" fill={`url(#${textureId}-cream)`}/>
       <ellipse cx="62" cy="79" rx="5" ry="7" fill="#725966"/><ellipse cx="98" cy="79" rx="5" ry="7" fill="#725966"/>
       <path d="m73 96 7 5 7-5q-7-9-14 0" fill="#725966"/><path d="M80 101q-7 9-15 2m15-2q7 9 15 2" fill="none" stroke="#806875" strokeWidth="2.4" strokeLinecap="round"/>
+      <path d="M72 55q8 8 8 17m8-17q-8 8-8 17" fill="none" stroke="#f8c99f" strokeWidth="2.5" strokeLinecap="round" opacity=".8"/>
+      <path d="M48 92q10-8 20-3m24 0q10-5 20 3" fill="none" stroke="#e6b8a4" strokeWidth="2" strokeLinecap="round" opacity=".75"/>
+      <ellipse cx="51" cy="96" rx="8" ry="5" fill="#eaa2a0" opacity=".35"/><ellipse cx="109" cy="96" rx="8" ry="5" fill="#eaa2a0" opacity=".35"/>
     </>}
       <ellipse cx="65" cy="58" rx="26" ry="12" fill={`url(#${textureId}-shine)`} opacity=".34" />
     </g>
