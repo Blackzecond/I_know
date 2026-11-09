@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { CHARACTER_CARDS } from "./catalog";
-import { exchangeWholeHand, playCards } from "./actions";
+import { exchangeWholeHand, guessRoundRule, playCards } from "./actions";
 import { setupOfflineRound, type GameParticipant, type OfflineRoundState } from "./setup";
 
 const players: GameParticipant[] = [
@@ -104,10 +104,52 @@ describe("exchangeWholeHand", () => {
     expect(result.state.pendingGuesserId).toBe("p2");
   });
 
-  it("does not mutate the input state when an exchange cannot draw", () => {
+  it("ends the game when the draw pile is exhausted during an exchange", () => {
     const game = gameWithHand("R001", ["CAT_BLUE_01", "CAT_GOLD_02"]);
-    const before = game.hands.p2.map((card) => card.id);
-    expect(() => exchangeWholeHand(game, "p2")).toThrow(/Not enough cards/);
-    expect(game.hands.p2.map((card) => card.id)).toEqual(before);
+    game.drawPile = [];
+    const result = exchangeWholeHand(game, "p2");
+
+    expect(result.state.discardPile).toHaveLength(2);
+    expect(result.state.hands.p2).toHaveLength(0);
+    expect(result.state.phase).toBe("guessing");
+    expect(result.state.endReason).toBe("draw_pile_exhausted");
+    expect(result.state.pendingGuesserId).toBe("p2");
+  });
+
+  it("still draws a replacement when the only playable card is the player's last card", () => {
+    const game = gameWithHand("R001", ["CAT_PINK_02"], ["FOX_PINK_03"]);
+    const result = exchangeWholeHand(game, "p2", "CAT_PINK_02");
+
+    expect(result.state.hands.p2.map((card) => card.id)).toEqual(["FOX_PINK_03"]);
+    expect(result.state.phase).toBe("playing");
+  });
+
+  it("ends by draw-pile exhaustion if a playable last card cannot be replaced", () => {
+    const game = gameWithHand("R001", ["CAT_PINK_02"]);
+    game.drawPile = [];
+    const result = exchangeWholeHand(game, "p2", "CAT_PINK_02");
+
+    expect(result.state.hands.p2).toHaveLength(0);
+    expect(result.state.phase).toBe("guessing");
+    expect(result.state.endReason).toBe("draw_pile_exhausted");
+  });
+});
+
+
+describe("guessRoundRule", () => {
+  it("passes a wrong guess clockwise and awards the bonus to the correct guesser", () => {
+    const game = gameWithHand("R001", ["CAT_PINK_02"]);
+    const ended = playCards(game, "p2", ["CAT_PINK_02"], fixedRandom).state;
+    const wrongChoice = ended.ruleGuessState!.choices.find((rule) => rule.id !== "R001")!;
+
+    const wrong = guessRoundRule(ended, "p2", wrongChoice.id);
+    expect(wrong.correct).toBe(false);
+    expect(wrong.state.pendingGuesserId).toBe("p3");
+
+    const correct = guessRoundRule(wrong.state, "p3", "R001");
+    expect(correct.correct).toBe(true);
+    expect(correct.state.phase).toBe("complete");
+    expect(correct.state.roundScore?.players.find((player) => player.playerId === "p3")?.points)
+      .toBe(1);
   });
 });
