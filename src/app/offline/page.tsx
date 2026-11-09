@@ -374,14 +374,8 @@ export default function OfflinePage() {
                     ? "ถึงเวลาทายกฎลับแล้ว"
                     : "เมื่อพร้อมแล้ว ให้ผู้เล่นที่ระบุรับอุปกรณ์"}
           </p>
-          {keeperBriefing ? (
-            <div className="offline-rule-secret handoff-secret">
-              <strong>{round?.secretRule.title}</strong>
-              <span>{round?.secretRule.description}</span>
-            </div>
-          ) : null}
           <button className="offline-primary" type="button" onClick={continueAfterHandoff}>
-            {keeperBriefing ? "รับทราบ ดูกฎแล้ว" : "พร้อมแล้ว"}
+            {keeperBriefing ? "เปิดหน้าผู้คุมกฎ" : "พร้อมแล้ว"}
           </button>
         </section>
       </main>
