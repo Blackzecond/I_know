@@ -1,5 +1,7 @@
 import { CHARACTER_CARDS, RULE_CARDS, type CharacterCard, type RuleCard } from "./catalog";
 import { evaluatePlay } from "./rule-engine";
+import type { RoundScoreSnapshot } from "./scoring";
+import type { RuleGuessState } from "./guessing";
 
 export interface GameParticipant {
   id: string;
@@ -18,8 +20,11 @@ export interface OfflineRoundState {
   discardPile: CharacterCard[];
   tableCards: CharacterCard[];
   currentPlayerId: string;
-  phase: "playing" | "guessing";
+  phase: "playing" | "guessing" | "complete";
   pendingGuesserId?: string;
+  endReason?: RoundScoreSnapshot["endReason"];
+  roundScore?: RoundScoreSnapshot;
+  ruleGuessState?: RuleGuessState;
 }
 
 export interface SetupRoundOptions {
