@@ -58,6 +58,7 @@ The server is authoritative. Secret rule, draw pile, discard pile, and individua
 ## Private rooms and guest identity
 
 - Players use Supabase anonymous authentication; no email or password is required.
+- A Next.js Proxy refreshes cookie-backed sessions before server rendering, following Supabase SSR guidance.
 - Each room seat stores the authenticated Supabase user ID in `game_players.auth_user_id`.
 - A player can rejoin the same waiting room with the same anonymous session without taking another seat.
 - Room creation and joining run through server-only RPC calls. The API verifies the current user with `auth.getUser()` before calling the RPC with the server-side service-role client.
