@@ -32,11 +32,11 @@ Foundational database schema is in place. The web application is being built in 
 1. Install dependencies with `npm install`.
 2. Copy `.env.example` to `.env.local`.
 3. Set the Supabase project URL and publishable key.
-4. Set `SUPABASE_SERVICE_ROLE_KEY` for server-side room operations only.
+4. Set `SUPABASE_SECRET_KEY` for server-side room operations only.
 5. In Supabase Dashboard, enable **Authentication → Sign-In / Providers → Anonymous Sign-Ins**.
 6. Start the app with `npm run dev`.
 
-Do not prefix the service-role key with `NEXT_PUBLIC_`, commit it, or expose it to browser code.
+Do not prefix the secret key with `NEXT_PUBLIC_`, commit it, or expose it to browser code.
 
 ## Current room flow
 
