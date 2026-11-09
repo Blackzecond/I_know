@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { CHARACTER_CARDS } from "./catalog";
-import { exchangeWholeHand, guessRoundRule, playCards } from "./actions";
+import { addRuleCardForNextGuess, exchangeWholeHand, guessRoundRule, playCards } from "./actions";
 import { setupOfflineRound, type GameParticipant, type OfflineRoundState } from "./setup";
 
 const players: GameParticipant[] = [
@@ -149,8 +149,10 @@ describe("guessRoundRule", () => {
     const wrong = guessRoundRule(ended, "p2", wrongChoice.id);
     expect(wrong.correct).toBe(false);
     expect(wrong.state.pendingGuesserId).toBe("p3");
+    const replacementId = wrong.state.ruleGuessState!.unusedRuleIds[0];
+    const replenished = addRuleCardForNextGuess(wrong.state, "p1", replacementId);
 
-    const correct = guessRoundRule(wrong.state, "p3", "R001");
+    const correct = guessRoundRule(replenished, "p3", "R001");
     expect(correct.correct).toBe(true);
     expect(correct.state.phase).toBe("complete");
     expect(correct.state.roundScore?.players.find((player) => player.playerId === "p3")?.points)
