@@ -74,6 +74,7 @@ The schema is tracked under `supabase/migrations`:
 3. `20261109170153_add_guest_identity_and_room_rpc.sql`
 4. `20261109170205_fix_room_rpc_search_path.sql`
 5. `20261109170832_index_room_and_game_foreign_keys.sql`
+6. `20261109171017_ensure_pgcrypto_extension.sql`
 
 ## Current implementation boundary
 
