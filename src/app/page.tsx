@@ -126,6 +126,7 @@ export default function Home() {
             </form>
           </div>
           {error ? <p className="room-error" role="alert">{error}</p> : null}
+          <Link className="offline-home-link" href="/offline">หรือเริ่มเล่นแบบออฟไลน์ด้วยอุปกรณ์เครื่องเดียว ↗</Link>
           <p className="coming-soon">PRIVATE ROOMS · 3–7 PLAYERS</p>
         </div>
       </section>
