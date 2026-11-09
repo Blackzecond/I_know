@@ -33,19 +33,19 @@ Before changing rules or game behavior, read [game-rules.md](./game-rules.md). I
 The following are defined in the canonical rules document but are not yet fully implemented in the engine:
 
 - Transition to the guessing phase when the first player empties their hand.
-- Snapshot remaining hand sizes at that moment and rank players with fewer remaining cards higher.
+- Snapshot remaining hand sizes at that moment and rank players with fewer remaining cards higher; ties use competition ranking (for example, 1, 2, 2, 4).
 - Rule-guessing choices: the actual secret rule plus two decoys; after a wrong guess, pass clockwise and add one unused rule card to keep three choices.
 - Award the +1 correct-guess bonus.
 - Apply round ranking scores, with tied hand counts receiving the same rank score and the Rule Keeper receiving zero points for that round.
 - End the match after a fixed number of rounds equal to the number of players, so each player serves as Rule Keeper exactly once; sum scores across rounds.
 - Advance the Rule Keeper clockwise after each completed round.
 - End the game immediately if the draw pile is exhausted before anyone empties their hand; rank active players by remaining hand size (fewest cards is first), then begin rule guessing with the first-place player.
+- Treat the initial clue card as the previous card for sequence-dependent rules.
+- When a whole-hand exchange finds a playable card, the player always draws one replacement card after the keeper plays one, even if that was the player's last card. If no playable card exists and the player had one card, discard it, draw zero, and enter rule guessing.
 
 ## Decisions still open
 
-See the full list in [game-rules.md](./game-rules.md). In particular:
-- Apply the score table using the number of active card-playing players (total players minus the Rule Keeper); the Rule Keeper independently receives zero points for that round.
-- Whether the clue card counts as the previous card for sequence-dependent rules.
+No core rule decisions remain open. The canonical rules document records the confirmed behavior. The score table uses the number of active card-playing players (total players minus the Rule Keeper); the Rule Keeper independently receives zero points for that round.
 
 ## Architecture constraints
 
