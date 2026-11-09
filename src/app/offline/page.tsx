@@ -45,7 +45,7 @@ function RuleOptionCard({
       type="button"
       className={`offline-rule-option offline-rule-card rule-card-${rule.id.toLowerCase()}${selected ? " is-rule-selected" : ""}`}
       onClick={onClick}
-      aria-pressed={selected}
+      aria-pressed={selected ? true : undefined}
     >
       <span className="offline-rule-card-top">
         <span className="offline-rule-card-brand">I KNOW <i>✦</i> YOU DON&apos;T</span>
