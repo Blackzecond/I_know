@@ -121,3 +121,59 @@ button:disabled { opacity: .55; cursor: not-allowed; }
   .sample-card { width: 112px; height: 158px; }
   .animal-art { font-size: 46px; }
 }
+
+.room-controls {
+  width: min(500px, 100%);
+  margin: 28px auto 0;
+  text-align: left;
+}
+.name-field { display: grid; gap: 8px; }
+.name-field > span {
+  color: #9b8ca7;
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: .18em;
+}
+.name-field input, .room-code-input {
+  width: 100%;
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #ffffffd9;
+  color: var(--ink);
+  padding: 13px 15px;
+  font: inherit;
+  font-size: 12px;
+  outline: none;
+}
+.name-field input:focus, .room-code-input:focus {
+  border-color: #a58bc3;
+  box-shadow: 0 0 0 3px #a58bc31c;
+}
+.room-action-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 11px;
+}
+.room-action-row .primary-button,
+.room-action-row .secondary-button { width: 100%; cursor: pointer; }
+.join-form { display: grid; grid-template-columns: 1fr; gap: 8px; }
+.room-code-input {
+  text-align: center;
+  font-weight: 800;
+  letter-spacing: .2em;
+}
+.room-error {
+  margin: 13px 0 0;
+  color: #a43e56;
+  font-size: 11px;
+  text-align: center;
+  line-height: 1.5;
+}
+button:disabled { opacity: .48; cursor: not-allowed; }
+@media (max-width: 560px) {
+  .room-action-row { grid-template-columns: 1fr; }
+  .join-form { grid-template-columns: 1fr 1fr; }
+  .join-form .secondary-button { padding-left: 10px; padding-right: 10px; }
+}
