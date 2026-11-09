@@ -271,3 +271,28 @@ button:disabled { opacity: .48; cursor: not-allowed; }
   .room-header { height: 70px; }
   .lobby-panel { margin-top: 30px; }
 }
+
+.max-player-field {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 10px;
+  padding: 0 2px;
+}
+.max-player-field > span {
+  color: #9b8ca7;
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: .18em;
+}
+.max-player-field select {
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: #fff;
+  color: #796c89;
+  padding: 7px 10px;
+  font: inherit;
+  font-size: 9px;
+  font-weight: 700;
+}
