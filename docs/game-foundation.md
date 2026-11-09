@@ -23,6 +23,10 @@ Card IDs use `ANIMAL_COLOR_NUMBER`, for example `CAT_PINK_01`.
 
 R005 is adapted to this game's animal set rather than claimed as a verbatim original-game rule.
 
+## Rule Keeper rotation
+
+At the start of the first round, the room selects an initial Rule Keeper. After each completed round, the role passes to the next occupied seat clockwise (the player to the current Rule Keeper's left). It never skips a player and wraps around to the first seat. The next round starts with the player to the new Rule Keeper's left, matching the published turn direction.
+
 ## Rule evaluation
 
 A multi-card play is evaluated from left to right. Each proposed card is checked against the last previously accepted card, or the preceding card in the same proposed play. The whole play is accepted only if every card passes. A failed play must not partially change the public sequence.
@@ -45,7 +49,7 @@ The server is authoritative. Secret rule, draw pile, discard pile, and individua
 
 ## Decisions still required before full turn implementation
 
-- Whether the Rule Keeper rotates after each round
+- Rule Keeper rotates one seat to the left (clockwise) after every completed round. The next round's Rule Keeper is the next player in seat order, wrapping from the last seat to the first.
 - Exact rule-guessing flow and whether all players can guess after the first player empties their hand
 - Deck-exhaustion behavior
 - Whether the initial clue card is removed from the draw pile
