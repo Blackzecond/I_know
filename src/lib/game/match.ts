@@ -143,5 +143,30 @@ export function advanceOfflineGame(
 /** Allows the table to stop a match before all scheduled rounds are played. */
 export function endOfflineGameEarly(current: OfflineGameState): OfflineGameState {
   if (current.phase === "complete") return current;
-  return { ...current, phase: "complete" };
+
+  const round = current.currentRound;
+  if (round.phase !== "complete" || !round.roundScore) {
+    return { ...current, phase: "complete" };
+  }
+
+  const totalScores = { ...current.totalScores };
+  for (const playerScore of round.roundScore.players) {
+    totalScores[playerScore.playerId] =
+      (totalScores[playerScore.playerId] ?? 0) + playerScore.points;
+  }
+
+  return {
+    ...current,
+    roundsCompleted: current.roundsCompleted + 1,
+    totalScores,
+    roundHistory: [
+      ...current.roundHistory,
+      {
+        roundNumber: round.roundNumber,
+        ruleKeeperId: round.ruleKeeperId,
+        result: round.roundScore,
+      },
+    ],
+    phase: "complete",
+  };
 }
