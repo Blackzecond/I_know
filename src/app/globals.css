@@ -575,3 +575,14 @@ button:disabled { opacity: .48; cursor: not-allowed; }
   .offline-turn-top strong { font-size: 10px; }
   .offline-table-panel { padding: 14px; }
 }
+
+.offline-home-link {
+  display: block;
+  margin: 17px auto 0;
+  color: #80649f;
+  text-align: center;
+  text-decoration: none;
+  font-size: 10px;
+  font-weight: 700;
+}
+.offline-home-link:hover { color: #5e427e; text-decoration: underline; }
