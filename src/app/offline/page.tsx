@@ -480,7 +480,7 @@ export default function OfflinePage() {
         </section>
       ) : null}
 
-      {isRoundComplete ? (
+      {isRoundComplete && !choosingNextSecret ? (
         <section className="offline-panel">
           <p className="offline-eyebrow">ROUND {round?.roundNumber} COMPLETE</p>
           <h1 className="offline-title">ผลคะแนน <span>ประจำรอบ</span></h1>
