@@ -1633,3 +1633,25 @@ button:disabled { opacity: .48; cursor: not-allowed; }
   .offline-rule-option.offline-rule-card,
   .offline-rule-secret-card { transition: none; }
 }
+
+
+/* Painted character atlas — 2D storybook artwork, one sprite per animal */
+.offline-card-art.animal-painted {
+  width: min(100%, 116px);
+  aspect-ratio: 1;
+  min-height: 0;
+  background-image: url("/game/animal-painted-atlas.webp");
+  background-repeat: no-repeat;
+  background-size: 400% 100%;
+  background-position-y: center;
+  border-radius: 44%;
+  mix-blend-mode: multiply;
+  filter: drop-shadow(0 8px 6px rgba(54,39,59,.2));
+}
+.offline-card-art.animal-painted-cat { background-position-x: 0%; }
+.offline-card-art.animal-painted-rabbit { background-position-x: 33.3333%; }
+.offline-card-art.animal-painted-frog { background-position-x: 66.6667%; }
+.offline-card-art.animal-painted-fox { background-position-x: 100%; }
+@media (max-width:560px) {
+  .offline-card-art.animal-painted { width: min(100%, 88px); }
+}

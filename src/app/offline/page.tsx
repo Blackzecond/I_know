@@ -17,7 +17,7 @@ import {
   type OfflineGameState,
 } from "@/lib/game/match";
 import type { GameParticipant } from "@/lib/game/setup";
-import { AnimalArt, CardBack, RuleEmblem } from "@/components/game/animal-art";
+import { CardBack, RuleEmblem } from "@/components/game/animal-art";
 
 const ANIMAL_LABELS: Record<CharacterCard["animal"], string> = {
   cat: "แมว",
@@ -85,7 +85,7 @@ function CardFace({
       </span>
       <span className="offline-card-art-stage">
         <span className="offline-card-halo" aria-hidden="true" />
-        <span className="offline-card-art"><AnimalArt animal={card.animal} /></span>
+        <span className={`offline-card-art animal-painted animal-painted-${card.animal}`} role="img" aria-label={ANIMAL_LABELS[card.animal]} />
         <span className="offline-card-sparkle sparkle-one" aria-hidden="true">✧</span>
         <span className="offline-card-sparkle sparkle-two" aria-hidden="true">✦</span>
       </span>
