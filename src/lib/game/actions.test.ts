@@ -28,15 +28,18 @@ function gameWithHand(
   if (requested.some((card) => !card)) throw new Error("Test card missing.");
   for (const id of hand) reserved.add(id);
   const rest = CHARACTER_CARDS.filter((card) => !reserved.has(card.id));
+  const p3Hand = rest.slice(0, 7);
+  const p4Hand = rest.slice(7, 14);
+  const remainingDrawCards = rest.slice(14);
   return {
     ...game,
     hands: {
       p1: [],
       p2: requested as NonNullable<(typeof requested)[number]>[],
-      p3: [],
-      p4: [],
+      p3: p3Hand,
+      p4: p4Hand,
     },
-    drawPile: drawPile.map((id) => cardsById.get(id)!).concat(rest),
+    drawPile: drawPile.map((id) => cardsById.get(id)!).concat(remainingDrawCards),
     discardPile: [],
     tableCards: [game.clueCard],
     currentPlayerId: "p2",
