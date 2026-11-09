@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 const stars = ["✦", "✧", "✦", "✧", "✦"];
 
 export default function Home() {
@@ -6,7 +8,7 @@ export default function Home() {
       <div className="ambient ambient-one" />
       <div className="ambient ambient-two" />
       <header className="topbar">
-        <a className="wordmark" href="/">IKYD<span>✦</span></a>
+        <Link className="wordmark" href="/">IKYD<span>✦</span></Link>
         <span className="topbar-note">A little game of hidden rules</span>
       </header>
 
