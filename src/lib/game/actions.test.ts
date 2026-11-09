@@ -53,19 +53,19 @@ describe("playCards", () => {
     expect(result.state.tableCards).toEqual(game.tableCards);
   });
 
-  it("plays a valid card and advances clockwise", () => {
-    const game = gameWithHand("R001", ["CAT_PINK_01"]);
-    const result = playCards(game, "p2", ["CAT_PINK_01"]);
+  it("plays a valid card and enters the pending-guess phase when the hand is empty", () => {
+    const game = gameWithHand("R001", ["CAT_PINK_02"]);
+    const result = playCards(game, "p2", ["CAT_PINK_02"]);
     expect(result.accepted).toBe(true);
-    expect(result.state.tableCards.at(-1)?.id).toBe("CAT_PINK_01");
+    expect(result.state.tableCards.at(-1)?.id).toBe("CAT_PINK_02");
     expect(result.state.hands.p2).toHaveLength(0);
     expect(result.state.phase).toBe("guessing");
     expect(result.state.pendingGuesserId).toBe("p2");
   });
 
   it("does not partially play a multi-card submission", () => {
-    const game = gameWithHand("R001", ["CAT_PINK_01", "CAT_BLUE_01"]);
-    const result = playCards(game, "p2", ["CAT_PINK_01", "CAT_BLUE_01"]);
+    const game = gameWithHand("R001", ["CAT_PINK_02", "CAT_BLUE_01"]);
+    const result = playCards(game, "p2", ["CAT_PINK_02", "CAT_BLUE_01"]);
     expect(result.accepted).toBe(false);
     expect(result.state.hands.p2).toHaveLength(2);
     expect(result.state.tableCards).toHaveLength(1);
@@ -75,22 +75,22 @@ describe("playCards", () => {
 
 describe("exchangeWholeHand", () => {
   it("discards an entirely unplayable hand and draws one fewer card", () => {
-    const game = gameWithHand("R001", ["CAT_BLUE_01", "CAT_GOLD_02"], ["DOG_PINK_03", "FOX_BLUE_04"]);
+    const game = gameWithHand("R001", ["CAT_BLUE_01", "CAT_GOLD_02"], ["FOX_PINK_03", "FOX_BLUE_04"]);
     const result = exchangeWholeHand(game, "p2");
     expect(result.reason).toBe("no_playable_cards");
     expect(result.state.discardPile.map((card) => card.id)).toEqual(["CAT_BLUE_01", "CAT_GOLD_02"]);
-    expect(result.state.hands.p2.map((card) => card.id)).toEqual(["DOG_PINK_03"]);
+    expect(result.state.hands.p2.map((card) => card.id)).toEqual(["FOX_PINK_03"]);
     expect(result.state.currentPlayerId).toBe("p3");
   });
 
   it("requires the Rule Keeper to choose a playable card, then returns the rest and draws one", () => {
-    const game = gameWithHand("R001", ["CAT_PINK_01", "CAT_BLUE_01"], ["DOG_PINK_03"]);
+    const game = gameWithHand("R001", ["CAT_PINK_02", "CAT_BLUE_01"], ["FOX_PINK_03"]);
     const pending = exchangeWholeHand(game, "p2");
     expect(pending.reason).toBe("keeper_selection_required");
-    expect(pending.playableCardIds).toEqual(["CAT_PINK_01"]);
-    const result = exchangeWholeHand(game, "p2", "CAT_PINK_01");
-    expect(result.state.tableCards.at(-1)?.id).toBe("CAT_PINK_01");
-    expect(result.state.hands.p2.map((card) => card.id)).toEqual(["CAT_BLUE_01", "DOG_PINK_03"]);
+    expect(pending.playableCardIds).toEqual(["CAT_PINK_02"]);
+    const result = exchangeWholeHand(game, "p2", "CAT_PINK_02");
+    expect(result.state.tableCards.at(-1)?.id).toBe("CAT_PINK_02");
+    expect(result.state.hands.p2.map((card) => card.id)).toEqual(["CAT_BLUE_01", "FOX_PINK_03"]);
     expect(result.state.currentPlayerId).toBe("p3");
     expect(result.state.discardPile).toHaveLength(0);
   });
