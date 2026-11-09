@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { CHARACTER_CARDS } from "./catalog";
+import { evaluatePlay } from "./rule-engine";
 import { setupOfflineRound, type GameParticipant } from "./setup";
 
 const players: GameParticipant[] = [
@@ -37,6 +38,20 @@ describe("setupOfflineRound", () => {
   it("rejects invalid player counts and unknown rules", () => {
     expect(() => setupOfflineRound({ players: players.slice(0, 2), ruleKeeperId: "p1", secretRuleId: "R001", random: fixedRandom })).toThrow(/3 to 7/);
     expect(() => setupOfflineRound({ players, ruleKeeperId: "p1", secretRuleId: "R999", random: fixedRandom })).toThrow(/Unknown secret rule/);
+  });
+
+  it("uses the initial clue card as the previous card for sequence rules", () => {
+    const game = setupOfflineRound({
+      players,
+      ruleKeeperId: "p1",
+      secretRuleId: "R004",
+      random: fixedRandom,
+    });
+    const repeatedNumber = CHARACTER_CARDS.find(
+      (card) => card.id !== game.clueCard.id && card.number === game.clueCard.number,
+    )!;
+
+    expect(evaluatePlay(game.secretRule, [game.clueCard], [repeatedNumber]).accepted).toBe(false);
   });
 
   it("does not mutate the shared card catalog", () => {
