@@ -1131,3 +1131,26 @@ button:disabled { opacity: .48; cursor: not-allowed; }
 @media (prefers-reduced-motion: reduce) {
   .offline-rule-option.offline-rule-card { transition: none; }
 }
+
+
+/* Individual rule identities */
+.offline-rule-card.rule-card-r001 {
+  background: radial-gradient(ellipse at 50% 48%,#fff 0%,rgba(255,255,255,.38) 52%,transparent 74%),linear-gradient(150deg,#faedf3 0%,#f2dce8 58%,#eacddd 100%);
+}
+.offline-rule-card.rule-card-r002 {
+  background: radial-gradient(ellipse at 50% 48%,#fff 0%,rgba(255,255,255,.38) 52%,transparent 74%),linear-gradient(150deg,#edf4fb 0%,#dce8f4 58%,#cbdced 100%);
+}
+.offline-rule-card.rule-card-r003 {
+  background: radial-gradient(ellipse at 50% 48%,#fff 0%,rgba(255,255,255,.38) 52%,transparent 74%),linear-gradient(150deg,#fbf6e8 0%,#f1e8cc 58%,#e9ddb9 100%);
+}
+.offline-rule-card.rule-card-r004 {
+  background: radial-gradient(ellipse at 50% 48%,#fff 0%,rgba(255,255,255,.38) 52%,transparent 74%),linear-gradient(150deg,#edf5ef 0%,#dcebe0 58%,#cfe2d5 100%);
+}
+.offline-rule-card.rule-card-r005 {
+  background: radial-gradient(ellipse at 50% 48%,#fff 0%,rgba(255,255,255,.38) 52%,transparent 74%),linear-gradient(150deg,#fbf0e8 0%,#f2dfd1 58%,#e9d0be 100%);
+}
+.offline-rule-secret-card::before { content: none; }
+.offline-rule-secret-card .offline-rule-card-brand { color: rgba(83,66,83,.64); font-size: 7px; }
+.offline-rule-secret-card .offline-rule-card-id { color: rgba(83,66,83,.7); font-size: 8px; }
+.offline-rule-secret-card .offline-rule-card-footer { color: rgba(85,69,85,.58); font-size: 6px; }
+.offline-rule-secret-card .offline-rule-card-footer i { color: rgba(164,122,156,.8); font-size: 11px; }
