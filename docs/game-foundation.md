@@ -81,3 +81,10 @@ The schema is tracked under `supabase/migrations`:
 The home screen can create a private room or join by code. The room page shows the public lobby roster and refreshes every five seconds for now. Realtime push updates, ready states, host controls, and starting the game are not implemented yet.
 
 Before using the app, enable **Anonymous Sign-Ins** in Supabase Authentication settings and configure the three variables listed in `.env.example`. The secret key must never use a `NEXT_PUBLIC_` prefix.
+
+
+## Offline-first development
+
+Online multiplayer implementation is paused while the local game engine is built. See docs/offline-first-plan.md for the sequence and outstanding rule decisions.
+
+The initial local round setup is implemented in src/lib/game/setup.ts. It deals seven cards to each non-keeper, chooses a clue card that satisfies the secret rule, removes that clue from the draw pile, and starts with the player to the keeper's left. The random source is injectable for deterministic tests.
