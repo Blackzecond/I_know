@@ -50,13 +50,22 @@ function CardFace({
       disabled={disabled || !onClick}
       aria-pressed={selected}
     >
-      <span className="offline-card-top"><span>IKYD</span><span>{card.id.slice(-2)}</span></span>
-      <span className="offline-card-art"><AnimalArt animal={card.animal} /></span>
-      <span className="offline-card-bottom">
-        <span>{ANIMAL_LABELS[card.animal]}</span>
-        <strong>{card.number}</strong>
+      <span className="offline-card-frame" aria-hidden="true" />
+      <span className="offline-card-top">
+        <span className="offline-card-brand">I KNOW <i>✦</i> YOU DON&apos;T</span>
+        <span className="offline-card-index">{card.id.slice(-2)}</span>
       </span>
-      <span className="offline-card-color"><i />{COLOR_LABELS[card.color]}</span>
+      <span className="offline-card-art-stage">
+        <span className="offline-card-halo" aria-hidden="true" />
+        <span className="offline-card-art"><AnimalArt animal={card.animal} /></span>
+        <span className="offline-card-sparkle sparkle-one" aria-hidden="true">✧</span>
+        <span className="offline-card-sparkle sparkle-two" aria-hidden="true">✦</span>
+      </span>
+      <span className="offline-card-bottom">
+        <span className="offline-card-name">{ANIMAL_LABELS[card.animal]}</span>
+        <strong className="offline-card-number">{card.number}</strong>
+      </span>
+      <span className="offline-card-color"><i />{COLOR_LABELS[card.color]} <span>•</span> CHARACTER</span>
     </button>
   );
 }
