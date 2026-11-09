@@ -17,7 +17,7 @@ import {
   type OfflineGameState,
 } from "@/lib/game/match";
 import type { GameParticipant } from "@/lib/game/setup";
-import { AnimalArt, RuleEmblem } from "@/components/game/animal-art";
+import { AnimalArt, CardBack, RuleEmblem } from "@/components/game/animal-art";
 
 const ANIMAL_LABELS: Record<CharacterCard["animal"], string> = {
   cat: "แมว",
@@ -513,7 +513,7 @@ export default function OfflinePage() {
             <div className="offline-turn-top">
               <div><span>TURN</span><strong>{currentPlayer?.displayName}</strong></div>
               <div><span>RULE KEEPER</span><strong>{players.find((player) => player.id === round.ruleKeeperId)?.displayName}</strong></div>
-              <div><span>DRAW PILE</span><strong>{round.drawPile.length}</strong></div>
+              <div><span>DRAW PILE</span><strong className="offline-draw-count"><CardBack className="offline-draw-back" /><span>{round.drawPile.length}</span></strong></div>
             </div>
             <div className="offline-table-heading">
               <div><p className="offline-eyebrow">ON THE TABLE</p><h2>ไพ่คำใบ้และไพ่ที่ลงแล้ว</h2></div>
