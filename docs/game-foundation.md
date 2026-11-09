@@ -35,7 +35,7 @@ Unknown condition types fail closed.
 
 ## Security model
 
-The server is authoritative. Secret rule, draw pile, discard pile, and individual hands are stored separately from public room/player metadata. Direct Data API access is revoked for client roles; trusted server code uses the service role. Never ship the service-role key to a browser.
+The server is authoritative. Secret rule, draw pile, discard pile, and individual hands are stored separately from public room/player metadata. Direct Data API access is revoked for client roles; trusted server code uses the service role. Never ship the secret key to a browser.
 
 ## Initial database entities
 
@@ -61,10 +61,10 @@ The server is authoritative. Secret rule, draw pile, discard pile, and individua
 - A Next.js Proxy refreshes cookie-backed sessions before server rendering, following Supabase SSR guidance.
 - Each room seat stores the authenticated Supabase user ID in `game_players.auth_user_id`.
 - A player can rejoin the same waiting room with the same anonymous session without taking another seat.
-- Room creation and joining run through server-only RPC calls. The API verifies the current user with `auth.getUser()` before calling the RPC with the server-side service-role client.
+- Room creation and joining run through server-only RPC calls. The API verifies the current user with `auth.getUser()` before calling the RPC with the server-side server secret client.
 - Room codes are six uppercase hexadecimal characters. Joining locks the room row while checking status and capacity, preventing concurrent joins from exceeding the player limit.
 - RPC execution is revoked from `PUBLIC`, `anon`, and `authenticated`; only `service_role` can execute these functions.
-- The browser never receives the service-role key. Keep it only in server environment variables.
+- The browser never receives the secret key key. Keep it only in server environment variables.
 
 ## Migration history
 
