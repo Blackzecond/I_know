@@ -11,6 +11,7 @@ export default function Home() {
   const router = useRouter();
   const [displayName, setDisplayName] = useState("");
   const [roomCode, setRoomCode] = useState("");
+  const [maxPlayers, setMaxPlayers] = useState(7);
   const [busy, setBusy] = useState<"create" | "join" | null>(null);
   const [error, setError] = useState("");
 
@@ -22,7 +23,7 @@ export default function Home() {
       const response = await fetch("/api/rooms", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ displayName, maxPlayers: 7 }),
+        body: JSON.stringify({ displayName, maxPlayers }),
       });
       const result = await response.json();
       if (!response.ok) throw new Error(result.error ?? "สร้างห้องไม่สำเร็จ");
@@ -81,6 +82,14 @@ export default function Home() {
               placeholder="Enter your name"
               autoComplete="nickname"
             />
+          </label>
+          <label className="max-player-field">
+            <span>ROOM SIZE</span>
+            <select value={maxPlayers} onChange={(event) => setMaxPlayers(Number(event.target.value))}>
+              {[3, 4, 5, 6, 7].map((count) => (
+                <option key={count} value={count}>{count} PLAYERS</option>
+              ))}
+            </select>
           </label>
           <div className="room-action-row">
             <button
