@@ -912,3 +912,10 @@ button:disabled { opacity: .48; cursor: not-allowed; }
 @media (prefers-reduced-motion: reduce) {
   .offline-card { transition: none; }
 }
+
+.card-pink .offline-card-color i { background: #c8759b; }
+.card-blue .offline-card-color i { background: #6d9fc8; }
+.card-gold .offline-card-color i { background: #b38c43; }
+.card-pink .offline-card-number { color: #a85f80; }
+.card-blue .offline-card-number { color: #5d83a7; }
+.card-gold .offline-card-number { color: #9b793b; }
