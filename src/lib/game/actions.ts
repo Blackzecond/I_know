@@ -155,10 +155,10 @@ export function exchangeWholeHand(
     next.discardPile.push(...next.hands[playerId]);
     next.hands[playerId] = next.drawPile.splice(0, actualDrawCount);
 
-    if (next.hands[playerId].length === 0) {
-      beginGuessing(next, "player_empty_hand", random);
-    } else if (next.drawPile.length === 0 && requestedDrawCount > 0) {
+    if (requestedDrawCount > 0 && next.drawPile.length === 0) {
       beginGuessing(next, "draw_pile_exhausted", random);
+    } else if (next.hands[playerId].length === 0) {
+      beginGuessing(next, "player_empty_hand", random);
     } else {
       advanceTurn(next, playerId);
     }
