@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { CHARACTER_CARDS } from "./catalog";
+import { CHARACTER_CARDS, type CharacterCard } from "./catalog";
 import { awardGuessBonus, calculateRoundScores } from "./scoring";
 import type { GameParticipant } from "./setup";
 
@@ -35,10 +35,12 @@ describe("calculateRoundScores", () => {
       displayName: `Player ${index + 1}`,
       seatOrder: index + 1,
     }));
-    const hands = Object.fromEntries(sevenPlayers.map((player, index) => [
-      player.id,
-      cards(index),
-    ]));
+    const hands: Record<string, CharacterCard[]> = Object.fromEntries(
+      sevenPlayers.map((player, index): [string, CharacterCard[]] => [
+        player.id,
+        cards(index),
+      ]),
+    );
 
     const result = calculateRoundScores(sevenPlayers, hands, "p7", "draw_pile_exhausted");
     expect(result.players.filter((player) => !player.isRuleKeeper).map((player) => player.points))
