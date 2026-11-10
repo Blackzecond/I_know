@@ -39,3 +39,4 @@ The current offline interface has a first CSS depth pass for card faces, rule ca
 - Keep the roster horizontally scrollable on narrow screens so 3–7 players remain readable without compressing names.
 - Ordered card selection must communicate its sequence visually and accessibly; clearing the selection must never submit or alter game state.
 - Match progress should use one segment per scheduled round and remain legible on mobile.
+- Player status is exposed as a semantic list, and primary actions, secondary actions, and setup fields have visible keyboard-focus indicators.
