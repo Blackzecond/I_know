@@ -580,7 +580,7 @@ export default function OfflinePage() {
             ถึงตา <strong><PlayerName players={players} playerId={currentGuesserId ?? ""} /></strong>
             {" "}· เลือกกฎที่คิดว่าถูกต้อง
           </p>
-          <div className="offline-rule-options">
+          <div className="offline-rule-options offline-guess-options">
             {guessState?.choices.map((rule) => (
               <RuleOptionCard key={rule.id} rule={rule} onClick={() => makeGuess(rule.id)} />
             ))}
@@ -592,7 +592,7 @@ export default function OfflinePage() {
         <section className="offline-panel">
           <p className="offline-eyebrow">ROUND {round?.roundNumber} COMPLETE</p>
           <h1 className="offline-title">ผลคะแนน <span>ประจำรอบ</span></h1>
-          <div className="offline-score-list">
+          <div className="offline-score-list offline-round-score-list">
             {round?.roundScore?.players.map((score) => {
               const player = players.find((item) => item.id === score.playerId);
               return (
