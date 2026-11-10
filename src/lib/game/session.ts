@@ -68,9 +68,11 @@ export function parseOfflineSession(raw: string): OfflineSessionData | null {
     if (new Set(playerIds).size !== roster.length
       || new Set(roster.map((player) => player.seatOrder)).size !== roster.length) return null;
 
-    if (!isRecord(round) || !isRecord(round.hands)) return null;
-    if (!playerIds.includes(String(round.ruleKeeperId))
-      || !playerIds.includes(String(round.currentPlayerId))
+    if (!isRecord(round) || !isRecord(round.hands)
+      || Object.keys(round.hands).length !== roster.length) return null;
+    if (typeof round.ruleKeeperId !== "string" || typeof round.currentPlayerId !== "string"
+      || !playerIds.includes(round.ruleKeeperId)
+      || !playerIds.includes(round.currentPlayerId)
       || round.currentPlayerId === round.ruleKeeperId) return null;
     if (!["playing", "guessing", "complete"].includes(String(round.phase))) return null;
     if (!Number.isInteger(round.roundNumber) || (round.roundNumber as number) < 1) return null;
