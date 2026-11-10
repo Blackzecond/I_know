@@ -694,7 +694,7 @@ export default function OfflinePage() {
               </div>
               <div className="offline-table-heading">
                 <div><p className="offline-eyebrow">CARDS IN PLAY</p><h2>ไพ่บนโต๊ะ</h2></div>
-                <span>{round.tableCards.length} ใบ</span>
+                <span>{round.tableCards.length} ใบ{round.tableCards.length > 5 ? " · 5 ใบล่าสุด" : ""}</span>
               </div>
               <div className="offline-table-cards offline-table-arrive" key={round.tableCards.length}>
                 {round.tableCards.slice(-5).map((card) => <CardFace key={card.id} card={card} disabled />)}
