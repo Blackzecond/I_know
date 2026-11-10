@@ -120,6 +120,22 @@ describe("exchangeWholeHand", () => {
     expect(result.state.pendingGuesserId).toBe("p2");
   });
 
+  it("ends the round when a partial exchange draw empties the draw pile", () => {
+    const game = gameWithHand("R001", ["CAT_BLUE_01", "CAT_GOLD_02", "FOX_BLUE_04"]);
+    game.drawPile = [CHARACTER_CARDS.find((card) => card.id === "FOX_PINK_03")!];
+    const originalHand = game.hands.p2.map((card) => card.id);
+
+    const result = exchangeWholeHand(game, "p2");
+
+    expect(result.state.hands.p2.map((card) => card.id)).toEqual(["FOX_PINK_03"]);
+    expect(result.state.discardPile.map((card) => card.id)).toEqual(originalHand);
+    expect(result.state.phase).toBe("guessing");
+    expect(result.state.endReason).toBe("draw_pile_exhausted");
+    expect(result.state.roundScore?.players.find((player) => player.playerId === "p2")?.cardsRemaining).toBe(1);
+    expect(game.hands.p2.map((card) => card.id)).toEqual(originalHand);
+    expect(game.discardPile).toHaveLength(0);
+  });
+
   it("still draws a replacement when the only playable card is the player's last card", () => {
     const game = gameWithHand("R001", ["CAT_PINK_02"], ["FOX_PINK_03"]);
     const result = exchangeWholeHand(game, "p2", "CAT_PINK_02");
