@@ -107,4 +107,60 @@ describe("offline match flow", () => {
     const updated = updateOfflineGameRound(game, completedRound(game));
     expect(() => advanceOfflineGame(updated)).toThrow(/secret rule/);
   });
+
+  it("supports a complete clockwise keeper cycle for every player count from three to seven", () => {
+    for (const playerCount of [3, 4, 5, 6, 7]) {
+      const roster = Array.from({ length: playerCount }, (_, index) => ({
+        id: `seat-${index + 1}`,
+        displayName: `Seat ${index + 1}`,
+        seatOrder: index + 1,
+      }));
+      let game = startOfflineGame({
+        players: roster,
+        startingRuleKeeperId: roster[playerCount - 1].id,
+        firstSecretRuleId: "R001",
+        random: fixedRandom,
+        handSize: 1,
+      });
+
+      expect(game.roundsToPlay).toBe(playerCount);
+      expect(game.currentRound.currentPlayerId).toBe(roster[0].id);
+
+      for (let roundIndex = 0; roundIndex < playerCount; roundIndex += 1) {
+        const expectedKeeper = roster[roundIndex].id;
+        expect(game.currentRound.ruleKeeperId).toBe(expectedKeeper);
+        const updated = updateOfflineGameRound(game, completedRound(game));
+        game = advanceOfflineGame(
+          updated,
+          roundIndex + 1 < playerCount ? "R002" : undefined,
+          fixedRandom,
+        );
+      }
+
+      expect(game.phase).toBe("complete");
+      expect(game.roundsCompleted).toBe(playerCount);
+      expect(game.roundHistory.map((round) => round.ruleKeeperId))
+        .toEqual(roster.map((player) => player.id));
+    }
+  });
+
+  it("rejects a round update that changes the Rule Keeper or round number", () => {
+    const game = startOfflineGame({
+      players,
+      startingRuleKeeperId: "p1",
+      firstSecretRuleId: "R001",
+      random: fixedRandom,
+    });
+
+    expect(() => updateOfflineGameRound(game, {
+      ...game.currentRound,
+      ruleKeeperId: "p2",
+    })).toThrow(/Rule Keeper cannot change/);
+
+    expect(() => updateOfflineGameRound(game, {
+      ...game.currentRound,
+      roundNumber: 2,
+    })).toThrow(/does not belong/);
+  });
+
 });
