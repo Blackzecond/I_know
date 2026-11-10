@@ -42,13 +42,14 @@ Before changing rules or game behavior, read [game-rules.md](./game-rules.md). I
 
 Phase 3 — Visual & Interaction Polish is implementation-complete and has passed source-level review plus the full CI pipeline on the current branch. Browser/device playthrough is intentionally tracked as a Phase 5 QA gate because no browser automation/control runner is available in this environment.
 
-## Phase 4 progress — UX & Game Flow
+## Phase 4 exit status — UX & Game Flow
 
 - Added a setup rules preview explaining the seven-card starting hand, the Rule Keeper role, and one round per player.
 - Added explicit confirmation before exchanging a whole hand or ending a match early; canceling leaves game state unchanged.
 - Improved pass-and-play handoff screens to identify the actual recipient, including the named Rule Keeper.
 - Added responsive confirmation-dialog styling and keyboard-focus/reduced-motion considerations.
-- Phase 4 implementation is in progress pending full CI and source-level review. See [phase-4-ux-flow.md](./phase-4-ux-flow.md).
+- Source review and full CI passed on commit 1d4f035. Browser/device playthrough remains part of Phase 5 because no browser-control runner is available here.
+- See [phase-4-ux-flow.md](./phase-4-ux-flow.md) for the verification record.
 
 ## Remaining offline work
 

@@ -24,11 +24,13 @@ Make the offline pass-and-play experience understandable and deliberate from set
 
 ## Verification
 
-- [ ] ESLint
-- [ ] TypeScript typecheck
-- [ ] Unit tests
-- [ ] Production build
-- [ ] Source review of confirmation branches and pass-and-play recipient labels
+- [x] ESLint
+- [x] TypeScript typecheck
+- [x] Unit tests
+- [x] Production build
+- [x] Source review of confirmation branches, cancellation behavior, and pass-and-play recipient labels
+
+CI run: https://github.com/Blackzecond/I_know/actions/runs/42892731558 (commit 1d4f035)
 - [ ] Browser/device flow verification remains part of Phase 5 because no browser-control runner is available in this environment.
 
 ## Exit criteria
