@@ -127,7 +127,7 @@ describe("offline match flow", () => {
       expect(game.currentRound.currentPlayerId).toBe(roster[0].id);
 
       for (let roundIndex = 0; roundIndex < playerCount; roundIndex += 1) {
-        const expectedKeeper = roster[roundIndex].id;
+        const expectedKeeper = roster[(playerCount - 1 + roundIndex) % playerCount].id;
         expect(game.currentRound.ruleKeeperId).toBe(expectedKeeper);
         const updated = updateOfflineGameRound(game, completedRound(game));
         game = advanceOfflineGame(
@@ -140,7 +140,9 @@ describe("offline match flow", () => {
       expect(game.phase).toBe("complete");
       expect(game.roundsCompleted).toBe(playerCount);
       expect(game.roundHistory.map((round) => round.ruleKeeperId))
-        .toEqual(roster.map((player) => player.id));
+        .toEqual(Array.from({ length: playerCount }, (_, index) =>
+          roster[(playerCount - 1 + index) % playerCount].id,
+        ));
     }
   });
 
