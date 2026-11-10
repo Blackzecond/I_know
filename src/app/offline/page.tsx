@@ -148,11 +148,11 @@ export default function OfflinePage() {
           setNextSecretRule(saved.nextSecretRule ?? RULE_CARDS[0].id);
           setNotice(saved.notice ?? "");
         } else {
-          window.localStorage.removeItem("ikyd-offline-session-v1");
+          try { window.localStorage.removeItem("ikyd-offline-session-v1"); } catch { /* Storage may be disabled. */ }
         }
       }
     } catch {
-      window.localStorage.removeItem("ikyd-offline-session-v1");
+      try { window.localStorage.removeItem("ikyd-offline-session-v1"); } catch { /* Storage may be disabled. */ }
     } finally {
       setIsRestoring(false);
     }
@@ -161,7 +161,7 @@ export default function OfflinePage() {
   useEffect(() => {
     if (isRestoring) return;
     if (!game) {
-      window.localStorage.removeItem("ikyd-offline-session-v1");
+      try { window.localStorage.removeItem("ikyd-offline-session-v1"); } catch { /* Storage may be disabled. */ }
       return;
     }
     try {
