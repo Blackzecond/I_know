@@ -53,4 +53,36 @@ describe("evaluatePlay", () => {
     const unknownRule = { ...RULE_CARDS[0], conditionType: "not_implemented" };
     expect(evaluatePlay(unknownRule, [], [card("CAT_PINK_01")]).accepted).toBe(false);
   });
+
+  it("rejects an empty proposal without changing the previous table", () => {
+    const previous = [card("CAT_PINK_01")];
+    expect(evaluatePlay(RULE_CARDS[0], previous, []).accepted).toBe(false);
+    expect(previous.map((item) => item.id)).toEqual(["CAT_PINK_01"]);
+  });
+
+  it("checks the initial card against a previous card for number sequence rules", () => {
+    const previous = card("CAT_PINK_02");
+    expect(evaluatePlay(RULE_CARDS[3], [previous], [card("FOX_GOLD_02")]).accepted).toBe(false);
+    expect(evaluatePlay(RULE_CARDS[3], [previous], [card("FOX_GOLD_03")]).accepted).toBe(true);
+  });
+
+  it("validates every proposed card for color and animal membership rules", () => {
+    expect(evaluatePlay(RULE_CARDS[1], [], [
+      card("CAT_BLUE_01"),
+      card("FOX_GOLD_02"),
+    ]).accepted).toBe(true);
+    expect(evaluatePlay(RULE_CARDS[1], [], [
+      card("CAT_BLUE_01"),
+      card("FOX_PINK_02"),
+    ]).accepted).toBe(false);
+    expect(evaluatePlay(RULE_CARDS[4], [], [
+      card("CAT_PINK_01"),
+      card("RABBIT_BLUE_02"),
+    ]).accepted).toBe(true);
+    expect(evaluatePlay(RULE_CARDS[4], [], [
+      card("CAT_PINK_01"),
+      card("FOX_BLUE_02"),
+    ]).accepted).toBe(false);
+  });
+
 });
