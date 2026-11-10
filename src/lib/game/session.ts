@@ -70,25 +70,27 @@ export function parseOfflineSession(raw: string): OfflineSessionData | null {
 
     if (!isRecord(round) || !isRecord(round.hands)
       || Object.keys(round.hands).length !== roster.length) return null;
+    const hands = round.hands as Record<string, unknown>;
     if (typeof round.ruleKeeperId !== "string" || typeof round.currentPlayerId !== "string"
       || !playerIds.includes(round.ruleKeeperId)
       || !playerIds.includes(round.currentPlayerId)
       || round.currentPlayerId === round.ruleKeeperId) return null;
     if (!["playing", "guessing", "complete"].includes(String(round.phase))) return null;
     if (!Number.isInteger(round.roundNumber) || (round.roundNumber as number) < 1) return null;
-    if (!Array.isArray(round.players) || !round.players.every(isPlayer)
-      || round.players.length !== roster.length
-      || !roster.every((player) => round.players.some((roundPlayer) => isPlayer(roundPlayer)
-        && roundPlayer.id === player.id && roundPlayer.seatOrder === player.seatOrder))) return null;
+    const roundPlayers = round.players;
+    if (!Array.isArray(roundPlayers) || !roundPlayers.every(isPlayer)
+      || roundPlayers.length !== roster.length
+      || !roster.every((player) => roundPlayers.some((roundPlayer) =>
+        roundPlayer.id === player.id && roundPlayer.seatOrder === player.seatOrder))) return null;
 
     if (!isRuleCard(round.secretRule) || !isCharacterCard(round.clueCard)) return null;
     if (!isCardArray(round.drawPile) || !isCardArray(round.discardPile)
       || !isCardArray(round.tableCards)) return null;
-    if (!roster.every((player) => isCardArray(round.hands[player.id]))) return null;
+    if (!roster.every((player) => isCardArray(hands[player.id]))) return null;
     if (round.tableCards.length === 0 || round.tableCards[0].id !== round.clueCard.id) return null;
 
     const allCards = [
-      ...Object.values(round.hands).flatMap((hand) => Array.isArray(hand) ? hand : []),
+      ...Object.values(hands).flatMap((hand) => Array.isArray(hand) ? hand : []),
       ...round.drawPile,
       ...round.discardPile,
       ...round.tableCards,
@@ -103,7 +105,8 @@ export function parseOfflineSession(raw: string): OfflineSessionData | null {
       || !Number.isInteger(game.handSize) || (game.handSize as number) < 1) return null;
     if (!isRecord(game.totalScores) || !Array.isArray(game.roundHistory)
       || !["playing", "guessing", "round_complete", "complete"].includes(String(game.phase))) return null;
-    if (!roster.every((player) => Number.isFinite(game.totalScores[player.id]))) return null;
+    const totalScores = game.totalScores as Record<string, unknown>;
+    if (!roster.every((player) => Number.isFinite(totalScores[player.id]))) return null;
 
     const keeperPlayableIds = value.keeperPlayableIds;
     if (keeperPlayableIds !== null && keeperPlayableIds !== undefined
