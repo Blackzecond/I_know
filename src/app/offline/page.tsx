@@ -500,6 +500,29 @@ export default function OfflinePage() {
         <span className="offline-header-note">OFFLINE · ROUND {round?.roundNumber}/{game.roundsToPlay}</span>
       </header>
 
+      <div
+        className="offline-round-progress"
+        role="progressbar"
+        aria-label={`รอบที่ ${round?.roundNumber ?? game.roundsCompleted} จาก ${game.roundsToPlay}`}
+        aria-valuemin={1}
+        aria-valuemax={game.roundsToPlay}
+        aria-valuenow={round?.roundNumber ?? game.roundsCompleted}
+      >
+        <span className="offline-round-progress-label">MATCH PROGRESS</span>
+        <div className="offline-round-progress-track" aria-hidden="true">
+          {Array.from({ length: game.roundsToPlay }, (_, index) => {
+            const number = index + 1;
+            return (
+              <span
+                className={`offline-round-progress-segment${number < (round?.roundNumber ?? 0) ? " is-complete" : ""}${number === round?.roundNumber ? " is-active" : ""}`}
+                key={number}
+              />
+            );
+          })}
+        </div>
+        <span className="offline-round-progress-count">{game.roundsCompleted}/{game.roundsToPlay} รอบจบแล้ว</span>
+      </div>
+
       {notice ? <p key={notice} className="offline-notice" role="status" aria-live="polite">{notice}</p> : null}
 
       {choosingNextSecret ? (
