@@ -59,4 +59,50 @@ describe("setupOfflineRound", () => {
     setupOfflineRound({ players, ruleKeeperId: "p1", secretRuleId: "R004", random: fixedRandom });
     expect(CHARACTER_CARDS.map((card) => card.id)).toEqual(before);
   });
+
+  it("rejects duplicate player IDs and seat positions", () => {
+    expect(() => setupOfflineRound({
+      players: [...players, { ...players[0], displayName: "Duplicate ID", seatOrder: 5 }],
+      ruleKeeperId: "p1",
+      secretRuleId: "R001",
+      random: fixedRandom,
+    })).toThrow(/Player IDs must be unique/);
+
+    expect(() => setupOfflineRound({
+      players: players.map((player, index) => ({
+        ...player,
+        seatOrder: index === 3 ? players[0].seatOrder : player.seatOrder,
+      })),
+      ruleKeeperId: "p1",
+      secretRuleId: "R001",
+      random: fixedRandom,
+    })).toThrow(/Seat orders must be unique/);
+  });
+
+  it("rejects a keeper outside the roster and invalid hand sizes", () => {
+    expect(() => setupOfflineRound({
+      players,
+      ruleKeeperId: "missing",
+      secretRuleId: "R001",
+      random: fixedRandom,
+    })).toThrow(/Rule Keeper must be seated/);
+
+    expect(() => setupOfflineRound({
+      players,
+      ruleKeeperId: "p1",
+      secretRuleId: "R001",
+      handSize: 0,
+      random: fixedRandom,
+    })).toThrow(/positive integer/);
+  });
+
+  it("rejects an invalid random source", () => {
+    expect(() => setupOfflineRound({
+      players,
+      ruleKeeperId: "p1",
+      secretRuleId: "R001",
+      random: () => 1,
+    })).toThrow(/range \[0, 1\)/);
+  });
+
 });
