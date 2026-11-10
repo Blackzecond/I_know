@@ -60,4 +60,57 @@ describe("calculateRoundScores", () => {
     expect(result.players.find((player) => player.playerId === "p4")?.points).toBe(0);
     expect(snapshot.players.find((player) => player.playerId === "p4")?.points).toBe(-1);
   });
+
+  it("uses the full score ladder for every supported active-player count", () => {
+    for (const activeCount of [2, 3, 4, 5, 6]) {
+      const roster = Array.from({ length: activeCount + 1 }, (_, index) => ({
+        id: `player-${index + 1}`,
+        displayName: `Player ${index + 1}`,
+        seatOrder: index + 1,
+      }));
+      const keeperId = roster[roster.length - 1].id;
+      const hands: Record<string, CharacterCard[]> = Object.fromEntries(
+        roster.map((player, index) => [
+          player.id,
+          player.id === keeperId ? [] : cards(index),
+        ]),
+      );
+
+      const result = calculateRoundScores(roster, hands, keeperId, "player_empty_hand");
+      const expectedStart = Math.floor(activeCount / 2);
+      expect(result.activePlayerCount).toBe(activeCount);
+      expect(result.players.filter((score) => !score.isRuleKeeper).map((score) => score.points))
+        .toEqual(Array.from({ length: activeCount }, (_, index) => expectedStart - index));
+      expect(result.players.find((score) => score.isRuleKeeper)?.points).toBe(0);
+    }
+  });
+
+  it("uses competition ranking after a tie in the middle of the order", () => {
+    const result = calculateRoundScores(
+      players,
+      { p1: [], p2: cards(1), p3: cards(2), p4: cards(2) },
+      "p1",
+      "draw_pile_exhausted",
+    );
+
+    expect(result.players.filter((score) => !score.isRuleKeeper).map((score) => score.rank))
+      .toEqual([1, 2, 2]);
+    expect(result.players.filter((score) => !score.isRuleKeeper).map((score) => score.points))
+      .toEqual([1, 0, 0]);
+  });
+
+  it("does not mutate the source score snapshot when awarding a guess bonus", () => {
+    const snapshot = calculateRoundScores(
+      players,
+      { p1: [], p2: cards(1), p3: cards(2), p4: cards(3) },
+      "p1",
+      "player_empty_hand",
+    );
+    const originalPoints = snapshot.players.map((score) => score.points);
+    const updated = awardGuessBonus(snapshot, "p4");
+
+    expect(snapshot.players.map((score) => score.points)).toEqual(originalPoints);
+    expect(updated.players.find((score) => score.playerId === "p4")?.points).toBe(0);
+  });
+
 });
