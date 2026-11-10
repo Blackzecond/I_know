@@ -661,7 +661,7 @@ export default function OfflinePage() {
           </section>
 
           <section className="offline-panel offline-hand-panel">
-            <p className="offline-eyebrow">YOUR HAND · {currentHand.length} CARDS · {selectedCards.length} SELECTED</p>
+            <p className="offline-eyebrow" aria-live="polite" aria-atomic="true">YOUR HAND · {currentHand.length} CARDS · {selectedCards.length} SELECTED</p>
             <h1 className="offline-title">เลือกไพ่ที่จะลง</h1>
             <p className="offline-copy">เลือกได้หลายใบตามลำดับที่ต้องการ หมายเลขบนไพ่แสดงลำดับที่จะลง และไพ่ทุกใบต้องผ่านกฎ</p>
             <div className="offline-card-grid offline-hand-deal" key={`${currentPlayer?.id ?? "none"}-${currentHand.length}`}>

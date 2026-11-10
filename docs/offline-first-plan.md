@@ -40,10 +40,10 @@ Before changing rules or game behavior, read [game-rules.md](./game-rules.md). I
 
 ## Remaining offline work
 
-- Refine card artwork and interaction design; current character cards use emoji placeholders.
-- Add browser-level/manual playthrough checks for 3–7 players, especially device handoffs and hidden-information privacy.
-- Add persistence/resume behavior only if wanted; the current hot-seat session lives in page memory and resets on refresh.
-- Strengthen state invariants and cover any issues found during full-game playtests.
+- Continue refining the painted character atlas and card interaction polish; ordered multi-card selection now shows its sequence number on each selected card.
+- Complete browser-level/manual playthrough checks for 3–7 players, especially device handoffs and hidden-information privacy. Automated unit tests and production build pass, but browser playthrough remains unverified.
+- Versioned localStorage persistence now restores the match, current handoff, selected cards, and private keeper/guessing screens after refresh; malformed or incompatible sessions are discarded safely.
+- Continue strengthening state invariants and cover any issues found during full-game playtests.
 - Resume online multiplayer only after the offline rules and engine are stable and the user approves resuming online work.
 
 ## Decisions still open
