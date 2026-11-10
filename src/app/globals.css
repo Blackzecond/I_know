@@ -1862,3 +1862,69 @@ button:disabled { opacity: .48; cursor: not-allowed; }
   outline: 3px solid #8060a8;
   outline-offset: 3px;
 }
+
+
+/* Phase 4 — deliberate confirmation for irreversible offline actions */
+.offline-confirmation-backdrop {
+  position: fixed;
+  z-index: 50;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(35,27,43,.48);
+  backdrop-filter: blur(5px);
+}
+.offline-confirmation-dialog {
+  width: min(440px,100%);
+  padding: clamp(21px,4vw,30px);
+  border: 1px solid rgba(255,255,255,.88);
+  border-radius: 22px;
+  background: linear-gradient(150deg,#fffdfa,#f8f4f8);
+  box-shadow: 0 24px 70px rgba(27,18,35,.28),inset 0 1px #fff;
+}
+.offline-confirmation-dialog h2 {
+  margin: 9px 0 8px;
+  color: #4f4058;
+  font-family: Georgia,"Noto Serif Thai",serif;
+  font-size: clamp(21px,4vw,27px);
+  line-height: 1.35;
+}
+.offline-confirmation-dialog > p:not(.offline-eyebrow) {
+  margin: 0;
+  color: #827687;
+  font-size: 12px;
+  line-height: 1.8;
+}
+.offline-confirmation-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 9px;
+  margin-top: 22px;
+}
+.offline-confirmation-actions button {
+  min-height: 45px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 800;
+}
+.offline-confirmation-actions .offline-primary {
+  color: #fff;
+  background: linear-gradient(135deg,#8a6da5,#6d528b);
+}
+.offline-confirmation-actions .offline-secondary {
+  border: 1px solid #e8dfeb;
+  color: #725b82;
+  background: #fff;
+}
+.offline-confirmation-dialog button:focus-visible {
+  outline: 3px solid #8060a8;
+  outline-offset: 3px;
+}
+@media(max-width:420px) {
+  .offline-confirmation-actions { grid-template-columns: 1fr; }
+}
+@media(prefers-reduced-motion:reduce) {
+  .offline-confirmation-backdrop { backdrop-filter: none; }
+}
