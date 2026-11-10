@@ -64,11 +64,13 @@ function RuleOptionCard({
 function CardFace({
   card,
   selected,
+  selectionOrder,
   onClick,
   disabled = false,
 }: {
   card: CharacterCard;
   selected?: boolean;
+  selectionOrder?: number;
   onClick?: () => void;
   disabled?: boolean;
 }) {
@@ -78,8 +80,10 @@ function CardFace({
       type="button"
       onClick={onClick}
       disabled={disabled || !onClick}
-      aria-pressed={selected}
+      aria-pressed={Boolean(selected)}
+      aria-label={`${ANIMAL_LABELS[card.animal]} สี${COLOR_LABELS[card.color]} หมายเลข ${card.number}${selectionOrder ? ` ลำดับที่ ${selectionOrder}` : ""}`}
     >
+      {selectionOrder ? <span className="offline-card-selection-order" aria-hidden="true">{selectionOrder}</span> : null}
       <span className="offline-card-frame" aria-hidden="true" />
       <span className="offline-card-top">
         <span className="offline-card-brand">I KNOW <i>✦</i> YOU DON&apos;T</span>
@@ -666,6 +670,7 @@ export default function OfflinePage() {
                   key={card.id}
                   card={card}
                   selected={selectedCards.includes(card.id)}
+                  selectionOrder={selectedCards.includes(card.id) ? selectedCards.indexOf(card.id) + 1 : undefined}
                   onClick={() => setSelectedCards((current) => current.includes(card.id)
                     ? current.filter((id) => id !== card.id)
                     : [...current, card.id])}

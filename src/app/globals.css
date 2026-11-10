@@ -1733,3 +1733,37 @@ button:disabled { opacity: .48; cursor: not-allowed; }
   .offline-hand-deal .offline-card,
   .offline-table-arrive .offline-card { animation: none !important; }
 }
+
+
+/* Visible sequence marker for ordered multi-card submissions */
+.offline-card-selection-order {
+  position: absolute;
+  z-index: 4;
+  top: 31px;
+  left: 9px;
+  display: grid;
+  place-items: center;
+  width: 23px;
+  height: 23px;
+  border: 1px solid rgba(255,255,255,.94);
+  border-radius: 50%;
+  color: #fff;
+  background: linear-gradient(145deg,#9476b2,#6d548f);
+  box-shadow: 0 2px 7px rgba(65,45,83,.24), inset 0 1px rgba(255,255,255,.35);
+  font-size: 11px;
+  font-weight: 900;
+  line-height: 1;
+  pointer-events: none;
+}
+.offline-hand-panel .offline-card.is-selected .offline-card-selection-order {
+  transform: translateZ(15px);
+}
+@media (max-width:560px) {
+  .offline-card-selection-order {
+    top: 28px;
+    left: 7px;
+    width: 20px;
+    height: 20px;
+    font-size: 10px;
+  }
+}
