@@ -437,7 +437,7 @@ export default function OfflinePage() {
           <h1 className="offline-title">สรุปผล <span>การแข่งขัน</span></h1>
           <div className="offline-score-list">
             {totals.map((player) => (
-              <div className="offline-score-row" key={player.playerId}>
+              <div className={`offline-score-row${player.rank === 1 ? " is-match-leader" : ""}`} key={player.playerId}>
                 <strong className="offline-rank">{player.rank}</strong>
                 <span>{players.find((item) => item.id === player.playerId)?.displayName ?? "ผู้เล่น"}</span>
                 <b>{player.points > 0 ? "+" : ""}{player.points}</b>
@@ -591,7 +591,7 @@ export default function OfflinePage() {
             {round?.roundScore?.players.map((score) => {
               const player = players.find((item) => item.id === score.playerId);
               return (
-                <div className="offline-score-row" key={score.playerId}>
+                <div className={`offline-score-row${score.rank === 1 ? " is-round-leader" : ""}`} key={score.playerId}>
                   <strong className="offline-rank">{score.rank ?? "–"}</strong>
                   <span>{player?.displayName}{score.isRuleKeeper ? " · ผู้คุมกฎ" : ""}</span>
                   <b>{score.points > 0 ? "+" : ""}{score.points}</b>
