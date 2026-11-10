@@ -1822,9 +1822,7 @@ button:disabled { opacity: .48; cursor: not-allowed; }
 }
 .offline-round-progress-track {
   display: grid;
-  grid-template-columns: repeat(var(--round-count, 1),minmax(0,1fr));
-  grid-auto-columns: 1fr;
-  grid-auto-flow: column;
+  grid-template-columns: repeat(5,minmax(0,1fr));
   gap: 5px;
 }
 .offline-round-progress-segment {

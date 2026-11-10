@@ -509,7 +509,7 @@ export default function OfflinePage() {
         aria-valuenow={round?.roundNumber ?? game.roundsCompleted}
       >
         <span className="offline-round-progress-label">MATCH PROGRESS</span>
-        <div className="offline-round-progress-track" aria-hidden="true">
+        <div className="offline-round-progress-track" style={{ gridTemplateColumns: `repeat(${game.roundsToPlay}, minmax(0, 1fr))` }} aria-hidden="true">
           {Array.from({ length: game.roundsToPlay }, (_, index) => {
             const number = index + 1;
             return (
