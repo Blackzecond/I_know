@@ -60,6 +60,31 @@ describe("parseOfflineSession", () => {
     expect(parseOfflineSession(JSON.stringify(invalidHands))).toBeNull();
   });
 
+  it("rejects unknown cards and duplicate cards across saved zones", () => {
+    const unknownCard = validSession();
+    unknownCard.game.currentRound.hands.p2[0] = {
+      ...unknownCard.game.currentRound.hands.p2[0],
+      id: "UNKNOWN_CARD",
+    };
+    expect(parseOfflineSession(JSON.stringify(unknownCard))).toBeNull();
+
+    const duplicateCard = validSession();
+    duplicateCard.game.currentRound.discardPile.push(
+      duplicateCard.game.currentRound.hands.p2[0],
+    );
+    expect(parseOfflineSession(JSON.stringify(duplicateCard))).toBeNull();
+  });
+
+  it("rejects invalid player rosters and non-numeric match totals", () => {
+    const duplicateSeat = validSession();
+    duplicateSeat.game.players[1].seatOrder = duplicateSeat.game.players[0].seatOrder;
+    expect(parseOfflineSession(JSON.stringify(duplicateSeat))).toBeNull();
+
+    const invalidScore = validSession();
+    (invalidScore.game.totalScores as Record<string, unknown>).p2 = "many";
+    expect(parseOfflineSession(JSON.stringify(invalidScore))).toBeNull();
+  });
+
   it("uses safe defaults for optional UI state fields", () => {
     const saved = validSession() as Record<string, unknown>;
     delete saved.selectedCards;
