@@ -127,6 +127,7 @@ export default function OfflinePage() {
   const [nextSecretRule, setNextSecretRule] = useState(RULE_CARDS[0].id);
   const [notice, setNotice] = useState("");
   const [busy, setBusy] = useState(false);
+  const [confirmation, setConfirmation] = useState<"exchange" | "quit" | null>(null);
   const [isRestoring, setIsRestoring] = useState(true);
 
   useEffect(() => {
@@ -374,6 +375,14 @@ export default function OfflinePage() {
     if (!game) return;
     setGame(endOfflineGameEarly(game));
     setHandoffTo(null);
+    setConfirmation(null);
+  }
+
+  function confirmPendingAction() {
+    const action = confirmation;
+    setConfirmation(null);
+    if (action === "exchange") submitExchange();
+    if (action === "quit") quitEarly();
   }
 
   if (!game) {
@@ -470,9 +479,8 @@ export default function OfflinePage() {
           <div className="handoff-symbol">✦</div>
           <h1 className="offline-title">ส่งอุปกรณ์ให้</h1>
           <h2 className="handoff-name">
-            {isKeeperSelection || isKeeperReplacement || keeperBriefing
-              ? "ผู้คุมกฎ"
-              : handoffPlayer?.displayName ?? "ผู้เล่น"}
+            {handoffPlayer?.displayName ?? "ผู้เล่น"}
+            {isKeeperSelection || isKeeperReplacement || keeperBriefing ? " · ผู้คุมกฎ" : ""}
           </h2>
           <p className="offline-copy">
             {keeperBriefing
@@ -731,7 +739,7 @@ export default function OfflinePage() {
               <button className="offline-primary" type="button" onClick={submitPlay} disabled={!selectedCards.length || busy}>
                 ลงไพ่ที่เลือก ({selectedCards.length})
               </button>
-              <button className="offline-secondary" type="button" onClick={submitExchange} disabled={busy}>
+              <button className="offline-secondary" type="button" onClick={() => setConfirmation("exchange")} disabled={busy}>
                 แลกไพ่ทั้งมือ
               </button>
             </div>
@@ -741,8 +749,35 @@ export default function OfflinePage() {
 
       <footer className="offline-footer">
         <span>{game.roundsCompleted} รอบที่จบแล้ว</span>
-        <button type="button" onClick={quitEarly}>จบเกมก่อนกำหนด</button>
+        <button type="button" onClick={() => setConfirmation("quit")}>จบเกมก่อนกำหนด</button>
       </footer>
+      {confirmation ? (
+        <div className="offline-confirmation-backdrop">
+          <section
+            className="offline-confirmation-dialog"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="offline-confirmation-title"
+            aria-describedby="offline-confirmation-description"
+          >
+            <p className="offline-eyebrow">PLEASE CONFIRM</p>
+            <h2 id="offline-confirmation-title">
+              {confirmation === "exchange" ? "ยืนยันแลกไพ่ทั้งมือ?" : "ต้องการจบเกมก่อนกำหนด?"}
+            </h2>
+            <p id="offline-confirmation-description">
+              {confirmation === "exchange"
+                ? "ไพ่ทุกใบในมือจะถูกส่งให้ผู้คุมกฎตรวจ การกระทำนี้จะจบเทิร์นของผู้เล่น"
+                : "เกมจะหยุดทันทีและสรุปคะแนนจากรอบที่เล่นจบแล้ว คุณจะไม่สามารถเล่นรอบที่เหลือต่อได้"}
+            </p>
+            <div className="offline-confirmation-actions">
+              <button className="offline-secondary" type="button" onClick={() => setConfirmation(null)}>กลับไปเล่นต่อ</button>
+              <button className="offline-primary" type="button" onClick={confirmPendingAction} disabled={busy}>
+                {confirmation === "exchange" ? "ยืนยันแลกไพ่" : "ยืนยันจบเกม"}
+              </button>
+            </div>
+          </section>
+        </div>
+      ) : null}
     </main>
   );
 }
