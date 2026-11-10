@@ -38,3 +38,4 @@ The current offline interface has a first CSS depth pass for card faces, rule ca
 - Keep public information visible without exposing private hands: show each participant's remaining hand count, highlight the active player, and distinguish the Rule Keeper.
 - Keep the roster horizontally scrollable on narrow screens so 3–7 players remain readable without compressing names.
 - Ordered card selection must communicate its sequence visually and accessibly; clearing the selection must never submit or alter game state.
+- Match progress should use one segment per scheduled round and remain legible on mobile.

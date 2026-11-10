@@ -40,7 +40,7 @@ Before changing rules or game behavior, read [game-rules.md](./game-rules.md). I
 
 ## Remaining offline work
 
-- Continue refining the painted character atlas and card interaction polish; ordered multi-card selection now shows its sequence number on each selected card.
+- Continue refining the painted character atlas; the current 384×96 atlas remains a low-resolution prototype, not final production art. Card interaction polish now includes ordered selection markers, a clear-selection action, public player hand counts, active-turn/Rule Keeper highlights, recent-table-card context, and segmented match-round progress.
 - Complete browser-level/manual playthrough checks for 3–7 players, especially device handoffs and hidden-information privacy. Automated unit tests and production build pass, but browser playthrough remains unverified.
 - Versioned localStorage persistence now restores the match, current handoff, selected cards, and private keeper/guessing screens after refresh; malformed or incompatible sessions are discarded safely.
 - Continue strengthening state invariants and cover any issues found during full-game playtests.
