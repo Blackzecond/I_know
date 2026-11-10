@@ -174,4 +174,22 @@ describe("guessRoundRule", () => {
     expect(correct.state.roundScore?.players.find((player) => player.playerId === "p3")?.points)
       .toBe(1);
   });
+
+  it("requires the Rule Keeper to replenish choices before the next guess", () => {
+    const game = gameWithHand("R001", ["CAT_PINK_02"]);
+    const ended = playCards(game, "p2", ["CAT_PINK_02"], fixedRandom).state;
+    const wrongChoice = ended.ruleGuessState!.choices.find((rule) => rule.id !== "R001")!;
+    const wrong = guessRoundRule(ended, "p2", wrongChoice.id);
+
+    expect(() => guessRoundRule(wrong.state, "p3", "R001")).toThrow(/replacement rule/);
+    const replacementId = wrong.state.ruleGuessState!.unusedRuleIds[0];
+    expect(() => addRuleCardForNextGuess(wrong.state, "p2", replacementId))
+      .toThrow(/Only the Rule Keeper/);
+
+    const replenished = addRuleCardForNextGuess(wrong.state, "p1", replacementId);
+    const correct = guessRoundRule(replenished, "p3", "R001");
+    expect(correct.correct).toBe(true);
+    expect(correct.state.phase).toBe("complete");
+  });
+
 });
