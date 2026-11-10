@@ -396,6 +396,11 @@ export default function OfflinePage() {
           <p className="offline-eyebrow">NO INTERNET NEEDED</p>
           <h1 className="offline-title">เริ่มเกม <span>ออฟไลน์</span></h1>
           <p className="offline-copy">เล่นด้วยอุปกรณ์เครื่องเดียว ส่งต่อให้ผู้เล่นตามลำดับ</p>
+          <ul className="offline-setup-rules" aria-label="สรุปกติกาก่อนเริ่มเกม">
+            <li>ผู้เล่นทุกคนเริ่มต้นด้วยไพ่ 7 ใบ</li>
+            <li>ผู้คุมกฎไม่มีไพ่ในมือ และไม่ลงไพ่ในรอบนั้น</li>
+            <li>เล่นทั้งหมดคนละ 1 รอบ โดยผลัดกันเป็นผู้คุมกฎ</li>
+          </ul>
 
           <label className="offline-field">
             <span>จำนวนผู้เล่น</span>
