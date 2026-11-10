@@ -12,7 +12,7 @@ function validSession() {
   return {
     version: 1,
     game: startOfflineGame({
-      players,
+      players: players.map((player) => ({ ...player })),
       startingRuleKeeperId: "p1",
       firstSecretRuleId: "R001",
       random: () => 0.42,
