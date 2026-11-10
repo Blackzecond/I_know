@@ -97,3 +97,31 @@ export function awardGuessBonus(
     ),
   };
 }
+
+export interface MatchStanding {
+  playerId: string;
+  points: number;
+  rank: number;
+}
+
+/** Ranks final match totals in descending order using competition ranking. */
+export function calculateMatchStandings(
+  players: GameParticipant[],
+  totalScores: Record<string, number>,
+): MatchStanding[] {
+  const ordered = [...players].sort((a, b) => {
+    const scoreDifference = (totalScores[b.id] ?? 0) - (totalScores[a.id] ?? 0);
+    return scoreDifference || a.seatOrder - b.seatOrder;
+  });
+
+  let previousPoints: number | undefined;
+  let previousRank = 0;
+
+  return ordered.map((player, index) => {
+    const points = totalScores[player.id] ?? 0;
+    const rank = points === previousPoints ? previousRank : index + 1;
+    previousPoints = points;
+    previousRank = rank;
+    return { playerId: player.id, points, rank };
+  });
+}

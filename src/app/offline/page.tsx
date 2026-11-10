@@ -17,6 +17,7 @@ import {
   type OfflineGameState,
 } from "@/lib/game/match";
 import type { GameParticipant } from "@/lib/game/setup";
+import { calculateMatchStandings } from "@/lib/game/scoring";
 import { CardBack, RuleEmblem } from "@/components/game/animal-art";
 
 const ANIMAL_LABELS: Record<CharacterCard["animal"], string> = {
@@ -195,8 +196,7 @@ export default function OfflinePage() {
   const isMatchComplete = game?.phase === "complete";
 
   const totals = useMemo(
-    () => players.map((player) => ({ ...player, points: game?.totalScores[player.id] ?? 0 }))
-      .sort((a, b) => b.points - a.points),
+    () => calculateMatchStandings(players, game?.totalScores ?? {}),
     [game?.totalScores, players],
   );
 
@@ -442,9 +442,9 @@ export default function OfflinePage() {
           <h1 className="offline-title">สรุปผล <span>การแข่งขัน</span></h1>
           <div className="offline-score-list">
             {totals.map((player, index) => (
-              <div className="offline-score-row" key={player.id}>
-                <strong className="offline-rank">{index + 1}</strong>
-                <span>{player.displayName}</span>
+              <div className="offline-score-row" key={player.playerId}>
+                <strong className="offline-rank">{player.rank}</strong>
+                <span>{players.find((item) => item.id === player.playerId)?.displayName ?? "ผู้เล่น"}</span>
                 <b>{player.points > 0 ? "+" : ""}{player.points}</b>
               </div>
             ))}

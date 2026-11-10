@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { CHARACTER_CARDS, type CharacterCard } from "./catalog";
-import { awardGuessBonus, calculateRoundScores } from "./scoring";
+import { awardGuessBonus, calculateMatchStandings, calculateRoundScores } from "./scoring";
 import type { GameParticipant } from "./setup";
 
 const players: GameParticipant[] = [
@@ -111,6 +111,22 @@ describe("calculateRoundScores", () => {
 
     expect(snapshot.players.map((score) => score.points)).toEqual(originalPoints);
     expect(updated.players.find((score) => score.playerId === "p4")?.points).toBe(0);
+  });
+
+  it("ranks final match totals with shared places and competition ranking", () => {
+    const standings = calculateMatchStandings(players, { p1: 8, p2: 5, p3: 5, p4: 1 });
+    expect(standings).toEqual([
+      { playerId: "p1", points: 8, rank: 1 },
+      { playerId: "p2", points: 5, rank: 2 },
+      { playerId: "p3", points: 5, rank: 2 },
+      { playerId: "p4", points: 1, rank: 4 },
+    ]);
+  });
+
+  it("uses seat order only to make tied standings display deterministic", () => {
+    const standings = calculateMatchStandings(players, { p1: 3, p2: 3, p3: 3, p4: 3 });
+    expect(standings.map((standing) => standing.playerId)).toEqual(["p1", "p2", "p3", "p4"]);
+    expect(standings.map((standing) => standing.rank)).toEqual([1, 1, 1, 1]);
   });
 
 });
