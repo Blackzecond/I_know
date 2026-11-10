@@ -75,6 +75,16 @@ describe("parseOfflineSession", () => {
     expect(parseOfflineSession(JSON.stringify(duplicateCard))).toBeNull();
   });
 
+  it("rejects missing cards and unexpected hand zones", () => {
+    const missingCard = validSession();
+    missingCard.game.currentRound.drawPile.pop();
+    expect(parseOfflineSession(JSON.stringify(missingCard))).toBeNull();
+
+    const extraHand = validSession();
+    (extraHand.game.currentRound.hands as Record<string, unknown>).spectator = [];
+    expect(parseOfflineSession(JSON.stringify(extraHand))).toBeNull();
+  });
+
   it("rejects invalid player rosters and non-numeric match totals", () => {
     const duplicateSeat = validSession();
     duplicateSeat.game.players[1].seatOrder = duplicateSeat.game.players[0].seatOrder;
