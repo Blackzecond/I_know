@@ -31,3 +31,10 @@
 ## Implementation status
 
 The current offline interface has a first CSS depth pass for card faces, rule cards, the felt playmat, card piles, and the player's hand panel. The existing character drawings remain SVG vector art; replacing them with painted raster assets is a separate art-asset phase.
+
+
+## Offline table status layer
+
+- Keep public information visible without exposing private hands: show each participant's remaining hand count, highlight the active player, and distinguish the Rule Keeper.
+- Keep the roster horizontally scrollable on narrow screens so 3–7 players remain readable without compressing names.
+- Ordered card selection must communicate its sequence visually and accessibly; clearing the selection must never submit or alter game state.
