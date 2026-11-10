@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   addRuleCardForNextGuess,
   exchangeWholeHand,
@@ -121,6 +121,65 @@ export default function OfflinePage() {
   const [nextSecretRule, setNextSecretRule] = useState(RULE_CARDS[0].id);
   const [notice, setNotice] = useState("");
   const [busy, setBusy] = useState(false);
+  const [isRestoring, setIsRestoring] = useState(true);
+
+  useEffect(() => {
+    try {
+      const raw = window.localStorage.getItem("ikyd-offline-session-v1");
+      if (raw) {
+        const saved = JSON.parse(raw) as {
+          version?: number;
+          game?: OfflineGameState;
+          selectedCards?: string[];
+          keeperPlayableIds?: string[] | null;
+          handoffTo?: string | null;
+          keeperBriefing?: boolean;
+          choosingNextSecret?: boolean;
+          nextSecretRule?: string;
+          notice?: string;
+        };
+        if (saved.version === 1 && saved.game?.currentRound && saved.game.players?.length) {
+          setGame(saved.game);
+          setSelectedCards(Array.isArray(saved.selectedCards) ? saved.selectedCards : []);
+          setKeeperPlayableIds(saved.keeperPlayableIds ?? null);
+          setHandoffTo(saved.handoffTo ?? null);
+          setKeeperBriefing(Boolean(saved.keeperBriefing));
+          setChoosingNextSecret(Boolean(saved.choosingNextSecret));
+          setNextSecretRule(saved.nextSecretRule ?? RULE_CARDS[0].id);
+          setNotice(saved.notice ?? "");
+        } else {
+          window.localStorage.removeItem("ikyd-offline-session-v1");
+        }
+      }
+    } catch {
+      window.localStorage.removeItem("ikyd-offline-session-v1");
+    } finally {
+      setIsRestoring(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (isRestoring) return;
+    if (!game) {
+      window.localStorage.removeItem("ikyd-offline-session-v1");
+      return;
+    }
+    try {
+      window.localStorage.setItem("ikyd-offline-session-v1", JSON.stringify({
+        version: 1,
+        game,
+        selectedCards,
+        keeperPlayableIds,
+        handoffTo,
+        keeperBriefing,
+        choosingNextSecret,
+        nextSecretRule,
+        notice,
+      }));
+    } catch {
+      // The game remains playable if browser storage is unavailable.
+    }
+  }, [game, selectedCards, keeperPlayableIds, handoffTo, keeperBriefing, choosingNextSecret, nextSecretRule, notice, isRestoring]);
 
   const round = game?.currentRound;
   const players = game?.players ?? [];
