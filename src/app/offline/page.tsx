@@ -659,7 +659,7 @@ export default function OfflinePage() {
                 <div><p className="offline-eyebrow">CARDS IN PLAY</p><h2>ไพ่บนโต๊ะ</h2></div>
                 <span>{round.tableCards.length} ใบ</span>
               </div>
-              <div className="offline-table-cards">
+              <div className="offline-table-cards offline-table-arrive" key={round.tableCards.length}>
                 {round.tableCards.slice(-5).map((card) => <CardFace key={card.id} card={card} disabled />)}
               </div>
             </div>
@@ -669,7 +669,7 @@ export default function OfflinePage() {
             <p className="offline-eyebrow">YOUR HAND · {currentHand.length} CARDS</p>
             <h1 className="offline-title">เลือกไพ่ที่จะลง</h1>
             <p className="offline-copy">เลือกได้หลายใบตามลำดับที่ต้องการ ไพ่ทุกใบต้องผ่านกฎ</p>
-            <div className="offline-card-grid">
+            <div className="offline-card-grid offline-hand-deal" key={`${currentPlayer?.id ?? "none"}-${currentHand.length}`}>
               {currentHand.map((card) => (
                 <CardFace
                   key={card.id}
