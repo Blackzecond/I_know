@@ -1655,3 +1655,54 @@ button:disabled { opacity: .48; cursor: not-allowed; }
 @media (max-width:560px) {
   .offline-card-art.animal-painted { width: min(100%, 88px); }
 }
+
+
+/* Motion pass — feedback for the physical actions around the table */
+@keyframes offline-screen-arrive {
+  from { opacity: 0; transform: translateY(12px) scale(.99); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes offline-pile-impact {
+  0% { opacity: .65; transform: translateY(-9px) scale(.94); }
+  62% { opacity: 1; transform: translateY(2px) scale(1.025); }
+  100% { transform: translateY(0) scale(1); }
+}
+@keyframes offline-score-arrive {
+  from { opacity: 0; transform: translateX(-12px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes offline-notice-arrive {
+  0% { opacity: 0; transform: translateY(-7px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+.handoff-panel {
+  animation: offline-screen-arrive .34s cubic-bezier(.2,.72,.25,1) both;
+}
+.offline-notice {
+  animation: offline-notice-arrive .22s ease-out both;
+}
+.offline-pile-stack {
+  animation: offline-pile-impact .3s cubic-bezier(.2,.72,.25,1) both;
+  transform-origin: 50% 85%;
+}
+.offline-guess-options .offline-rule-option {
+  animation: offline-screen-arrive .32s cubic-bezier(.2,.72,.25,1) both;
+}
+.offline-guess-options .offline-rule-option:nth-child(2) { animation-delay: 45ms; }
+.offline-guess-options .offline-rule-option:nth-child(3) { animation-delay: 90ms; }
+.offline-round-score-list .offline-score-row {
+  animation: offline-score-arrive .28s ease-out both;
+}
+.offline-round-score-list .offline-score-row:nth-child(2) { animation-delay: 45ms; }
+.offline-round-score-list .offline-score-row:nth-child(3) { animation-delay: 90ms; }
+.offline-round-score-list .offline-score-row:nth-child(4) { animation-delay: 135ms; }
+.offline-round-score-list .offline-score-row:nth-child(5) { animation-delay: 180ms; }
+.offline-round-score-list .offline-score-row:nth-child(6) { animation-delay: 225ms; }
+.offline-round-score-list .offline-score-row:nth-child(7) { animation-delay: 270ms; }
+@media (prefers-reduced-motion: reduce) {
+  .handoff-panel,
+  .offline-notice,
+  .offline-pile-stack,
+  .offline-guess-options .offline-rule-option,
+  .offline-round-score-list .offline-score-row { animation: none !important; }
+}
