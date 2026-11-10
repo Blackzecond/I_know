@@ -456,7 +456,7 @@ export default function OfflinePage() {
           <Link className="wordmark" href="/">IKYD<span>✦</span></Link>
           <span className="offline-header-note">PASS & PLAY · ROUND {round?.roundNumber}</span>
         </header>
-        <section className="offline-panel handoff-panel">
+        <section className="offline-panel handoff-panel" key={`${handoffTo ?? "restore"}-${keeperBriefing ? "keeper" : choosingNextSecret ? "rule" : isKeeperSelection ? "exchange" : isGuessingHandoff ? "guess" : "pass"}`}>
           <p className="offline-eyebrow">PRIVATE SCREEN</p>
           <div className="handoff-symbol">✦</div>
           <h1 className="offline-title">ส่งอุปกรณ์ให้</h1>
@@ -491,7 +491,7 @@ export default function OfflinePage() {
         <span className="offline-header-note">OFFLINE · ROUND {round?.roundNumber}/{game.roundsToPlay}</span>
       </header>
 
-      {notice ? <p className="offline-notice" role="status">{notice}</p> : null}
+      {notice ? <p key={notice} className="offline-notice" role="status" aria-live="polite">{notice}</p> : null}
 
       {choosingNextSecret ? (
         <section className="offline-panel">
@@ -609,7 +609,7 @@ export default function OfflinePage() {
       {round?.phase === "playing" && !keeperBriefing && !isKeeperSelection && !isKeeperReplacement ? (
         <>
           <section className="offline-table-panel">
-            <div className="offline-turn-top">
+            <div className="offline-turn-top" aria-live="polite">
               <div><span>TURN</span><strong>{currentPlayer?.displayName}</strong></div>
               <div><span>RULE KEEPER</span><strong>{players.find((player) => player.id === round.ruleKeeperId)?.displayName}</strong></div>
             </div>
@@ -617,7 +617,7 @@ export default function OfflinePage() {
               <div className="offline-playmat-ornament" aria-hidden="true">✦</div>
               <div className="offline-pile-zone">
                 <div className="offline-pile offline-draw-pile">
-                  <div className="offline-pile-stack" aria-hidden="true">
+                  <div className="offline-pile-stack" key={`draw-${round.drawPile.length}`} aria-hidden="true">
                     {round.drawPile.length > 2 ? <CardBack className="offline-pile-layer pile-layer-back" /> : null}
                     {round.drawPile.length > 1 ? <CardBack className="offline-pile-layer pile-layer-middle" /> : null}
                     {round.drawPile.length > 0 ? <CardBack className="offline-pile-layer pile-layer-front" /> : null}
@@ -632,7 +632,7 @@ export default function OfflinePage() {
                   <span className="offline-playmat-caption">ไพ่คำใบ้และไพ่ที่ลงแล้ว</span>
                 </div>
                 <div className="offline-pile offline-discard-pile">
-                  <div className="offline-pile-stack offline-discard-stack">
+                  <div className="offline-pile-stack offline-discard-stack" key={`discard-${round.discardPile.length}`}>
                     {round.discardPile.length > 0 ? (
                       <CardFace card={round.discardPile[round.discardPile.length - 1]} disabled />
                     ) : <span className="offline-empty-pile">—</span>}
