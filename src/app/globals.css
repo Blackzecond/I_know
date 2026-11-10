@@ -1852,3 +1852,13 @@ button:disabled { opacity: .48; cursor: not-allowed; }
   .offline-round-progress-segment { height: 4px; }
   .offline-round-progress-count { font-size: 7px; }
 }
+
+/* Consistent keyboard focus for offline game actions and setup controls */
+.offline-primary:focus-visible,
+.offline-secondary:focus-visible,
+.offline-footer button:focus-visible,
+.offline-field input:focus-visible,
+.offline-field select:focus-visible {
+  outline: 3px solid #8060a8;
+  outline-offset: 3px;
+}
