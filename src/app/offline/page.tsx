@@ -441,7 +441,7 @@ export default function OfflinePage() {
           <p className="offline-eyebrow">THE TABLE HAS SPOKEN</p>
           <h1 className="offline-title">สรุปผล <span>การแข่งขัน</span></h1>
           <div className="offline-score-list">
-            {totals.map((player) => (
+            {totals.map((player, index) => (
               <div className="offline-score-row" key={player.playerId}>
                 <strong className="offline-rank">{player.rank}</strong>
                 <span>{players.find((item) => item.id === player.playerId)?.displayName ?? "ผู้เล่น"}</span>

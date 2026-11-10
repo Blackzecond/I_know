@@ -1,6 +1,8 @@
 import { describe, expect, it } from "vitest";
 import { advanceOfflineGame, endOfflineGameEarly, startOfflineGame, updateOfflineGameRound } from "./match";
 import { calculateRoundScores } from "./scoring";
+import { CHARACTER_CARDS } from "./catalog";
+import { addRuleCardForNextGuess, guessRoundRule, playCards } from "./actions";
 import type { GameParticipant } from "./setup";
 
 const players: GameParticipant[] = [
@@ -218,6 +220,51 @@ describe("offline match flow", () => {
 
     expect(game.totalScores).toEqual({ p1: 1, p2: 1, p3: 0 });
     expect(game.roundHistory).toHaveLength(2);
+  });
+
+  it("completes a real play, correct rule guess, score bonus, and next round transition", () => {
+    let game = startOfflineGame({
+      players,
+      startingRuleKeeperId: "p1",
+      firstSecretRuleId: "R001",
+      random: fixedRandom,
+      handSize: 1,
+    });
+
+    const pinkCard = CHARACTER_CARDS.find(
+      (card) => card.color === "pink" && card.id !== game.currentRound.clueCard.id,
+    );
+    expect(pinkCard).toBeDefined();
+
+    const playableRound = {
+      ...game.currentRound,
+      hands: {
+        ...game.currentRound.hands,
+        p2: [pinkCard!],
+      },
+      currentPlayerId: "p2",
+    };
+    const played = playCards(playableRound, "p2", [pinkCard!.id], fixedRandom);
+    expect(played.accepted).toBe(true);
+    expect(played.state.phase).toBe("guessing");
+    expect(played.state.pendingGuesserId).toBe("p2");
+
+    const correctGuess = guessRoundRule(played.state, "p2", "R001");
+    expect(correctGuess.correct).toBe(true);
+    expect(correctGuess.state.phase).toBe("complete");
+    expect(correctGuess.state.roundScore?.players.find((score) => score.playerId === "p2"))
+      .toMatchObject({ rank: 1, points: 2, cardsRemaining: 0 });
+
+    game = advanceOfflineGame(
+      updateOfflineGameRound(game, correctGuess.state),
+      "R002",
+      fixedRandom,
+    );
+    expect(game.roundsCompleted).toBe(1);
+    expect(game.totalScores.p2).toBe(2);
+    expect(game.currentRound.ruleKeeperId).toBe("p2");
+    expect(game.currentRound.roundNumber).toBe(2);
+    expect(game.phase).toBe("playing");
   });
 
 });
