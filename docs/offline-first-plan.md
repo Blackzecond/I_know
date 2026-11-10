@@ -38,10 +38,14 @@ Before changing rules or game behavior, read [game-rules.md](./game-rules.md). I
 - Added a direct Offline entry point from the home page.
 - The latest full CI run passed: lint, TypeScript typecheck, unit tests, and production build.
 
+## Phase 3 exit status
+
+Phase 3 — Visual & Interaction Polish is implementation-complete and has passed source-level review plus the full CI pipeline on the current branch. Browser/device playthrough is intentionally tracked as a Phase 5 QA gate because no browser automation/control runner is available in this environment.
+
 ## Remaining offline work
 
-- Continue refining the painted character atlas; the current 384×96 atlas remains a low-resolution prototype, not final production art. Card interaction polish now includes ordered selection markers, a clear-selection action, public player hand counts, active-turn/Rule Keeper highlights, recent-table-card context, and segmented match-round progress.
-- Complete browser-level/manual playthrough checks for 3–7 players, especially device handoffs and hidden-information privacy. Automated unit tests and production build pass, but browser playthrough remains unverified.
+- Phase 3 visual and interaction implementation is complete: ordered selection markers, clear-selection action, public player hand counts, active-turn/Rule Keeper highlights, recent-table-card context, segmented match-round progress, semantic roster, keyboard focus indicators, and reduced-motion behavior. See [phase-3-qa.md](./phase-3-qa.md) for the verification record.
+- Browser-level/manual playthrough checks for 3–7 players, especially device handoffs and hidden-information privacy, remain explicitly scheduled for Phase 5 QA. Automated CI and source-level review pass; no browser playthrough is claimed.
 - Versioned localStorage persistence now restores the match, current handoff, selected cards, and private keeper/guessing screens after refresh; malformed or incompatible sessions are discarded safely.
 - Continue strengthening state invariants and cover any issues found during full-game playtests.
 - Resume online multiplayer only after the offline rules and engine are stable and the user approves resuming online work.
