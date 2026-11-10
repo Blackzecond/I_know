@@ -165,4 +165,59 @@ describe("offline match flow", () => {
     })).toThrow(/does not belong/);
   });
 
+  it("accumulates round points across rounds while each Rule Keeper scores zero", () => {
+    let game = startOfflineGame({
+      players,
+      startingRuleKeeperId: "p1",
+      firstSecretRuleId: "R001",
+      random: fixedRandom,
+      handSize: 1,
+    });
+
+    const firstRound = {
+      ...game.currentRound,
+      phase: "complete" as const,
+      endReason: "player_empty_hand" as const,
+      hands: {
+        ...game.currentRound.hands,
+        p2: [],
+        p3: [game.currentRound.clueCard],
+      },
+    };
+    game = advanceOfflineGame(updateOfflineGameRound(game, {
+      ...firstRound,
+      roundScore: calculateRoundScores(
+        firstRound.players,
+        firstRound.hands,
+        firstRound.ruleKeeperId,
+        "player_empty_hand",
+      ),
+    }), "R002", fixedRandom);
+
+    expect(game.totalScores).toEqual({ p1: 0, p2: 1, p3: 0 });
+
+    const secondRound = {
+      ...game.currentRound,
+      phase: "complete" as const,
+      endReason: "player_empty_hand" as const,
+      hands: {
+        ...game.currentRound.hands,
+        p1: [],
+        p3: [game.currentRound.clueCard],
+      },
+    };
+    game = advanceOfflineGame(updateOfflineGameRound(game, {
+      ...secondRound,
+      roundScore: calculateRoundScores(
+        secondRound.players,
+        secondRound.hands,
+        secondRound.ruleKeeperId,
+        "player_empty_hand",
+      ),
+    }), "R003", fixedRandom);
+
+    expect(game.totalScores).toEqual({ p1: 1, p2: 1, p3: 0 });
+    expect(game.roundHistory).toHaveLength(2);
+  });
+
 });
