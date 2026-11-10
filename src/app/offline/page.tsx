@@ -184,7 +184,7 @@ export default function OfflinePage() {
   }, [game, selectedCards, keeperPlayableIds, handoffTo, keeperBriefing, choosingNextSecret, nextSecretRule, notice, isRestoring]);
 
   const round = game?.currentRound;
-  const players = game?.players ?? [];
+  const players = useMemo(() => game?.players ?? [], [game?.players]);
   const currentPlayer = round?.players.find((player) => player.id === round.currentPlayerId);
   const currentHand = round && currentPlayer ? round.hands[currentPlayer.id] : [];
   const guessState = round?.ruleGuessState;
@@ -193,6 +193,12 @@ export default function OfflinePage() {
   const isGuessing = round?.phase === "guessing";
   const isRoundComplete = round?.phase === "complete";
   const isMatchComplete = game?.phase === "complete";
+
+  const totals = useMemo(
+    () => players.map((player) => ({ ...player, points: game?.totalScores[player.id] ?? 0 }))
+      .sort((a, b) => b.points - a.points),
+    [game?.totalScores, players],
+  );
 
   if (isRestoring) {
     return (
@@ -205,12 +211,6 @@ export default function OfflinePage() {
       </main>
     );
   }
-
-  const totals = useMemo(
-    () => players.map((player) => ({ ...player, points: game?.totalScores[player.id] ?? 0 }))
-      .sort((a, b) => b.points - a.points),
-    [game?.totalScores, players],
-  );
 
   function updateGameWithRound(updatedRound: typeof round) {
     if (!game || !updatedRound) return;
