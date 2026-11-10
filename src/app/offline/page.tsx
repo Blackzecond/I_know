@@ -192,6 +192,18 @@ export default function OfflinePage() {
   const isRoundComplete = round?.phase === "complete";
   const isMatchComplete = game?.phase === "complete";
 
+  if (isRestoring) {
+    return (
+      <main className="offline-page">
+        <section className="offline-panel handoff-panel">
+          <p className="offline-eyebrow">OFFLINE SESSION</p>
+          <h1 className="offline-title">กำลังกู้คืน <span>เกมล่าสุด</span></h1>
+          <p className="offline-copy">กำลังโหลดสถานะเกมจากอุปกรณ์นี้</p>
+        </section>
+      </main>
+    );
+  }
+
   const totals = useMemo(
     () => players.map((player) => ({ ...player, points: game?.totalScores[player.id] ?? 0 }))
       .sort((a, b) => b.points - a.points),
