@@ -645,7 +645,7 @@ export default function OfflinePage() {
               <div><span>TURN</span><strong>{currentPlayer?.displayName}</strong></div>
               <div><span>RULE KEEPER</span><strong>{players.find((player) => player.id === round.ruleKeeperId)?.displayName}</strong></div>
             </div>
-            <div className="offline-player-rail" aria-label="สถานะผู้เล่นในรอบนี้">
+            <div className="offline-player-rail" role="list" aria-label="สถานะผู้เล่นในรอบนี้">
               {players.map((player) => {
                 const isRuleKeeper = player.id === round.ruleKeeperId;
                 const isCurrentTurn = player.id === round.currentPlayerId;
@@ -654,6 +654,7 @@ export default function OfflinePage() {
                   <div
                     className={`offline-player-chip${isCurrentTurn ? " is-current" : ""}${isRuleKeeper ? " is-keeper" : ""}`}
                     key={player.id}
+                    role="listitem"
                     aria-current={isCurrentTurn ? "step" : undefined}
                     aria-label={`${player.displayName}, ${isRuleKeeper ? "ผู้คุมกฎ" : `เหลือไพ่ ${remaining} ใบ`}${isCurrentTurn ? ", กำลังเล่น" : ""}`}
                   >
