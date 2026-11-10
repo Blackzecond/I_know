@@ -124,38 +124,40 @@ export default function OfflinePage() {
   const [isRestoring, setIsRestoring] = useState(true);
 
   useEffect(() => {
-    try {
-      const raw = window.localStorage.getItem("ikyd-offline-session-v1");
-      if (raw) {
-        const saved = JSON.parse(raw) as {
-          version?: number;
-          game?: OfflineGameState;
-          selectedCards?: string[];
-          keeperPlayableIds?: string[] | null;
-          handoffTo?: string | null;
-          keeperBriefing?: boolean;
-          choosingNextSecret?: boolean;
-          nextSecretRule?: string;
-          notice?: string;
-        };
-        if (saved.version === 1 && saved.game?.currentRound && saved.game.players?.length) {
-          setGame(saved.game);
-          setSelectedCards(Array.isArray(saved.selectedCards) ? saved.selectedCards : []);
-          setKeeperPlayableIds(saved.keeperPlayableIds ?? null);
-          setHandoffTo(saved.handoffTo ?? null);
-          setKeeperBriefing(Boolean(saved.keeperBriefing));
-          setChoosingNextSecret(Boolean(saved.choosingNextSecret));
-          setNextSecretRule(saved.nextSecretRule ?? RULE_CARDS[0].id);
-          setNotice(saved.notice ?? "");
-        } else {
-          try { window.localStorage.removeItem("ikyd-offline-session-v1"); } catch { /* Storage may be disabled. */ }
+    queueMicrotask(() => {
+      try {
+        const raw = window.localStorage.getItem("ikyd-offline-session-v1");
+        if (raw) {
+          const saved = JSON.parse(raw) as {
+            version?: number;
+            game?: OfflineGameState;
+            selectedCards?: string[];
+            keeperPlayableIds?: string[] | null;
+            handoffTo?: string | null;
+            keeperBriefing?: boolean;
+            choosingNextSecret?: boolean;
+            nextSecretRule?: string;
+            notice?: string;
+          };
+          if (saved.version === 1 && saved.game?.currentRound && saved.game.players?.length) {
+            setGame(saved.game);
+            setSelectedCards(Array.isArray(saved.selectedCards) ? saved.selectedCards : []);
+            setKeeperPlayableIds(saved.keeperPlayableIds ?? null);
+            setHandoffTo(saved.handoffTo ?? null);
+            setKeeperBriefing(Boolean(saved.keeperBriefing));
+            setChoosingNextSecret(Boolean(saved.choosingNextSecret));
+            setNextSecretRule(saved.nextSecretRule ?? RULE_CARDS[0].id);
+            setNotice(saved.notice ?? "");
+          } else {
+            try { window.localStorage.removeItem("ikyd-offline-session-v1"); } catch { /* Storage may be disabled. */ }
+          }
         }
+      } catch {
+        try { window.localStorage.removeItem("ikyd-offline-session-v1"); } catch { /* Storage may be disabled. */ }
+      } finally {
+        setIsRestoring(false);
       }
-    } catch {
-      try { window.localStorage.removeItem("ikyd-offline-session-v1"); } catch { /* Storage may be disabled. */ }
-    } finally {
-      setIsRestoring(false);
-    }
+    });
   }, []);
 
   useEffect(() => {
