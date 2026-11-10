@@ -18,6 +18,7 @@ import {
 } from "@/lib/game/match";
 import type { GameParticipant } from "@/lib/game/setup";
 import { calculateMatchStandings } from "@/lib/game/scoring";
+import { parseOfflineSession } from "@/lib/game/session";
 import { CardBack, RuleEmblem } from "@/components/game/animal-art";
 
 const ANIMAL_LABELS: Record<CharacterCard["animal"], string> = {
@@ -129,26 +130,16 @@ export default function OfflinePage() {
       try {
         const raw = window.localStorage.getItem("ikyd-offline-session-v1");
         if (raw) {
-          const saved = JSON.parse(raw) as {
-            version?: number;
-            game?: OfflineGameState;
-            selectedCards?: string[];
-            keeperPlayableIds?: string[] | null;
-            handoffTo?: string | null;
-            keeperBriefing?: boolean;
-            choosingNextSecret?: boolean;
-            nextSecretRule?: string;
-            notice?: string;
-          };
-          if (saved.version === 1 && saved.game?.currentRound && saved.game.players?.length) {
+          const saved = parseOfflineSession(raw);
+          if (saved) {
             setGame(saved.game);
-            setSelectedCards(Array.isArray(saved.selectedCards) ? saved.selectedCards : []);
-            setKeeperPlayableIds(saved.keeperPlayableIds ?? null);
-            setHandoffTo(saved.handoffTo ?? null);
-            setKeeperBriefing(Boolean(saved.keeperBriefing));
-            setChoosingNextSecret(Boolean(saved.choosingNextSecret));
-            setNextSecretRule(saved.nextSecretRule ?? RULE_CARDS[0].id);
-            setNotice(saved.notice ?? "");
+            setSelectedCards(saved.selectedCards);
+            setKeeperPlayableIds(saved.keeperPlayableIds);
+            setHandoffTo(saved.handoffTo);
+            setKeeperBriefing(saved.keeperBriefing);
+            setChoosingNextSecret(saved.choosingNextSecret);
+            setNextSecretRule(saved.nextSecretRule);
+            setNotice(saved.notice);
           } else {
             try { window.localStorage.removeItem("ikyd-offline-session-v1"); } catch { /* Storage may be disabled. */ }
           }
@@ -441,7 +432,7 @@ export default function OfflinePage() {
           <p className="offline-eyebrow">THE TABLE HAS SPOKEN</p>
           <h1 className="offline-title">สรุปผล <span>การแข่งขัน</span></h1>
           <div className="offline-score-list">
-            {totals.map((player, index) => (
+            {totals.map((player) => (
               <div className="offline-score-row" key={player.playerId}>
                 <strong className="offline-rank">{player.rank}</strong>
                 <span>{players.find((item) => item.id === player.playerId)?.displayName ?? "ผู้เล่น"}</span>
