@@ -1784,3 +1784,22 @@ button:disabled { opacity: .48; cursor: not-allowed; }
   background: linear-gradient(145deg,#fff8e6,#f0dfb8);
   box-shadow: inset 0 1px rgba(255,255,255,.9), 0 2px 5px rgba(111,86,46,.1);
 }
+
+
+/* Live table roster: public hand counts and turn ownership at a glance */
+.offline-player-rail{display:flex;gap:8px;margin:13px 0 0;padding:2px 1px 7px;overflow-x:auto;overscroll-behavior-inline:contain;scrollbar-width:thin;scrollbar-color:rgba(125,103,140,.24) transparent}
+.offline-player-chip{position:relative;display:flex;flex:1 0 104px;flex-direction:column;gap:4px;min-width:0;padding:9px 10px 8px;border:1px solid rgba(128,109,139,.15);border-radius:12px;background:linear-gradient(145deg,rgba(255,255,255,.96),rgba(247,243,248,.9));box-shadow:0 3px 8px rgba(65,47,74,.035),inset 0 1px rgba(255,255,255,.9)}
+.offline-player-chip-name{overflow:hidden;color:#75697d;font-size:10px;font-weight:800;text-overflow:ellipsis;white-space:nowrap}
+.offline-player-chip>strong{color:#51445b;font-family:Georgia,"Noto Serif Thai",serif;font-size:13px;font-weight:800}
+.offline-player-chip.is-current{border-color:rgba(119,91,151,.48);background:linear-gradient(145deg,#fff,#f1eaf6);box-shadow:0 0 0 2px rgba(119,91,151,.1),0 5px 11px rgba(87,65,111,.08),inset 0 1px #fff}
+.offline-player-chip.is-current .offline-player-chip-name,.offline-player-chip.is-current>strong{color:#71548f}
+.offline-player-chip.is-keeper{border-color:rgba(190,157,91,.38);background:linear-gradient(145deg,#fffdf7,#f8f0dc)}
+.offline-player-chip.is-keeper>strong{color:#98783c}
+.offline-player-chip-tag{position:absolute;top:6px;right:7px;color:#80649a;font-size:7px;font-weight:900;letter-spacing:.04em}
+.offline-hand-instructions{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.offline-hand-instructions .offline-copy{min-width:0}
+.offline-clear-selection{flex:0 0 auto;padding:6px 9px;border:1px solid #e9e0ee;border-radius:9px;color:#765f89;background:#fbf8fc;font-size:9px;font-weight:800;cursor:pointer;transition:background .15s ease,border-color .15s ease}
+.offline-clear-selection:hover{border-color:#cdbbd9;background:#f2ebf6}
+.offline-clear-selection:focus-visible{outline:2px solid #8060a8;outline-offset:2px}
+@media(max-width:560px){.offline-player-rail{gap:6px;margin-top:10px}.offline-player-chip{flex-basis:91px;padding:8px 8px 7px;border-radius:10px}.offline-player-chip-name{font-size:9px}.offline-player-chip>strong{font-size:12px}.offline-player-chip-tag{top:5px;right:6px;font-size:6px}.offline-hand-instructions{align-items:flex-start}.offline-clear-selection{margin-top:5px}}
+@media(prefers-reduced-motion:reduce){.offline-clear-selection{transition:none}}

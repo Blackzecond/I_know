@@ -622,6 +622,25 @@ export default function OfflinePage() {
               <div><span>TURN</span><strong>{currentPlayer?.displayName}</strong></div>
               <div><span>RULE KEEPER</span><strong>{players.find((player) => player.id === round.ruleKeeperId)?.displayName}</strong></div>
             </div>
+            <div className="offline-player-rail" aria-label="สถานะผู้เล่นในรอบนี้">
+              {players.map((player) => {
+                const isRuleKeeper = player.id === round.ruleKeeperId;
+                const isCurrentTurn = player.id === round.currentPlayerId;
+                const remaining = round.hands[player.id]?.length ?? 0;
+                return (
+                  <div
+                    className={`offline-player-chip${isCurrentTurn ? " is-current" : ""}${isRuleKeeper ? " is-keeper" : ""}`}
+                    key={player.id}
+                    aria-current={isCurrentTurn ? "step" : undefined}
+                    aria-label={`${player.displayName}, ${isRuleKeeper ? "ผู้คุมกฎ" : `เหลือไพ่ ${remaining} ใบ`}${isCurrentTurn ? ", กำลังเล่น" : ""}`}
+                  >
+                    <span className="offline-player-chip-name">{player.displayName}</span>
+                    <strong>{isRuleKeeper ? "ผู้คุมกฎ" : `${remaining} ใบ`}</strong>
+                    {isCurrentTurn ? <span className="offline-player-chip-tag">เทิร์นนี้</span> : null}
+                  </div>
+                );
+              })}
+            </div>
             <div className="offline-playmat">
               <div className="offline-playmat-ornament" aria-hidden="true">✦</div>
               <div className="offline-pile-zone">
@@ -663,7 +682,14 @@ export default function OfflinePage() {
           <section className="offline-panel offline-hand-panel">
             <p className="offline-eyebrow" aria-live="polite" aria-atomic="true">YOUR HAND · {currentHand.length} CARDS · {selectedCards.length} SELECTED</p>
             <h1 className="offline-title">เลือกไพ่ที่จะลง</h1>
-            <p className="offline-copy">เลือกได้หลายใบตามลำดับที่ต้องการ หมายเลขบนไพ่แสดงลำดับที่จะลง และไพ่ทุกใบต้องผ่านกฎ</p>
+            <div className="offline-hand-instructions">
+              <p className="offline-copy">เลือกได้หลายใบตามลำดับที่ต้องการ หมายเลขบนไพ่แสดงลำดับที่จะลง และไพ่ทุกใบต้องผ่านกฎ</p>
+              {selectedCards.length > 0 ? (
+                <button className="offline-clear-selection" type="button" onClick={() => setSelectedCards([])}>
+                  ล้างที่เลือก
+                </button>
+              ) : null}
+            </div>
             <div className="offline-card-grid offline-hand-deal" key={`${currentPlayer?.id ?? "none"}-${currentHand.length}`}>
               {currentHand.map((card) => (
                 <CardFace
