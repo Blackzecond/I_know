@@ -86,6 +86,10 @@ Character paintings should remain cohesive complete portraits. Do not cut a char
 - Avoid neon, hard black outlines, plastic shine, heavy bloom, cluttered scenery, oversized fantasy props, and mismatched illustration styles.
 - Screen background and UI must support the cards, not compete with them.
 
+## Implementation checkpoint
+
+The offline Character Card now uses independent DOM/CSS layers for card stock, color wash, frame, corner ornaments, portrait, foreground accents, and UI data. The existing four-animal atlas remains a temporary portrait source. This validates the composition architecture only; the 12 production paintings, final card back, Rule Card art, and environment assets are still outstanding.
+
 ## Current exploration
 
 The first generated concept board explored the general game world and card composition, but its fantasy spectacle is now intentionally toned down. Use it only as a broad composition reference, not as the final mood target. The approved direction is softer, cozier, more natural, and less ornate. Individual production portraits and code integration remain outstanding.
