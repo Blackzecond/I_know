@@ -2080,3 +2080,17 @@ button:disabled { opacity: .48; cursor: not-allowed; }
 .offline-card-art-layer.animal-painted-rabbit { background-position-x: 33.3333%; }
 .offline-card-art-layer.animal-painted-frog { background-position-x: 66.6667%; }
 .offline-card-art-layer.animal-painted-fox { background-position-x: 100%; }
+
+/* Portrait atlas fallback for the layered character slot */
+.offline-card-art-layer.animal-painted {
+  background-image: url("/game/animal-painted-atlas.webp");
+  background-repeat: no-repeat;
+  background-size: 400% 100%;
+  background-position-y: center;
+  border-radius: 44%;
+  overflow: hidden;
+}
+.offline-card-art-layer.animal-painted-cat { background-position-x: 0%; }
+.offline-card-art-layer.animal-painted-rabbit { background-position-x: 33.3333%; }
+.offline-card-art-layer.animal-painted-frog { background-position-x: 66.6667%; }
+.offline-card-art-layer.animal-painted-fox { background-position-x: 100%; }
