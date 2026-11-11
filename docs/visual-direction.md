@@ -2,33 +2,34 @@
 
 ## Approved visual identity
 
-**Fantasy Minimalist Pastel — Stylized Semi-Realistic 2.5D.**
+**Soft Fantasy / Cozy Pastel — Stylized Semi-Realistic 2.5D.**
 
-A premium magical tabletop card game: whimsical and enchanted, with refined fantasy details and gentle effects, while remaining calm, uncluttered, and easy to read. Every screen, card, illustration, icon, and animation must look as though it belongs to one coherent world.
+A premium, gentle storybook tabletop game. It should feel warm, soft, and welcoming, with a little hidden magic rather than grand fantasy spectacle. The whole product must feel like one coherent illustrated world.
 
-This is neither generic high-fantasy spectacle nor flat minimal UI. It is a soft storybook world with controlled ornament, material depth, and restrained glow.
+The target is softer and less overtly fantastical than the first concept board: natural light, quiet enchanted woodland details, delicate materials, and restrained magical accents. Keep the charm; reduce the visual noise.
 
 ## Mood and world
 
-- A peaceful enchanted garden / woodland realm with a warm, welcoming atmosphere.
-- Soft ambient light, delicate haze, tiny floating motes, subtle stardust, and occasional magical glimmers.
-- Organic motifs such as leaves, petals, moon-stars, small runes, and elegant botanical flourishes.
-- Fantasy details frame the content rather than compete with it.
-- Avoid dark, threatening, overly medieval, or aggressively dramatic styling.
+- A peaceful garden / woodland clearing with soft morning or late-afternoon light.
+- Warm diffused lighting, gentle atmospheric depth, soft shadows, and a little natural haze.
+- Small botanical details: leaves, tiny flowers, petals, seed heads, and occasional firefly-like motes.
+- Magic is subtle: a faint glimmer, a delicate halo, a tiny star detail, or a soft light trail only when it supports feedback.
+- Avoid grand castles, dramatic fantasy skies, large magical circles, dense sparkles, oversized crowns, and ornate high-fantasy decoration.
+- Keep negative space around the play area and character portraits.
 
 ## Core palette
 
-Use muted, low-saturation pastel colors with warm neutral foundations.
+Use muted, low-saturation pastels with warm neutral foundations.
 
 | Role | Color direction | Suggested token |
 |---|---|---|
 | Pink identity | Powder rose | #EFBBCB |
 | Blue identity | Mist blue | #AFCFE8 |
-| Gold identity | Champagne gold | #E8D39A |
+| Gold identity | Soft champagne | #E8D39A |
 | World / play surface | Muted sage | #C7D8C2 |
-| Magical accent | Soft lavender | #D5C6E6 |
+| Secondary accent | Dusty lavender | #D5C6E6 |
 | Card / panel surface | Warm ivory | #F3EBDD |
-| Main ink | Deep plum-charcoal | #51485D |
+| Main ink | Soft plum-charcoal | #51485D |
 | Fine ornament | Muted antique gold | #C6A96B |
 
 These are starting tokens, not rigid limits. Maintain sufficient contrast. Pink, blue, and gold remain canonical card identities.
@@ -37,40 +38,41 @@ These are starting tokens, not rigid limits. Maintain sufficient contrast. Pink,
 
 - Final character illustrations are high-resolution 2D digital paintings, not SVG cartoons and not 3D renders.
 - Four animal identities: cat, rabbit, frog, and fox.
-- Each animal has a consistent recognizable silhouette and personality across all color variants.
-- Soft believable fur / skin / material texture, painterly edge control, nuanced form shadows, gentle rim light, and expressive but restrained faces.
-- Pastel clothing, magical accessories, tiny botanical details, and subtle particles may be used where they support the character.
-- Keep the character as the unmistakable focal point; backgrounds remain quiet and uncluttered.
+- Soft, believable fur / skin texture; gentle painterly edges; natural form shadows; soft highlights; restrained expressions.
+- Friendly, charming characters with personality conveyed through face, pose, and small costume details rather than elaborate fantasy outfits.
+- Use simple pastel scarves, collars, ribbons, tiny charms, or botanical accessories. Avoid heavy armor, elaborate crowns, oversized jewels, and complex costume silhouettes.
+- Keep the character as the focal point against a quiet, low-detail background.
 - Plan for 12 reusable portrait masters (4 animals × 3 color identities). Card numbers 1–6 remain live UI elements and must not be baked into art.
-- Preserve clean silhouettes and safe margins for mobile crops.
+- Keep consistent camera angle, light direction, portrait scale, and crop-safe margins.
 
 ## Card system
 
 - Warm ivory paper/card stock with subtle tactile grain.
-- Delicate double frames, softly raised bevels, rounded corners, fine corner flourishes, and restrained champagne-gold foil.
-- Contained soft glow or a few sparkles may identify magical states; avoid thick neon outlines and excessive bloom.
-- Character portrait occupies the visual center. Animal name, color identity, and number remain high-contrast and scannable.
-- Rule Cards share the same paper, frame, typography, and ornament language, but use distinct symbolic illustrations.
-- Card backs feel like the reverse of the same deck, with one memorable magical emblem.
-- Depth comes from layered 2D assets, CSS gradients, perspective, inset highlights, and contact shadows.
+- Delicate double frame, softly raised bevel, rounded corners, and fine botanical corner accents.
+- Champagne-gold details should be thin and matte / satin rather than bright metallic glare.
+- Character portrait occupies the visual center. Animal identity, color, and number remain high-contrast and immediately scannable.
+- Use a gentle color wash or small identity accent, not a full saturated background.
+- Rule Cards share the same paper, frame, typography, and ornament language, with simple symbolic illustrations.
+- Card backs feel like the reverse of the same deck, with one quiet, memorable emblem.
+- Depth comes from layered assets, CSS gradients, perspective, inset highlights, and contact shadows.
 
 ## Table and play environment
 
-- Calm sage / muted green felt or fabric play surface with fine, low-contrast texture.
-- Warm ivory and antique-gold edging, subtle botanical / celestial markings, and soft ambient shading.
+- Muted sage / soft green fabric play surface with a fine, low-contrast texture.
+- Warm ivory and subtle antique-gold edging; botanical markings are sparse and low contrast.
 - Card piles show layered edges, small natural rotations, and consistent cast shadows.
 - Keep the central play area quiet so card identity and turn state remain clear.
-- Decorative elements stay at the periphery and never obstruct interaction or contrast.
+- Environment decoration stays near the perimeter and never competes with cards or blocks interaction.
 
-## Motion and magical effects
+## Motion and effects
 
-- Deal: cards rise gently from the deck, travel with a small arc, then settle with a soft shadow.
+- Deal: cards rise gently from the deck, travel on a short soft arc, then settle with a contact shadow.
 - Play: selected cards lift, tilt slightly, and glide to the table; preserve selected order.
 - Draw: one card separates from the pile and moves into the player's hand.
-- Turn / handoff: restrained glow or short transition signals whose turn it is.
-- Correct / incorrect feedback: distinct but calm magical responses (warm sparkle / muted pulse), never aggressive flashing or shaking.
+- Turn / handoff: a soft highlight or short fade signals whose turn it is.
+- Correct / incorrect feedback: warm tiny sparkle or muted pulse; avoid flashing, explosive bursts, or aggressive shaking.
 - Selection: gentle lift, fine outline, and clear order marker.
-- Motion is short, purposeful, and non-blocking. Respect reduced-motion preferences and provide equivalent non-animated feedback.
+- Keep motion short, purposeful, and non-blocking. Respect reduced-motion preferences and provide equivalent static feedback.
 
 ## Interface consistency
 
@@ -83,22 +85,19 @@ These are starting tokens, not rigid limits. Maintain sufficient contrast. Pink,
 ## Rendering and asset pipeline
 
 1. Use high-resolution raster paintings for final character art. Use SVG only for scalable emblems, icons, fine ornaments, and simple interface details.
-2. Keep art assets independent of game rules and card data; the same portrait master may be reused by six numbered cards.
-3. Store source artwork and optimized web exports separately when practical. Preserve a documented animal/color-to-asset mapping.
-4. Use CSS for layered paper depth, soft shadows, foil-like gradients, subtle glow, perspective, and transitions.
-5. Optimize raster assets for responsive high-density screens; prefer modern formats such as WebP / AVIF for delivery, retaining editable source masters.
-6. Include reduced-motion behavior and verify text contrast, focus visibility, and mobile crop safety.
+2. Compose the visual scene from independent layers where useful: background, play surface, card shadows, card body/frame, portrait, number/labels, and foreground accents.
+3. Keep character portrait paintings cohesive as individual raster assets; do not slice a finished character into arbitrary fragments if that damages painterly continuity. Optional accessories or small effects may be separate transparent layers when they genuinely need independent motion.
+4. Use transparent PNG or WebP layers for compositional pieces, with documented dimensions, anchor points, and naming. Keep source masters separate from optimized delivery exports.
+5. Use sprite sheets / atlases for small repeated icons, particles, and frame-by-frame animation sequences where a shared cell size is useful. Do not put unrelated full-screen layers into one sprite sheet.
+6. Assemble layers with CSS positioning, z-index, transforms, perspective, gradients, and contact shadows. This creates parallax-like 2.5D depth without 3D models.
+7. Keep art assets independent of game rules and card data; the same portrait master may be reused by six numbered cards.
+8. Optimize raster assets for responsive high-density screens; preserve editable source masters and provide a documented animal/color-to-asset map.
+9. Include reduced-motion behavior and verify text contrast, focus visibility, and mobile crop safety.
 
 ## Quality guardrails
 
-- Avoid flat clip-art, harsh outlines, plastic gloss, heavy bloom, noisy textures, oversaturated gradients, and unrelated visual styles.
+- Avoid flat clip-art, harsh outlines, plastic gloss, heavy bloom, noisy textures, oversaturated gradients, cluttered scenery, and unrelated visual styles.
 - A dense ornate screen is not automatically premium; whitespace and hierarchy are essential.
 - Do not bake numbers, text, or game state into character paintings.
 - Current SVG animal art is prototype-only, not final digital painting.
 - No 3D models or real-time 3D engine are required.
-
-## Current asset status
-
-The existing SVG animal illustrations and CSS card treatment are prototypes, not final production character art.
-
-A generated full-screen concept board is an art-direction exploration only. It is not a shippable game screen, final character asset set, or verified implementation. Production character portraits still need to be generated, reviewed for consistency, exported as individual assets, and integrated into the card component.
