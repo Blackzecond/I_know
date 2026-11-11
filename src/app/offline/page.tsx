@@ -99,7 +99,7 @@ function CardFace({
       </span>
       <span className="offline-card-art-stage">
         <span className="offline-card-halo" aria-hidden="true" />
-        <span className="offline-card-art-layer animal-painted animal-painted-${card.animal}" role="img" aria-label={ANIMAL_LABELS[card.animal]}>
+        <span className={`offline-card-art-layer animal-painted animal-painted-${card.animal}`} role="img" aria-label={ANIMAL_LABELS[card.animal]}>
           <span className="offline-card-portrait" />
         </span>
         <span className="offline-card-foreground offline-card-leaf" aria-hidden="true">❧</span>
