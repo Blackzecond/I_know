@@ -20,6 +20,7 @@ import type { GameParticipant } from "@/lib/game/setup";
 import { calculateMatchStandings } from "@/lib/game/scoring";
 import { parseOfflineSession } from "@/lib/game/session";
 import { CardBack, RuleEmblem } from "@/components/game/animal-art";
+import { getCharacterArt } from "@/lib/game/art-assets";
 
 const ANIMAL_LABELS: Record<CharacterCard["animal"], string> = {
   cat: "แมว",
@@ -74,6 +75,13 @@ function CardFace({
   onClick?: () => void;
   disabled?: boolean;
 }) {
+  const art = getCharacterArt(card.animal, card.color);
+  const artStyle = {
+    backgroundImage: `url(${art.src})`,
+    backgroundSize: `${art.atlasColumns * 100}% ${art.atlasRows * 100}%`,
+    backgroundPosition: `${art.atlasColumns === 1 ? 50 : (art.atlasColumn / (art.atlasColumns - 1)) * 100}% ${art.atlasRows === 1 ? 50 : (art.atlasRow / (art.atlasRows - 1)) * 100}%`,
+  };
+
   return (
     <button
       className={`offline-card card-${card.color}${selected ? " is-selected" : ""}`}
@@ -99,7 +107,13 @@ function CardFace({
       </span>
       <span className="offline-card-art-stage">
         <span className="offline-card-halo" aria-hidden="true" />
-        <span className={`offline-card-art-layer animal-painted animal-painted-${card.animal}`} role="img" aria-label={ANIMAL_LABELS[card.animal]}>
+        <span
+          className={`offline-card-art-layer animal-painted animal-painted-${card.animal}`}
+          style={artStyle}
+          data-art-status={art.status}
+          role="img"
+          aria-label={art.alt}
+        >
           <span className="offline-card-portrait" />
         </span>
         <span className="offline-card-foreground offline-card-leaf" aria-hidden="true">❧</span>
