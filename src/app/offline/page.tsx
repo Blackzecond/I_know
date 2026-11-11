@@ -84,16 +84,26 @@ function CardFace({
       aria-label={`${ANIMAL_LABELS[card.animal]} สี${COLOR_LABELS[card.color]} หมายเลข ${card.number}${selectionOrder ? ` ลำดับที่ ${selectionOrder}` : ""}`}
     >
       {selectionOrder ? <span className="offline-card-selection-order" aria-hidden="true">{selectionOrder}</span> : null}
-      <span className="offline-card-frame" aria-hidden="true" />
+      <span className="offline-card-stock" aria-hidden="true" />
+      <span className="offline-card-wash" aria-hidden="true" />
+      <span className="offline-card-frame" aria-hidden="true">
+        <span className="offline-card-frame-inner" />
+        <span className="offline-card-corner offline-card-corner-tl" />
+        <span className="offline-card-corner offline-card-corner-tr" />
+        <span className="offline-card-corner offline-card-corner-bl" />
+        <span className="offline-card-corner offline-card-corner-br" />
+      </span>
       <span className="offline-card-top">
         <span className="offline-card-brand">I KNOW <i>✦</i> YOU DON&apos;T</span>
         <span className="offline-card-index">{card.id.slice(-2)}</span>
       </span>
       <span className="offline-card-art-stage">
         <span className="offline-card-halo" aria-hidden="true" />
-        <span className={`offline-card-art animal-painted animal-painted-${card.animal}`} role="img" aria-label={ANIMAL_LABELS[card.animal]} />
-        <span className="offline-card-sparkle sparkle-one" aria-hidden="true">✧</span>
-        <span className="offline-card-sparkle sparkle-two" aria-hidden="true">✦</span>
+        <span className="offline-card-art-layer animal-painted animal-painted-${card.animal}" role="img" aria-label={ANIMAL_LABELS[card.animal]}>
+          <span className="offline-card-portrait" />
+        </span>
+        <span className="offline-card-foreground offline-card-leaf" aria-hidden="true">❧</span>
+        <span className="offline-card-foreground offline-card-glint" aria-hidden="true">✧</span>
       </span>
       <span className="offline-card-bottom">
         <span className="offline-card-name">{ANIMAL_LABELS[card.animal]}</span>
