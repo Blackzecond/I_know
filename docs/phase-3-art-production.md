@@ -93,3 +93,10 @@ The offline Character Card now uses independent DOM/CSS layers for card stock, c
 ## Current exploration
 
 The first generated concept board explored the general game world and card composition, but its fantasy spectacle is now intentionally toned down. Use it only as a broad composition reference, not as the final mood target. The approved direction is softer, cozier, more natural, and less ornate. Individual production portraits and code integration remain outstanding.
+
+## Asset manifest checkpoint
+
+- Added `src/lib/game/art-assets.ts` as the single source of truth for portrait paths, atlas coordinates, alt text, and production status.
+- Offline Character Cards now resolve portrait metadata through `getCharacterArt(animal, color)` instead of relying on duplicated crop coordinates in CSS.
+- The current four-animal atlas is explicitly marked `prototype`; it is not counted as any of the 12 production portraits.
+- Production target remains 12 individually reviewed animal/color portraits. The manifest is ready to switch each entry to an individual transparent WebP/PNG asset without changing card rules or game state.
