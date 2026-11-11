@@ -2076,10 +2076,7 @@ button:disabled { opacity: .48; cursor: not-allowed; }
 }
 
 /* Animal atlas crop positions for the layered portrait wrapper */
-.offline-card-art-layer.animal-painted-cat { background-position-x: 0%; }
-.offline-card-art-layer.animal-painted-rabbit { background-position-x: 33.3333%; }
-.offline-card-art-layer.animal-painted-frog { background-position-x: 66.6667%; }
-.offline-card-art-layer.animal-painted-fox { background-position-x: 100%; }
+/* Atlas crop coordinates are supplied by the character art manifest. */
 
 /* Portrait atlas fallback for the layered character slot */
 .offline-card-art-layer.animal-painted {
