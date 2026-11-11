@@ -29,6 +29,15 @@ See [visual-direction.md](./visual-direction.md) and [phase-3-art-production.md]
 - [x] Reduced-motion rules disable existing card, handoff, pile, guessing, and score-entry animations.
 - [x] Character atlas is documented as a low-resolution prototype, not final painted production art.
 
+## Modular card composition scaffold
+
+- [x] Character card markup now separates card stock, identity wash, frame, corner ornaments, portrait layer, foreground accents, and UI-rendered data.
+- [x] Existing four-animal atlas is cropped through dedicated per-animal selectors inside the new portrait layer.
+- [x] CSS supplies independent depth, material, and identity-color treatments without changing card data or game rules.
+- [ ] Replace the prototype atlas with the approved 12 high-resolution production paintings.
+
+This is a reusable composition scaffold, not completion of production artwork.
+
 ## Production visual deliverables — not yet complete
 
 - [ ] 12 consistent painted character portrait masters: cat, rabbit, frog, fox × pink, blue, gold.
